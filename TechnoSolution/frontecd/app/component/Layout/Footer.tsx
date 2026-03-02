@@ -94,8 +94,8 @@ export default function Footer() {
             <div className="mb-[18px]">
               <Link href="/" aria-label="Home">
                 <img
-                  src="https://cdn.shopify.com/s/files/1/0671/0093/4192/files/mic-logo_1.webp?v=1770020772"
-                  alt="Micro Center India – Gaming PCs & Computer Components Store in Kolkata"
+                  src="/logocom1.png"
+                  alt="Techno Solution India – Gaming PCs & Computer Components Store in Kolkata"
                   width={180}
                   height="auto"
                   loading="lazy"
@@ -108,25 +108,34 @@ export default function Footer() {
               Phone:
               <br />
               <Link
-                href="tel:+916290923176"
+                href="tel:+919679895416"
                 className="hover:text-[#38bdf8] transition-colors"
               >
-                +91 62909 23176
-              </Link>
-              <br />
-              <Link
-                href="tel:+916290337892"
-                className="hover:text-[#38bdf8] transition-colors"
-              >
-                +91 62903 37892
+                +91 9679895416
               </Link>
               <br />
               <br />
-              4, Chittaranjan Avenue, Esplanade,
               <br />
-              Beside Bow Barracks,
+             Jamtala, Chawk, Midnapore,
               <br />
-              Kolkata – 700072, West Bengal, India
+              Ajodhya Nagar, West Bengal 721150
+              <br />
+             Hours: 
+
+              <br />
+Sunday	9 am–9 pm
+              <br />
+Monday	9 am–9:30 pm
+              <br />
+Tuesday	9 am–9 pm
+              <br />
+Wednesday 9 am–9 pm
+              <br />
+Thursday	9 am–9 pm
+              <br />
+Friday	9 am–9 pm
+              <br />
+Saturday	9 am–9 pm
             </address>
 
             {/* Socials */}
@@ -147,13 +156,13 @@ export default function Footer() {
 
           <FooterColumn title="Shop Computer Products" links={shopLinks} />
           <FooterColumn title="Customer Policies" links={policyLinks} />
-          <FooterColumn title="About Micro Center India" links={aboutLinks} />
+          <FooterColumn title="About Techno Solution India" links={aboutLinks} />
           <FooterColumn title="Customer Account" links={accountLinks} />
         </div>
 
         {/* Bottom bar */}
         <div className="mt-10 pt-5 text-center text-[13px] text-[#94a3b8] border-t border-white/[0.08]">
-          © 2026 Micro Center India. All rights reserved.
+          © 2026 Techno Solution India. All rights reserved.
         </div>
       </footer>
 
@@ -164,7 +173,7 @@ export default function Footer() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "ComputerStore",
-            name: "Micro Center India",
+            name: "Techno Solution India",
             url: "https://microcenterindia.com",
             logo: "//microcenterindia.com/cdn/shop/t/2/assets/logo.png?v=613",
             telephone: "+91-6290923176",

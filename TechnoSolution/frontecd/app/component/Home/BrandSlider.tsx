@@ -36,10 +36,9 @@ export default function BrandSlider() {
               className="flex-shrink-0 w-[200px] h-[120px] flex items-center justify-center px-8"
             >
               <div className="relative w-full h-20">
-                <Image
+                <img
                   src={brand.logo}
                   alt={brand.name}
-                  fill
                   className="object-contain grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
                 />
               </div>
@@ -47,6 +46,7 @@ export default function BrandSlider() {
           ))}
         </div>
       </div>
+
 
       <style jsx>{`
         @keyframes scroll {

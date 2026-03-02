@@ -38,7 +38,7 @@ export default function TopBar() {
               <Facebook className="w-4 h-4" />
             </Link>
             <Link
-              href="https://wa.me/+916290337892"
+              href="https://wa.me/+9196798 95416"
               aria-label="WhatsApp"
               className="hover:text-green-400 transition-colors"
             >
@@ -77,11 +77,11 @@ export default function TopBar() {
           {/* RIGHT CONTACT */}
           <div className="flex items-center gap-4">
             <Link
-              href="tel:+916290923176"
+              href="tel:+9196798 95416"
               className="hidden lg:flex items-center gap-1 hover:text-blue-400 transition-colors"
             >
               <Phone className="w-4 h-4" />
-              <span>+91 62909 23176</span>
+              <span>+91 96798 95416</span>
             </Link>
             <Link
               href="mailto:help@microcenterindia.com"

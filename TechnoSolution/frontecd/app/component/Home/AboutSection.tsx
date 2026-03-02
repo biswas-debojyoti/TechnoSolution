@@ -26,7 +26,7 @@ export default function AboutSection() {
           {/* Header */}
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              About Micro Center India
+              About Techno Solution India
             </h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
               Powering gamers, creators, and professionals with cutting-edge
@@ -39,7 +39,7 @@ export default function AboutSection() {
             {/* Left Content */}
             <div className="space-y-5 text-gray-700 leading-relaxed">
               <p>
-                At <strong>Micro Center India</strong>, we understand how
+                At <strong>Techno Solution India</strong>, we understand how
                 critical technology is in today's fast-moving world. Whether
                 you're a gamer chasing performance, a professional building
                 reliability, or a business scaling growth — we're here to
@@ -55,7 +55,7 @@ export default function AboutSection() {
               <p>
                 We don't just sell hardware — we provide confidence. With expert
                 recommendations, quality assurance, and customer-first support,
-                Micro Center India stands as your trusted destination for
+                Techno Solution India stands as your trusted destination for
                 technology that performs.
               </p>
             </div>

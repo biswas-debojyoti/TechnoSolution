@@ -23,7 +23,7 @@ export default function YouTubeSection() {
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto text-center">
           <h2 className="text-5xl font-bold text-[#7b1b7e] mb-3">
-            Subscribe to MicroCenter India
+            Subscribe to Techno Solution India
           </h2>
 
           <p className="text-gray-600 max-w-3xl mx-auto mb-6 leading-relaxed">

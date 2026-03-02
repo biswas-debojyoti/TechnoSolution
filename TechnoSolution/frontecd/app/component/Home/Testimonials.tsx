@@ -85,16 +85,16 @@ export default function Testimonials() {
             {/* Google Card */}
             <div className="bg-white rounded-2xl p-7 shadow-xl text-center">
               <strong className="block text-lg font-semibold text-gray-900 mb-2">
-                Micro Center India
+                Techno Solution India
               </strong>
               <div className="flex justify-center gap-0.5 mb-2">
                 {renderStars(5)}
               </div>
               <p className="text-sm text-gray-600 mb-4">
-                4.9 based on 2359 reviews
+                4.9 based on reviews
               </p>
               <Link
-                href="https://search.google.com/local/writereview?placeid=ChIJnbSbL2R3AjoRrAbxDmACg4o"
+                href="https://share.google/Nx3H3n3YxnDOVO6hv"
                 target="_blank"
                 className="inline-block px-6 py-2.5 bg-[#1a73e8] text-white rounded-full font-semibold hover:bg-[#1557b0] transition-colors"
               >
@@ -134,7 +134,7 @@ export default function Testimonials() {
                     >
                       <div className="flex items-start gap-3 mb-3">
                         <div className="w-11 h-11 rounded-full bg-gray-200 overflow-hidden flex-shrink-0">
-                          <Image
+                          <img
                             src={review.avatar}
                             alt={review.name}
                             width={44}

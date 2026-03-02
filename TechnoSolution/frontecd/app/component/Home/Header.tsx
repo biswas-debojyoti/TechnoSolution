@@ -42,11 +42,11 @@ export default function Header() {
           {/* Logo */}
           <Link href="/" className="flex-shrink-0">
             <img
-              src="//microcenterindia.com/cdn/shop/files/mic-logo_2.webp?v=1771233684&width=240"
-              alt="Microcenter India"
+              src="/logocom1.png"
+              alt="Techno Solution India"
               width={120}
               height={42}
-              className="h-10 w-auto md:h-12"
+              className="h-10 w-auto md:h-20"
             />
           </Link>
 
