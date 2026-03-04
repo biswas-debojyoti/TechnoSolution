@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { motion, useMotionValue, useSpring, useTransform, useInView, animate } from 'motion/react';
 import { ArrowRight, BarChart2, BookOpen, Target, Zap, CheckCircle2, Trophy, TrendingUp, Search, LayoutTemplate, Tag, PlaySquare, Smartphone, MousePointer2 } from 'lucide-react';
 import React, { useEffect, useRef, useState, Suspense, lazy } from 'react';
-// import gridImage from '../assets/grid-image.jpeg'
+import gridImage from '../assets/grid-image.jpeg'
 const InlineWidget = lazy(() => import('react-calendly').then(mod => ({ default: mod.InlineWidget })));
 const GoogleAdsHero = lazy(() => import('../components/GoogleAdsHero'));
 
@@ -112,7 +112,7 @@ export default function Home() {
       <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden pt-20 pb-32">
         {/* Background Elements */}
         <div className="absolute inset-0 z-0">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-brand-orange/10 rounded-full blur-[120px]" />
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-yellow-400/10 rounded-full blur-[120px]" />
           <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-[150px]" />
           <div className="absolute inset-0 bg-[url('https://picsum.photos/seed/stars/1920/1080?grayscale')] opacity-5 mix-blend-screen" />
         </div>
@@ -125,22 +125,22 @@ export default function Home() {
             className="flex flex-col gap-8"
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm w-fit">
-              <span className="w-2 h-2 rounded-full bg-brand-orange animate-pulse" />
+              <span className="w-2 h-2 rounded-full bg-yellow-400 animate-pulse" />
               <span className="text-sm font-medium tracking-wide text-white/80 uppercase">
                 Performance Marketing Strategist & Author
               </span>
             </div>
             
             <h1 className="text-5xl md:text-7xl font-display font-bold leading-[1.1] tracking-tight">
-              Scale Your Brand with  <span className='text-brand-orange'>NEX</span><span className="text-gradient-orange ">Zen Structured Growth</span> Systems
+              Scale Your Brand with <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-200">Structured Growth</span> Systems
             </h1>
             
             <p className="text-xl text-white/60 leading-relaxed max-w-xl">Managing
-              <span className='font-bold text-brand-orange'> ₹70L+ / $80k / £60k Monthly</span> Across <span className='text-brand-orange font-bold'>Google & Meta</span>| India • UK • USA. I build structured acquisition systems that scale profitably — and document the frameworks behind them.
+              <span className='font-bold text-yellow-400'> ₹70L+ / $80k / £60k Monthly</span> Across Google & Meta | India • UK • USA. I build structured acquisition systems that scale profitably — and document the frameworks behind them.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <Link to="/work-with-me" className="btn-glow group relative px-8 py-4 bg-brand-orange text-black rounded-full font-bold text-lg overflow-hidden flex items-center justify-center gap-2 transition-transform hover:scale-105">
+              <Link to="/work-with-me" className="btn-glow group relative px-8 py-4 bg-yellow-400 text-black rounded-full font-bold text-lg overflow-hidden flex items-center justify-center gap-2 transition-transform hover:scale-105">
                 <span className="relative z-10">Apply for Strategy Call</span>
                 <ArrowRight className="relative z-10 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
@@ -170,7 +170,7 @@ export default function Home() {
                 />
               </div>
               {/* Glow effect */}
-              <div className="absolute inset-0 bg-gradient-to-br from-brand-orange/20 to-transparent rounded-full blur-3xl -z-10" />
+              <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/20 to-transparent rounded-full blur-3xl -z-10" />
             </div>
           </motion.div>
         </div>
@@ -225,7 +225,7 @@ export default function Home() {
                   }}
                   className="w-full relative z-10"
                 >
-                  <div className="text-3xl md:text-4xl font-display font-bold text-brand-orange mb-2">
+                  <div className="text-3xl md:text-4xl font-display font-bold text-yellow-400 mb-2">
                     {/^\d/.test(stat.value) ? (
                       <Counter value={stat.value} prefix={stat.prefix} suffix={stat.suffix} />
                     ) : (
@@ -244,11 +244,11 @@ export default function Home() {
 
                 {/* Soft Glow Accent Sweep */}
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-brand-orange/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1500 ease-in-out" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-yellow-400/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1500 ease-in-out" />
                 </div>
                 
                 {/* Background Glow */}
-                <div className="absolute -bottom-12 -right-12 w-24 h-24 bg-brand-orange/5 rounded-full blur-2xl group-hover:bg-brand-orange/10 transition-colors duration-500" />
+                <div className="absolute -bottom-12 -right-12 w-24 h-24 bg-yellow-400/5 rounded-full blur-2xl group-hover:bg-yellow-400/10 transition-colors duration-500" />
               </motion.div>
             ))}
           </div>
@@ -275,7 +275,7 @@ export default function Home() {
                 href="https://calendly.com/greenmileshahid/30min" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="px-8 py-4 bg-brand-orange text-black rounded-full font-bold text-lg hover:scale-105 transition-transform shadow-lg shadow-brand-orange/20"
+                className="px-8 py-4 bg-yellow-400 text-black rounded-full font-bold text-lg hover:scale-105 transition-transform shadow-lg shadow-yellow-400/20"
               >
                 Schedule An Appointment
               </a>
@@ -313,19 +313,19 @@ export default function Home() {
               </ul>
               <p className="pt-6 text-xl font-medium text-white">
                 Performance marketing isn't about hacks.<br/>
-                <span className="text-brand-orange">It's about disciplined systems.</span>
+                <span className="text-yellow-400">It's about disciplined systems.</span>
               </p>
             </div>
           </div>
           <div className="relative">
             <div className=" h-auto aspect-square rounded-3xl overflow-hidden ">
-              {/* <img 
+              <img 
                 src={gridImage} 
                 alt="Structure" 
               
                 className=" md:h-100 object-cover opacity-50 hover:opacity-80 transition-opacity duration-700"
                 referrerPolicy="no-referrer"
-              /> */}
+              />
             </div>
           </div>
         </div>
@@ -335,9 +335,8 @@ export default function Home() {
       <section className="py-32 bg-white/[0.02] border-y border-white/5">
         <div className="max-w-7xl mx-auto px-6">
           <div className="max-w-3xl mb-20">
-            <h2 className="text-4xl md:text-6xl font-display font-bold leading-tight mb-0"><span className='text-brand-orange'>NEX</span>Zen</h2>
             <h2 className="text-4xl md:text-5xl font-display font-bold leading-tight mb-6">
-             Structured Growth Systems, Not Random Optimization.
+              Structured Growth Systems, Not Random Optimization.
             </h2>
             <p className="text-xl text-white/60">If you're spending at scale, structure isn't optional.</p>
           </div>
@@ -345,17 +344,17 @@ export default function Home() {
           <div className="grid md:grid-cols-3 gap-8">
             {[
               {
-                icon: <Target className="w-8 h-8 text-brand-orange" />,
+                icon: <Target className="w-8 h-8 text-yellow-400" />,
                 title: "Performance Marketing Systems",
                 desc: "Google & Meta campaigns engineered for controlled scaling."
               },
               {
-                icon: <BarChart2 className="w-8 h-8 text-brand-orange" />,
+                icon: <BarChart2 className="w-8 h-8 text-yellow-400" />,
                 title: "Growth Architecture",
                 desc: "Funnel mapping, data integrity, and structured testing cycles."
               },
               {
-                icon: <Zap className="w-8 h-8 text-brand-orange" />,
+                icon: <Zap className="w-8 h-8 text-yellow-400" />,
                 title: "Strategic Advisory",
                 desc: "High-level decision support for brands expanding aggressively."
               }
@@ -366,7 +365,7 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="p-8 rounded-3xl bg-[#0c0f14] border border-white/10 hover:border-brand-orange/50 transition-colors group"
+                className="p-8 rounded-3xl bg-[#0c0f14] border border-white/10 hover:border-yellow-400/50 transition-colors group"
               >
                 <div className="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
                   {service.icon}
@@ -386,7 +385,7 @@ export default function Home() {
         
         {/* Animated Background Gradient Waves */}
         <div className="absolute inset-0 z-0 opacity-30 pointer-events-none">
-          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-brand-orange/20 rounded-full blur-[120px] animate-pulse" />
+          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-yellow-400/20 rounded-full blur-[120px] animate-pulse" />
           <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-500/20 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '2s' }} />
         </div>
 
@@ -397,10 +396,9 @@ export default function Home() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-4xl md:text-6xl font-display font-bold">Our</h2>
               <h2 className="text-4xl md:text-5xl font-display font-bold">Featured Case Studies</h2>
             </motion.div>
-            <Link to="/case-studies" className="hidden md:flex items-center gap-2 text-brand-orange hover:text-yellow-300 font-medium group">
+            <Link to="/case-studies" className="hidden md:flex items-center gap-2 text-yellow-400 hover:text-yellow-300 font-medium group">
               View All <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
@@ -409,7 +407,7 @@ export default function Home() {
             {[
               {
                 id: 1,
-                bigMetric: <><span className="text-brand-orange"><Counter value="312" suffix="%" /></span> Revenue Growth in <span className="text-brand-orange"><Counter value="6" /></span> Months</>,
+                bigMetric: <><span className="text-yellow-400"><Counter value="312" suffix="%" /></span> Revenue Growth in <span className="text-yellow-400"><Counter value="6" /></span> Months</>,
                 title: "Scaling a D2C Apparel Brand in a Saturated Market",
                 metrics: { m1: "+340% ROAS", m2: "$120k Spend" },
                 desc: "How we restructured the entire account architecture to unlock profitable scale after they hit a plateau.",
@@ -417,7 +415,7 @@ export default function Home() {
               },
               {
                 id: 2,
-                bigMetric: <><span className="text-brand-orange"><Counter value="43" suffix="%" /></span> Reduction in Cost Per Qualified Lead</>,
+                bigMetric: <><span className="text-yellow-400"><Counter value="43" suffix="%" /></span> Reduction in Cost Per Qualified Lead</>,
                 title: "B2B SaaS Lead Generation Engine",
                 metrics: { m1: "-45% CPA", m2: "+210% Volume" },
                 desc: "Moving from broad targeting to intent-based search structures, drastically reducing cost per acquisition.",
@@ -425,7 +423,7 @@ export default function Home() {
               },
               {
                 id: 3,
-                bigMetric: <><span className="text-brand-orange">£<Counter value="1.1" suffix="M" /></span> Revenue Added Across <span className="text-brand-orange"><Counter value="2" /></span> Markets</>,
+                bigMetric: <><span className="text-yellow-400">£<Counter value="1.1" suffix="M" /></span> Revenue Added Across <span className="text-yellow-400"><Counter value="2" /></span> Markets</>,
                 title: "International Expansion for Luxury E-commerce",
                 metrics: { m1: "4 New Markets", m2: "4.2x ROAS" },
                 desc: "A phased rollout strategy for entering the UK and US markets with localized campaign structures.",
@@ -454,11 +452,11 @@ export default function Home() {
                       <h2 className="text-3xl font-display font-bold text-white mb-2 leading-tight">
                         {caseStudy.bigMetric}
                       </h2>
-                      <h3 className="text-2xl font-display font-bold group-hover:text-brand-orange transition-colors">
+                      <h3 className="text-2xl font-display font-bold group-hover:text-yellow-400 transition-colors">
                         {caseStudy.title}
                       </h3>
                       <p className="text-white/60 line-clamp-2">{caseStudy.desc}</p>
-                      <div className="flex gap-4 text-sm font-mono text-brand-orange pt-2">
+                      <div className="flex gap-4 text-sm font-mono text-yellow-400 pt-2">
                         <span>{caseStudy.metrics.m1}</span>
                         <span>{caseStudy.metrics.m2}</span>
                       </div>
@@ -469,7 +467,7 @@ export default function Home() {
             ))}
           </div>
           <div className="mt-12 text-center md:hidden">
-            <Link to="/case-studies" className="inline-flex items-center gap-2 text-brand-orange font-medium">
+            <Link to="/case-studies" className="inline-flex items-center gap-2 text-yellow-400 font-medium">
               View All <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
@@ -495,7 +493,7 @@ export default function Home() {
               </p>
               <Link 
                 to="/work-with-me" 
-                className="inline-flex items-center gap-2 px-8 py-4 bg-brand-orange text-black rounded-full font-bold hover:bg-yellow-300 transition-all hover:scale-105 active:scale-95 shadow-lg shadow-brand-orange/20"
+                className="inline-flex items-center gap-2 px-8 py-4 bg-yellow-400 text-black rounded-full font-bold hover:bg-yellow-300 transition-all hover:scale-105 active:scale-95 shadow-lg shadow-yellow-400/20"
               >
                 Book Strategy Call <ArrowRight className="w-5 h-5" />
               </Link>
@@ -514,8 +512,8 @@ export default function Home() {
               <TiltCard className="h-full group">
                 <div className="p-8 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-sm h-full flex flex-col hover:bg-white/[0.08] transition-colors">
                   <div className="flex items-center gap-3 mb-6">
-                    <div className="p-3 rounded-2xl bg-brand-orange/10 group-hover:scale-110 group-hover:rotate-12 transition-transform duration-500">
-                      <Zap className="w-6 h-6 text-brand-orange" />
+                    <div className="p-3 rounded-2xl bg-yellow-400/10 group-hover:scale-110 group-hover:rotate-12 transition-transform duration-500">
+                      <Zap className="w-6 h-6 text-yellow-400" />
                     </div>
                     <h3 className="text-2xl font-display font-bold">My Approach</h3>
                   </div>
@@ -529,7 +527,7 @@ export default function Home() {
                       "Data-driven decision making with real-time analytics"
                     ].map((item, i) => (
                       <li key={i} className="flex gap-3 text-white/80 text-sm">
-                        <div className="w-1.5 h-1.5 rounded-full bg-brand-orange mt-1.5 shrink-0" />
+                        <div className="w-1.5 h-1.5 rounded-full bg-yellow-400 mt-1.5 shrink-0" />
                         <span>{item}</span>
                       </li>
                     ))}
@@ -549,8 +547,8 @@ export default function Home() {
               <TiltCard className="h-full group">
                 <div className="p-8 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-sm h-full flex flex-col hover:bg-white/[0.08] transition-colors">
                   <div className="flex items-center gap-3 mb-6">
-                    <div className="p-3 rounded-2xl bg-brand-orange/10 group-hover:scale-110 group-hover:rotate-12 transition-transform duration-500">
-                      <Target className="w-6 h-6 text-brand-orange" />
+                    <div className="p-3 rounded-2xl bg-yellow-400/10 group-hover:scale-110 group-hover:rotate-12 transition-transform duration-500">
+                      <Target className="w-6 h-6 text-yellow-400" />
                     </div>
                     <h3 className="text-2xl font-display font-bold">Who I Help</h3>
                   </div>
@@ -563,7 +561,7 @@ export default function Home() {
                       "Agencies seeking white-label performance marketing"
                     ].map((item, i) => (
                       <li key={i} className="flex gap-3 text-white/80 text-sm">
-                        <CheckCircle2 className="w-5 h-5 text-brand-orange shrink-0" />
+                        <CheckCircle2 className="w-5 h-5 text-yellow-400 shrink-0" />
                         <span>{item}</span>
                       </li>
                     ))}
@@ -583,8 +581,8 @@ export default function Home() {
               <TiltCard className="h-full group">
                 <div className="p-8 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-sm h-full flex flex-col hover:bg-white/[0.08] transition-colors">
                   <div className="flex items-center gap-3 mb-6">
-                    <div className="p-3 rounded-2xl bg-brand-orange/10 group-hover:scale-110 group-hover:rotate-12 transition-transform duration-500">
-                      <Trophy className="w-6 h-6 text-brand-orange" />
+                    <div className="p-3 rounded-2xl bg-yellow-400/10 group-hover:scale-110 group-hover:rotate-12 transition-transform duration-500">
+                      <Trophy className="w-6 h-6 text-yellow-400" />
                     </div>
                     <h3 className="text-2xl font-display font-bold">Track Record</h3>
                   </div>
@@ -596,7 +594,7 @@ export default function Home() {
                       "Authored \"Google Ads Mastery OS\" - the operating system for serious performance marketers"
                     ].map((item, i) => (
                       <li key={i} className="flex gap-3 text-white/80 text-sm">
-                        <div className="w-1.5 h-1.5 rounded-full bg-brand-orange mt-1.5 shrink-0" />
+                        <div className="w-1.5 h-1.5 rounded-full bg-yellow-400 mt-1.5 shrink-0" />
                         <span>{item}</span>
                       </li>
                     ))}
@@ -650,15 +648,13 @@ export default function Home() {
                   <ul className="space-y-2 text-sm text-white/80 font-medium">
                     {book.takeaways.map((t, j) => (
                       <li key={j} className="flex items-center gap-2 justify-center md:justify-start">
-                        <BookOpen className="w-4 h-4 text-brand-orange" /> {t}
+                        <BookOpen className="w-4 h-4 text-yellow-400" /> {t}
                       </li>
                     ))}
                   </ul>
-                  <a href="https://greenmiles.gumroad.com/l/google-ads-mastery-os" target="_blank" rel="noopener noreferrer">
                   <button className="px-6 py-2.5 rounded-full border border-white/20 hover:bg-white hover:text-black transition-colors font-semibold text-sm">
                     Buy Now
                   </button>
-                  </a>
                 </div>
               </div>
             ))}
@@ -683,7 +679,7 @@ export default function Home() {
           <p className="text-xl text-white/60 mb-12 max-w-2xl mx-auto">
             Stop relying on random optimization. Let's engineer a structured system for your brand's growth.
           </p>
-          <Link to="/work-with-me" className="btn-glow inline-flex items-center gap-3 px-10 py-5 bg-brand-orange text-black rounded-full font-bold text-xl hover:scale-105 transition-transform">
+          <Link to="/work-with-me" className="btn-glow inline-flex items-center gap-3 px-10 py-5 bg-yellow-400 text-black rounded-full font-bold text-xl hover:scale-105 transition-transform">
             Work With Me <ArrowRight className="w-6 h-6" />
           </Link>
         </div>

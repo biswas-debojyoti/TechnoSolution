@@ -1,9 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
 import Home from './pages/Home';
-import GlobalArchitecture from './pages/GlobalArchitecture';
-import Audit from './pages/Audit';
-import Insights from './pages/Insights';
 import CaseStudies from './pages/CaseStudies';
 import CaseStudyDetail from './pages/CaseStudyDetail';
 import Books from './pages/Books';
@@ -16,9 +13,6 @@ export default function App() {
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/architecture" element={<GlobalArchitecture />} />
-          <Route path="/audit" element={<Audit />} />
-          <Route path="/insights" element={<Insights />} />
           <Route path="/case-studies" element={<CaseStudies />} />
           <Route path="/case-studies/:id" element={<CaseStudyDetail />} />
           <Route path="/books" element={<Books />} />

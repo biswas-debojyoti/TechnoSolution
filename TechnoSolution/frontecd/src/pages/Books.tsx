@@ -63,7 +63,7 @@ export default function Books() {
             className={`flex flex-col ${i % 2 === 1 ? 'lg:flex-row-reverse' : 'lg:flex-row'} gap-16 items-center`}
           >
             <div className="w-full lg:w-1/3 shrink-0">
-              <div className="aspect-[2/3] rounded-xl overflow-hidden border border-white/20 shadow-2xl shadow-brand-orange/10 relative group">
+              <div className="aspect-[2/3] rounded-xl overflow-hidden border border-white/20 shadow-2xl shadow-yellow-400/10 relative group">
                 <img 
                   src={book.image} 
                   alt={book.title} 
@@ -77,19 +77,19 @@ export default function Books() {
             <div className="w-full lg:w-2/3 space-y-10">
               <div>
                 <h2 className="text-4xl md:text-5xl font-display font-bold mb-4">{book.title}</h2>
-                <p className="text-2xl text-brand-orange font-serif italic mb-6">{book.subtitle}</p>
+                <p className="text-2xl text-yellow-400 font-serif italic mb-6">{book.subtitle}</p>
                 <p className="text-lg text-white/70 leading-relaxed">{book.desc}</p>
               </div>
 
               <div className="grid md:grid-cols-2 gap-12">
                 <div>
                   <h3 className="text-xl font-display font-bold mb-6 flex items-center gap-2">
-                    <BookOpen className="w-5 h-5 text-brand-orange" /> What You'll Learn
+                    <BookOpen className="w-5 h-5 text-yellow-400" /> What You'll Learn
                   </h3>
                   <ul className="space-y-4">
                     {book.learnings.map((learning, j) => (
                       <li key={j} className="flex gap-3 text-white/80">
-                        <CheckCircle2 className="w-5 h-5 text-brand-orange shrink-0" />
+                        <CheckCircle2 className="w-5 h-5 text-yellow-400 shrink-0" />
                         <span>{learning}</span>
                       </li>
                     ))}
@@ -98,24 +98,22 @@ export default function Books() {
 
                 <div className="space-y-6">
                   <h3 className="text-xl font-display font-bold mb-6 flex items-center gap-2">
-                    <Star className="w-5 h-5 text-brand-orange" /> Reader Feedback
+                    <Star className="w-5 h-5 text-yellow-400" /> Reader Feedback
                   </h3>
                   {book.testimonials.map((test, j) => (
                     <div key={j} className="p-6 rounded-2xl bg-white/5 border border-white/10 relative">
-                      <div className="absolute -top-3 -left-2 text-4xl text-brand-orange/20 font-serif">"</div>
+                      <div className="absolute -top-3 -left-2 text-4xl text-yellow-400/20 font-serif">"</div>
                       <p className="text-white/80 italic mb-4 relative z-10">"{test.text}"</p>
-                      <p className="text-sm font-bold text-brand-orange">— {test.author}</p>
+                      <p className="text-sm font-bold text-yellow-400">— {test.author}</p>
                     </div>
                   ))}
                 </div>
               </div>
 
               <div className="pt-6">
-                <a href="https://greenmiles.gumroad.com/l/google-ads-mastery-os" className="inline-block">
-                <button className="btn-glow px-10 py-4 bg-brand-orange text-black rounded-full font-bold text-lg hover:scale-105 transition-transform">
+                <button className="btn-glow px-10 py-4 bg-yellow-400 text-black rounded-full font-bold text-lg hover:scale-105 transition-transform">
                   Buy {book.title}
                 </button>
-                </a>
               </div>
             </div>
           </motion.div>
