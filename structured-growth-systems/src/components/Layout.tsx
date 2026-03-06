@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { Instagram, Linkedin, Menu, Twitter, X, Youtube } from 'lucide-react';
+import { BsWhatsapp } from "react-icons/bs";
+import WhatsAppSticky from './WhatsAppSticky';
+import MobileCallButton from './MobileCallButton';
 
 const navLinks = [
   { name: 'Home', path: '/' },
@@ -18,8 +21,17 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
 
+  const handleWhatsApp = () => {
+    const phone = "918383997723";
+    const message = "Hi. I want to Connect with you";
+    const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+    window.open(url, "_blank");
+  };
+
+
   return (
     <div className="min-h-screen flex flex-col studio-bg text-white selection:bg-brand-orange selection:text-black">
+      <WhatsAppSticky/>
       <header className="fixed top-0 left-0 right-0 z-50 bg-black/40 backdrop-blur-xl border-b border-white/5">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
           <Link to="/" className="font-display font-bold text-xl tracking-tight">
@@ -32,11 +44,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <Link
                 key={link.name}
                 to={link.path}
-                className={`text-sm font-medium transition-colors ${
-                  location.pathname === link.path
+                className={`text-sm font-medium transition-colors ${location.pathname === link.path
                     ? 'text-white'
                     : 'text-white/60 hover:text-white'
-                }`}
+                  }`}
               >
                 {link.name}
               </Link>
@@ -70,11 +81,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 key={link.name}
                 to={link.path}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className={`text-lg font-medium ${
-                  location.pathname === link.path
+                className={`text-lg font-medium ${location.pathname === link.path
                     ? 'text-brand-orange'
                     : 'text-white/80'
-                }`}
+                  }`}
               >
                 {link.name}
               </Link>
@@ -89,7 +99,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </motion.nav>
         )}
       </header>
-
+<MobileCallButton/>
       <main className="flex-grow pt-20 relative z-10">
         <motion.div
           key={location.pathname}
@@ -111,6 +121,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             © {new Date().getFullYear()} NexZen Creative Growth Systems. All rights reserved.
           </div>
           <div className="flex gap-6 text-sm text-white/60 items-center">
+            <div onClick={handleWhatsApp} rel="noopener noreferrer" className="hover:text-white transition-colors"><BsWhatsapp className='text-xl' /></div>
             <a href="https://youtube.com/@nexzencreativeofficial?si=iCuA12C_JP74X1qn" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors"><Youtube /></a>
             <a href="https://www.instagram.com/diamond_inthe_dust?igsh=MXFwbGY1aWUyOG8yMA==" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors"><Instagram /></a>
             <a href="https://in.linkedin.com/in/sayed-shahid-089086344" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors"><Linkedin /></a>

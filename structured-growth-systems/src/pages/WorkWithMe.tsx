@@ -1,11 +1,80 @@
 import { motion } from 'motion/react';
 import { AlertCircle, CheckCircle2, ChevronRight, ShieldCheck, Target, Zap, Globe, MapPin } from 'lucide-react';
+import emailjs from '@emailjs/browser';
+import { useRef, useState } from 'react';
+import { useSubmit } from 'react-router-dom';
+
 
 export default function WorkWithMe() {
+  const formRef = useRef(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+const [formData, setFormData] = useState({
+  full_name: "",
+  email: "",
+  website: "",
+  budget: "",
+  market: "",
+  bottleneck: ""
+});
+
+
+const handleChange = (e: any) => {
+  const { name, value } = e.target;
+  setFormData((prev) => ({
+    ...prev,
+    [name]: value
+  }));
+};
+
+
+ const sendEmail = async (e: any) => {
+  e.preventDefault();
+
+  if (isSubmitting) return;
+
+  setIsSubmitting(true);
+const payload = {
+  name: formData.full_name,
+  itme: new Date().toLocaleDateString(),
+  email: formData.email,
+  title: formData.website,
+  budget: formData.budget,
+  market: formData.market,
+  message: formData.bottleneck +"This ia my website"+ formData.website + "My budget"+ formData.budget +"Targating market"+ formData.market
+};
+  try {
+    await emailjs.send(
+      "service_i18vkpf",
+      "template_qka0y4r",
+      payload,
+      "RA8Jnik8efYhokoLu"
+    );
+
+    alert("Application submitted successfully!");
+
+    setFormData({
+      full_name: "",
+      email: "",
+      website: "",
+      budget: "",
+      market: "",
+      bottleneck: ""
+    });
+
+  } catch (error) {
+    console.error(error);
+    alert("Failed to send application");
+  }
+
+  setTimeout(() => {
+    setIsSubmitting(false);
+  }, 2000);
+};
+
   return (
     <div className="w-full pt-32 pb-40 px-6 max-w-7xl mx-auto">
       <div className="grid lg:grid-cols-2 gap-20">
-        <motion.div
+ <motion.div
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
@@ -116,26 +185,31 @@ export default function WorkWithMe() {
         >
           <div className="p-8 md:p-12 rounded-3xl bg-white/5 border border-white/10 relative overflow-hidden backdrop-blur-sm">
             <div className="absolute top-0 right-0 w-64 h-64 bg-brand-orange/5 rounded-full blur-[80px]" />
-            
+
             <div className="mb-10 relative z-10">
               <h2 className="text-3xl font-display font-bold mb-3">Strategic Evaluation Request</h2>
               <p className="text-white/40 text-sm">Access to strategic evaluation is by application only.</p>
             </div>
-            
-            <form className="space-y-6 relative z-10" onSubmit={(e) => e.preventDefault()}>
+
+            <form className="space-y-6 relative z-10" ref={formRef}
+              onSubmit={sendEmail}>
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label className="text-[10px] font-bold text-white/40 uppercase tracking-[0.2em]">Full Name</label>
-                  <input 
-                    type="text" 
+                  <input
+                    name="full_name"
+                     onChange={handleChange}
+                    type="text"
                     className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-orange transition-colors"
                     placeholder="John Doe"
                   />
                 </div>
                 <div className="space-y-2">
                   <label className="text-[10px] font-bold text-white/40 uppercase tracking-[0.2em]">Work Email</label>
-                  <input 
-                    type="email" 
+                  <input
+                    name="email"
+                     onChange={handleChange}
+                    type="email"
                     className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-orange transition-colors"
                     placeholder="john@company.com"
                   />
@@ -144,8 +218,10 @@ export default function WorkWithMe() {
 
               <div className="space-y-2">
                 <label className="text-[10px] font-bold text-white/40 uppercase tracking-[0.2em]">Brand Website</label>
-                <input 
-                  type="url" 
+                <input
+                  name="website"
+                   onChange={handleChange}
+                  type="url"
                   className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-orange transition-colors"
                   placeholder="https://yourbrand.com"
                 />
@@ -154,7 +230,7 @@ export default function WorkWithMe() {
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label className="text-[10px] font-bold text-white/40 uppercase tracking-[0.2em]">Monthly Paid Media Budget</label>
-                  <select className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-orange transition-colors appearance-none">
+                  <select name="budget"   onChange={handleChange} className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-orange transition-colors appearance-none">
                     <option value="">Select Range</option>
                     <option value="under-10k">Under $10k / ₹8L</option>
                     <option value="10k-50k">$10k - $50k</option>
@@ -164,7 +240,7 @@ export default function WorkWithMe() {
                 </div>
                 <div className="space-y-2">
                   <label className="text-[10px] font-bold text-white/40 uppercase tracking-[0.2em]">Primary Revenue Market</label>
-                  <select className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-orange transition-colors appearance-none">
+                  <select name="market"   onChange={handleChange} className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-orange transition-colors appearance-none">
                     <option value="">Select Market</option>
                     <option value="us">United States</option>
                     <option value="uk">United Kingdom</option>
@@ -176,7 +252,8 @@ export default function WorkWithMe() {
 
               <div className="space-y-2">
                 <label className="text-[10px] font-bold text-white/40 uppercase tracking-[0.2em]">Current Growth Bottleneck</label>
-                <textarea 
+                <textarea name="bottleneck"
+                 onChange={handleChange}
                   rows={4}
                   className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-orange transition-colors resize-none"
                   placeholder="What is the main bottleneck preventing you from scaling right now?"
@@ -184,18 +261,27 @@ export default function WorkWithMe() {
               </div>
 
               <div className="pt-4">
-                <button type="submit" className="btn-premium w-full py-5 text-lg group">
-                  Apply for Strategic Review <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className={`btn-premium w-full py-5 text-lg group ${isSubmitting ? "opacity-60 cursor-not-allowed" : ""
+                    }`}
+                >
+                  {isSubmitting ? "Submitting..." : "Apply for Strategic Review"}
+                  <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </button>
-                
+
                 <p className="text-center text-[10px] text-white/30 mt-6 leading-relaxed">
-                  Applications are reviewed within 24 hours.<br/>
+                  Applications are reviewed within 24 hours.<br />
                   If there’s alignment, you’ll receive a private calendar link.
                 </p>
               </div>
             </form>
           </div>
+        </motion.div>
 
+
+        
           {/* Global Presence / Address Section */}
           <div className="mt-12 p-8 rounded-3xl border border-white/5 bg-white/2[0.02] space-y-8">
             <h3 className="text-xs font-bold uppercase text-white/40 tracking-[0.2em] flex items-center gap-2">
@@ -228,7 +314,6 @@ export default function WorkWithMe() {
               </div>
             </div>
           </div>
-        </motion.div>
       </div>
     </div>
   );
