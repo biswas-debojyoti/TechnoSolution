@@ -325,8 +325,8 @@ export default function NexZen() {
                   key={industry} 
                   className={`animated-border-tag rounded-full transition-all hover:scale-105 ${
                     isSpecial 
-                      ? 'px-10 py-5 text-2xl font-bold text-white' 
-                      : 'px-8 py-4 text-lg font-medium text-white/80'
+                      ? 'px-6 py-5 text-xl font-bold text-white' 
+                      : 'px-6 py-5 text-xl font-bold text-white'
                   }`}
                 >
                   {industry}
@@ -386,7 +386,7 @@ export default function NexZen() {
           <div className="space-y-6">
             {faqs.map((faq, i) => (
               <section key={i} className="p-8 rounded-2xl bg-white/5 border border-white/10">
-                <h3 className="text-xl font-bold mb-4 text-white/90">{faq.question}</h3>
+                <h3 className="text-xl font-bold mb-4 text-white/90">{i+1}. {faq.question}</h3>
                 <p className="text-white/60 leading-relaxed">{faq.answer}</p>
               </section>
             ))}

@@ -666,6 +666,64 @@ export default function Home() {
         </div>
       </section>
 
+
+      {/* AGENCY PREVIEW SECTION */}
+      <section className="py-32 relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="p-12 md:p-20 rounded-[40px] animated-border-card border border-white/10 relative overflow-hidden text-center"
+          >
+            <div className="absolute inset-0 bg-brand-orange/5 blur-[120px] -z-10" />
+            
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm w-fit mb-8">
+              <Zap className="w-4 h-4 text-brand-orange" />
+              <span className="text-sm font-medium tracking-wide text-white/80 uppercase">
+                NexZen Creative Agency
+              </span>
+            </div>
+
+            <h2 className="text-4xl md:text-6xl font-display font-bold mb-8 leading-tight">
+              Turn Traffic Into <br/><span className="text-gradient-orange">Predictable Revenue</span>
+            </h2>
+            
+            <p className="text-xl text-white/60 max-w-3xl mx-auto leading-relaxed mb-12">
+              NexZen Creative builds <strong>structured SEO and paid media acquisition systems</strong> designed to turn random clicks into real customers and scalable revenue. We deliver economic clarity before capital expansion.
+            </p>
+
+            <div className="grid md:grid-cols-3 gap-8 mb-16 max-w-5xl mx-auto">
+              {[
+                { label: "Paid Media Managed", value: "$500K+" },
+                { label: "Global Reach", value: "India • UK • USA" },
+                { label: "Core Focus", value: "CAC • ROAS • LTV" }
+              ].map((item, i) => (
+                <div key={i} className="p-6 rounded-2xl bg-white/5 border border-white/5">
+                  <div className="text-2xl font-bold text-brand-orange mb-1">{item.value}</div>
+                  <div className="text-xs text-white/40 uppercase tracking-widest font-bold">{item.label}</div>
+                </div>
+              ))}
+            </div>
+
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-12">
+              <Link to="/work-with-me" className="btn-premium px-10 py-5 text-lg group w-full sm:w-auto">
+                Book Strategy Call
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </Link>
+              <Link to="/nexzen" className="px-10 py-5 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all text-lg font-bold w-full sm:w-auto">
+                Explore Our Services
+              </Link>
+            </div>
+
+            <p className="text-white/40 text-sm font-medium tracking-wide">
+              Trusted by growth-focused brands across <span className="text-white/60">E-commerce, Health Clinics, SaaS, and Startups</span>
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+
       {/* FINAL CTA */}
       <section className="py-40 relative overflow-hidden">
         {/* Golden Flow Background */}

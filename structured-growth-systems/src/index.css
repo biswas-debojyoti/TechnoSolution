@@ -1,33 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
-
-/* Neon animated border */
-@keyframes borderMove {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-.animate-borderMove {
-  background: linear-gradient(
-    270deg,
-    cyan,
-    magenta,
-    yellow,
-    cyan
-  );
-  background-size: 600% 600%;
-  animation: borderMove 4s ease infinite;
-}
-
-
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Space Grotesk", sans-serif;
@@ -189,6 +162,70 @@ h1, h2, h3 {
 @keyframes rotateRing {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+/* Animated Border Tag */
+.animated-border-tag {
+  position: relative;
+  background: #050505;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  z-index: 1;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
+}
+
+.animated-border-tag::before {
+  content: "";
+  position: absolute;
+  inset: -150%; /* Large enough to cover the rotation */
+  background: conic-gradient(from 0deg, transparent 0%, var(--accent-orange) 15%, transparent 30%);
+  animation: rotateBorder 4s linear infinite;
+  z-index: -1;
+}
+
+.animated-border-tag::after {
+  content: "";
+  position: absolute;
+  inset: 1px; /* This creates the "thin" border effect by covering the center */
+  background: #050505;
+  border-radius: inherit;
+  z-index: -1;
+}
+
+@keyframes rotateBorder {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Animated Border Card */
+.animated-border-card {
+  position: relative;
+  background: #050505;
+  overflow: hidden;
+  z-index: 1;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.animated-border-card::before {
+  content: "";
+  position: absolute;
+  inset: -150%;
+  background: conic-gradient(from 0deg, transparent 0%, var(--accent-orange) 5%, transparent 15%);
+  animation: rotateBorder 8s linear infinite;
+  z-index: -1;
+}
+
+.animated-border-card::after {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  background: #050505;
+  border-radius: inherit;
+  z-index: -1;
 }
 
 /* Neon Pill Styles (Updated for Orange) */
