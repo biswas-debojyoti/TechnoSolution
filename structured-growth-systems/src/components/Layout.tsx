@@ -10,6 +10,7 @@ const navLinks = [
   { name: 'Home', path: '/' },
   { name: 'Architecture', path: '/architecture' },
   { name: 'Audit', path: '/audit' },
+  { name: 'Agency', path: '/nexzen' },
   { name: 'Insights', path: '/insights' },
   { name: 'Case Studies', path: '/case-studies' },
   { name: 'Books', path: '/books' },
@@ -45,7 +46,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 key={link.name}
                 to={link.path}
                 className={`text-sm font-medium transition-colors ${location.pathname === link.path
-                    ? 'text-white'
+                    ? 'text-brand-orange font-semibold border-b-2 border-brand-orange'
                     : 'text-white/60 hover:text-white'
                   }`}
               >

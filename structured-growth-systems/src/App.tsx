@@ -9,6 +9,7 @@ import CaseStudyDetail from './pages/CaseStudyDetail';
 import Books from './pages/Books';
 import About from './pages/About';
 import WorkWithMe from './pages/WorkWithMe';
+import NexZen from './pages/NexZen';
 
 export default function App() {
   return (
@@ -19,6 +20,7 @@ export default function App() {
           <Route path="/architecture" element={<GlobalArchitecture />} />
           <Route path="/audit" element={<Audit />} />
           <Route path="/insights" element={<Insights />} />
+          <Route path="/nexzen" element={<NexZen />} />
           <Route path="/case-studies" element={<CaseStudies />} />
           <Route path="/case-studies/:id" element={<CaseStudyDetail />} />
           <Route path="/books" element={<Books />} />
