@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { motion, useMotionValue, useSpring, useTransform, useInView, animate } from 'motion/react';
 import { ArrowRight, BarChart2, BookOpen, Target, Zap, CheckCircle2, Trophy, TrendingUp, Search, LayoutTemplate, Tag, PlaySquare, Smartphone, MousePointer2 } from 'lucide-react';
 import React, { useEffect, useRef, useState, Suspense, lazy } from 'react';
-// import gridImage from '../assets/grid-image.jpeg'
+import gridImage from '../assets/grid-image1.jpeg';
 const InlineWidget = lazy(() => import('react-calendly').then(mod => ({ default: mod.InlineWidget })));
 const GoogleAdsHero = lazy(() => import('../components/GoogleAdsHero'));
 
@@ -319,13 +319,13 @@ export default function Home() {
           </div>
           <div className="relative">
             <div className=" h-auto aspect-square rounded-3xl overflow-hidden ">
-              {/* <img 
+              <img 
                 src={gridImage} 
                 alt="Structure" 
               
                 className=" md:h-100 object-cover opacity-50 hover:opacity-80 transition-opacity duration-700"
                 referrerPolicy="no-referrer"
-              /> */}
+              />
             </div>
           </div>
         </div>

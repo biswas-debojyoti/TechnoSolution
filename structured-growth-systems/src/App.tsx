@@ -10,6 +10,8 @@ import Books from './pages/Books';
 import About from './pages/About';
 import WorkWithMe from './pages/WorkWithMe';
 import NexZen from './pages/NexZen';
+import Blog from './pages/Blog';
+import GrowthOffers from './pages/GrowthOffers';
 
 export default function App() {
   return (
@@ -24,6 +26,8 @@ export default function App() {
           <Route path="/case-studies" element={<CaseStudies />} />
           <Route path="/case-studies/:id" element={<CaseStudyDetail />} />
           <Route path="/books" element={<Books />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/growth-offers" element={<GrowthOffers />} />
           <Route path="/about" element={<About />} />
           <Route path="/work-with-me" element={<WorkWithMe />} />
           <Route path="/contact" element={<WorkWithMe />} />

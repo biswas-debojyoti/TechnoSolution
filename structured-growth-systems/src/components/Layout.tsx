@@ -11,11 +11,13 @@ const navLinks = [
   { name: 'Architecture', path: '/architecture' },
   { name: 'Audit', path: '/audit' },
   { name: 'Agency', path: '/nexzen' },
+    { name: 'Offers', path: '/growth-offers' },
   { name: 'Insights', path: '/insights' },
   { name: 'Case Studies', path: '/case-studies' },
   { name: 'Books', path: '/books' },
+  { name: 'Blog', path: '/blog' },
   { name: 'About', path: '/about' },
-  { name: 'Work With Me', path: '/work-with-me' },
+  // { name: 'Work With Me', path: '/work-with-me' },
 ];
 
 export default function Layout({ children }: { children: React.ReactNode }) {
