@@ -671,6 +671,96 @@ export default function Home() {
         </div>
       </section>
 
+   {/* LATEST FROM THE JOURNAL */}
+      <section className="py-32 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col md:flex-row items-end justify-between mb-16 gap-8">
+            <div className="max-w-2xl">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm w-fit mb-6">
+                <BookOpen className="w-4 h-4 text-brand-orange" />
+                <span className="text-sm font-medium tracking-wide text-white/80 uppercase">
+                  The Growth Journal
+                </span>
+              </div>
+              <h2 className="text-4xl md:text-6xl font-display font-bold leading-tight">
+                Strategic Insights for <br/><span className="text-gradient-orange">Market Dominance</span>
+              </h2>
+            </div>
+            <Link to="/blog" className="group flex items-center gap-3 text-white/60 hover:text-brand-orange transition-colors font-bold text-lg">
+              View All Articles <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
+            </Link>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="group p-8 md:p-12 rounded-[40px] animated-border-card border border-white/10 relative overflow-hidden bg-white/5"
+            >
+              <div className="absolute inset-0 bg-brand-orange/5 blur-[80px] -z-10" />
+              <div className="flex items-center gap-4 mb-8">
+                <span className="text-[10px] font-bold text-brand-orange uppercase tracking-widest px-2 py-1 bg-brand-orange/10 rounded">
+                  Featured
+                </span>
+                <span className="text-xs text-white/40 font-mono">15 Min Read</span>
+              </div>
+              <h3 className="text-3xl md:text-4xl font-display font-bold mb-6 group-hover:text-brand-orange transition-colors leading-tight">
+                How to Turn Google Ads Into a Predictable Lead Gen System
+              </h3>
+              <p className="text-white/60 mb-10 leading-relaxed text-lg">
+                Most companies waste thousands on ads without a real acquisition system. Here's the framework high-growth companies use to scale leads consistently.
+              </p>
+              <Link to="/blog/google-ads-lead-generation-system" className="btn-premium inline-flex items-center gap-3 px-8 py-4 group">
+                Read Article <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
+              </Link>
+            </motion.div>
+
+            <div className="space-y-8">
+              {[
+                {
+                  title: "SEO vs Paid Ads: Which One Drives Better ROI?",
+                  category: "Strategy",
+                  readTime: "12 min",
+                  link: "/blog/seo-vs-paid-ads-roi"
+                },
+                {
+                  title: "Why Most Marketing Agencies Fail to Scale Campaigns",
+                  category: "Performance",
+                  readTime: "10 min",
+                  link: "/blog/why-marketing-campaigns-fail-to-scale"
+                }
+              ].map((post, i) => (
+                <Link
+                  key={i}
+                  to={post.link}
+                  className="block"
+                >
+                  <motion.div
+                    initial={{ opacity: 0, x: 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.1 }}
+                    className="p-8 rounded-3xl border border-white/5 bg-white/[0.02] hover:bg-white/5 hover:border-white/10 transition-all group cursor-pointer h-full"
+                  >
+                    <div className="flex items-center gap-4 mb-4">
+                      <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">
+                        {post.category}
+                      </span>
+                      <span className="text-[10px] text-white/20 font-mono italic">{post.readTime} read</span>
+                    </div>
+                    <h4 className="text-xl font-bold group-hover:text-brand-orange transition-colors">
+                      {post.title}
+                    </h4>
+                  </motion.div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+
 
       {/* AGENCY PREVIEW SECTION */}
       <section className="py-32 relative overflow-hidden">

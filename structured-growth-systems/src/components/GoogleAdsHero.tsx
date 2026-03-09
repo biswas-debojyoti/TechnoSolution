@@ -37,10 +37,10 @@ export default function GoogleAdsHero() {
               { name: "App", class: "app" },
             ].map((item, i) => (
 
-              <div key={i} className="relative p-[2px] rounded-full overflow-hidden group">
+              <div key={i} className="animated-border-card relative p-[2px] rounded-full overflow-hidden group">
 
                 {/* Animated Border Layer */}
-                <div className="absolute inset-0 rounded-full animate-borderMove"></div>
+                {/* <div className="absolute inset-0 rounded-full animated-border-card"></div> */}
 
                 <motion.div
                   whileHover={{ scale: 1.05 }}
