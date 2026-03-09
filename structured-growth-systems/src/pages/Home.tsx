@@ -3,6 +3,7 @@ import { motion, useMotionValue, useSpring, useTransform, useInView, animate } f
 import { ArrowRight, BarChart2, BookOpen, Target, Zap, CheckCircle2, Trophy, TrendingUp, Search, LayoutTemplate, Tag, PlaySquare, Smartphone, MousePointer2 } from 'lucide-react';
 import React, { useEffect, useRef, useState, Suspense, lazy } from 'react';
 import gridImage from '../assets/grid-image1.jpeg';
+import MarketingDiagnosisOffer from '../components/MarketingDiagnosisOffer';
 const InlineWidget = lazy(() => import('react-calendly').then(mod => ({ default: mod.InlineWidget })));
 const GoogleAdsHero = lazy(() => import('../components/GoogleAdsHero'));
 
@@ -174,6 +175,10 @@ export default function Home() {
             </div>
           </motion.div>
         </div>
+      </section>
+
+ <section className="py-24">
+        <MarketingDiagnosisOffer />
       </section>
 
       {/* GOOGLE ADS HERO SECTION */}

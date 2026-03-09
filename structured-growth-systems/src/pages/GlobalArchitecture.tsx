@@ -2,9 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { Globe, TrendingUp, Shield, Zap, ArrowRight, CheckCircle2, AlertCircle } from 'lucide-react';
-import india from "../assets/india1.png";
-import uk from "../assets/uk.png";
+// import india from "../assets/india1.png";
+// import uk from "../assets/uk.png";
 import usa from "../assets/usa1.png";
+import MarketingDiagnosisOffer from '../components/MarketingDiagnosisOffer';
 const markets = [
   {
     country: "INDIA",
@@ -46,7 +47,7 @@ const markets = [
   },
   {
     country: "USA",
-    flag: "🇺🇸", 
+    flag: "🇺🇸",
     tagline: "High Competition, Creative-Driven Market",
     characteristics: [
       "Expensive CPC",
@@ -86,6 +87,10 @@ export default function GlobalArchitecture() {
           Performance marketing fails when strategy ignores geography. This framework adapts capital deployment logic per market maturity level.
         </p>
       </motion.div>
+
+      <section className="py-24">
+        <MarketingDiagnosisOffer />
+      </section>
 
       {/* LAYER 1: MARKET SPECIFIC */}
       <section className="mb-32">

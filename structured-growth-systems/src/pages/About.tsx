@@ -2,6 +2,7 @@ import { motion } from 'motion/react';
 import { ArrowRight, CheckCircle2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
+import MarketingDiagnosisOffer from '../components/MarketingDiagnosisOffer';
 
 export default function About() {
   useEffect(() => {
@@ -96,6 +97,10 @@ export default function About() {
         </motion.div>
       </div>
 
+
+ <section className="py-24">
+        <MarketingDiagnosisOffer />
+      </section>
       <div className="grid md:grid-cols-2 gap-20 mb-32">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

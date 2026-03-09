@@ -14,7 +14,6 @@ import {
   Filter
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import MarketingDiagnosisOffer from '../components/MarketingDiagnosisOffer';
 
 const categories = [
   {
@@ -41,32 +40,68 @@ const categories = [
 
 const latestArticles = [
   {
-    title: "How Google Ads Conversion Tracking Impacts Lead Quality",
-    excerpt: "Most agencies focus on volume. We focus on value. Learn how to filter out low-quality leads using advanced tracking.",
+    title: "How to Turn Google Ads Into a Predictable Lead Generation System",
+    excerpt: "Most companies burn ad budgets chasing random clicks. Learn the structured Google Ads framework that turns paid traffic into consistent leads.",
     category: "Google Ads",
-    date: "March 5, 2026",
-    readTime: "8 min read"
+    date: "March 8, 2026",
+    readTime: "15 min read",
+    slug: "google-ads-lead-generation-system"
   },
   {
     title: "SEO vs Paid Ads: Which One Drives Better ROI?",
     excerpt: "The ultimate comparison for scaling businesses. We break down the unit economics of both channels.",
     category: "Strategy",
-    date: "March 2, 2026",
-    readTime: "12 min read"
+    date: "March 8, 2026",
+    readTime: "12 min read",
+    slug: "seo-vs-paid-ads-roi"
   },
   {
     title: "The 2026 Guide to B2B Lead Generation Systems",
     excerpt: "Stop chasing leads. Build a system that attracts them. A deep dive into modern B2B acquisition architecture.",
     category: "Lead Gen",
-    date: "Feb 28, 2026",
-    readTime: "15 min read"
+    date: "March 8, 2026",
+    readTime: "15 min read",
+    slug: "b2b-lead-generation-systems-guide"
   },
   {
     title: "Why Most Marketing Agencies Fail to Scale Campaigns",
     excerpt: "Scaling isn't just about increasing budget. It's about structural integrity. Here's what's missing in most accounts.",
     category: "Performance",
-    date: "Feb 25, 2026",
-    readTime: "10 min read"
+    date: "March 8, 2026",
+    readTime: "10 min read",
+    slug: "why-marketing-campaigns-fail-to-scale"
+  },
+  {
+    title: "The Problem With Random Lead Generation",
+    excerpt: "Many B2B companies rely on scattered tactics that create an unstable pipeline. Discover why predictable growth requires a system.",
+    category: "Lead Gen",
+    date: "March 8, 2026",
+    readTime: "8 min read",
+    slug: "problem-with-random-lead-generation"
+  },
+  {
+    title: "Why Your Google Ads Campaign Is Generating Clicks But No Customers",
+    excerpt: "If your Google Ads campaigns generate traffic but not customers, the issue is usually structural. Learn the key reasons campaigns fail to convert.",
+    category: "Performance",
+    date: "March 8, 2026",
+    readTime: "7 min read",
+    slug: "google-ads-clicks-no-customers"
+  },
+  {
+    title: "The 5 Biggest Mistakes That Kill Google Ads ROI",
+    excerpt: "Many Google Ads campaigns waste budget due to structural mistakes. Here are the five most common issues that reduce advertising ROI.",
+    category: "Performance",
+    date: "March 8, 2026",
+    readTime: "9 min read",
+    slug: "biggest-google-ads-roi-mistakes"
+  },
+  {
+    title: "When Should a Business Hire a Marketing Agency?",
+    excerpt: "Hiring a marketing agency can accelerate growth, but timing matters. Here are the signs your business is ready for external expertise.",
+    category: "Strategy",
+    date: "March 8, 2026",
+    readTime: "8 min read",
+    slug: "when-to-hire-marketing-agency"
   }
 ];
 
@@ -88,6 +123,7 @@ const popularGuides = [
   }
 ];
 
+import MarketingDiagnosisOffer from '../components/MarketingDiagnosisOffer';
 
 export default function Blog() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -159,7 +195,7 @@ export default function Blog() {
                 <p className="text-lg text-white/60 leading-relaxed">
                   Most companies waste thousands on ads without a real acquisition system. Here’s the framework high-growth companies use to scale leads consistently without increasing CAC.
                 </p>
-                <Link to="#" className="btn-premium inline-flex items-center gap-3 px-8 py-4 group">
+                <Link to="/blog/google-ads-lead-generation-system" className="btn-premium inline-flex items-center gap-3 px-8 py-4 group">
                   Read Article <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
                 </Link>
               </div>
@@ -246,7 +282,10 @@ export default function Blog() {
                 </p>
                 <div className="flex items-center justify-between pt-6 border-t border-white/5">
                   <span className="text-xs text-white/40 font-mono italic">{article.readTime}</span>
-                  <Link to="#" className="text-sm font-bold flex items-center gap-2 text-white group-hover:text-brand-orange transition-colors">
+                  <Link 
+                    to={article.slug ? `/blog/${article.slug}` : "#"} 
+                    className="text-sm font-bold flex items-center gap-2 text-white group-hover:text-brand-orange transition-colors"
+                  >
                     Read More <ChevronRight className="w-4 h-4" />
                   </Link>
                 </div>

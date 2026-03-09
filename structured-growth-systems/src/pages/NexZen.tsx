@@ -17,6 +17,7 @@ import {
   Globe
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import MarketingDiagnosisOffer from '../components/MarketingDiagnosisOffer';
 
 const services = [
   {
@@ -200,6 +201,10 @@ export default function NexZen() {
           </motion.div>
         </div>
       </header>
+
+ <section className="py-24">
+        <MarketingDiagnosisOffer />
+      </section>
 
       {/* About Section */}
       <section className="py-32 px-6 bg-white/[0.02]">

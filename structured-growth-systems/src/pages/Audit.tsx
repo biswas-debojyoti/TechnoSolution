@@ -14,6 +14,7 @@ import {
   Layers,
   MousePointer2
 } from 'lucide-react';
+import MarketingDiagnosisOffer from '../components/MarketingDiagnosisOffer';
 
 const auditRibbons = [
   {
@@ -134,6 +135,10 @@ export default function Audit() {
           </div>
         </div>
       </motion.div>
+
+ <section className="py-24">
+        <MarketingDiagnosisOffer />
+      </section>
 
       {/* Audit Ribbons */}
       <div className="grid md:grid-cols-2 gap-8 mb-32">
