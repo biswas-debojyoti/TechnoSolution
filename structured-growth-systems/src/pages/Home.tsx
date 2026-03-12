@@ -4,6 +4,8 @@ import { ArrowRight, BarChart2, BookOpen, Target, Zap, CheckCircle2, Trophy, Tre
 import React, { useEffect, useRef, useState, Suspense, lazy } from 'react';
 import gridImage from '../assets/fullchart.jpeg';
 import MarketingDiagnosisOffer from '../components/MarketingDiagnosisOffer';
+import SEO from '../components/SEO';
+import CourseBanner from '../components/CourseBanner';
 const InlineWidget = lazy(() => import('react-calendly').then(mod => ({ default: mod.InlineWidget })));
 const GoogleAdsHero = lazy(() => import('../components/GoogleAdsHero'));
 
@@ -107,8 +109,32 @@ export default function Home() {
     };
   }, []);
 
+
+ const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "Sayad Shahid | Growth Strategist",
+    "image": "https://sayadshahid.com/og-image.jpg",
+    "description": "Engineering structured acquisition systems for high-growth brands. Specializing in Meta Ads, Google Ads, and Performance Marketing.",
+    "url": "https://sayadshahid.com",
+    "telephone": "",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Mumbai",
+      "addressCountry": "IN"
+    },
+    "sameAs": [
+      "https://in.linkedin.com/in/sayed-shahid-089086344",
+      "https://twitter.com/sayadshahid"
+    ]
+  };
   return (
     <div className="w-full">
+      <SEO 
+        title="Sayad Shahid | Growth Strategist & Performance Marketer"
+        description="Engineering structured acquisition systems for high-growth brands. Specializing in Meta Ads, Google Ads, and Performance Marketing."
+        structuredData={structuredData}
+      />
       {/* HERO SECTION */}
       <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden pt-20 pb-32">
         {/* Background Elements */}
@@ -132,11 +158,11 @@ export default function Home() {
               </span>
             </div>
             
-            <h1 className="text-5xl md:text-7xl font-display font-bold leading-[1.1] tracking-tight">
+            <h1 className="text-2xl md:text-3xl font-display font-bold leading-[1.1] tracking-tight">
               Scale Your Brand with  <span className='text-brand-orange'>NEX</span><span className="text-gradient-orange ">Zen Structured Growth</span> Systems
             </h1>
             
-            <p className="text-xl text-white/60 leading-relaxed max-w-xl">Managing
+            <p className="text-sm text-white/60 leading-relaxed max-w-xl">Managing
               <span className='font-bold text-brand-orange'> ₹70L+ / $80k / £60k Monthly</span> Across <span className='text-brand-orange font-bold'>Google & Meta</span>| India • UK • USA. I build structured acquisition systems that scale profitably — and document the frameworks behind them.
             </p>
             
@@ -157,14 +183,14 @@ export default function Home() {
             transition={{ duration: 1, delay: 0.2 }}
             className="relative hidden lg:block"
           >
-            <div className="profile-wrapper mx-auto">
+            <div className="profile-wrapper h-100 w-100 mx-auto">
               <div className="rotating-ring"></div>
-              <div className="profile-image-container">
+              <div className="profile-image-container ">
                 <img 
                   src="https://drive.google.com/thumbnail?id=1c1Q1D_CpXdXqqT9yYz0_GLsZf2mR3CuU&sz=w800" 
                   alt="Sayed Shahid" 
-                  width="420"
-                  height="420"
+                  width="320"
+                  height="320"
                   className="w-full h-full object-cover shadow-2xl"
                   referrerPolicy="no-referrer"
                   fetchPriority="high"
@@ -177,8 +203,66 @@ export default function Home() {
         </div>
       </section>
 
- <section className="py-24">
+      <CourseBanner />
+
+      <section className="py-24">
         <MarketingDiagnosisOffer />
+      </section>
+
+
+        {/* STRATEGIC OFFERS SECTION */}
+      <section className="py-15 bg-white/[0.02] border-y border-white/5">
+        <div className="max-w-5xl mx-auto px-6">
+          <div className="text-center mb-20">
+            <h2 className="text-4xl md:text-6xl font-display font-bold mb-6">Strategic <span className="text-gradient-orange">Growth Entry Points</span></h2>
+            <p className="text-xl text-white/60 max-w-2xl mx-auto">
+              High-leverage opportunities to experience the Structured Growth System with zero initial risk.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                title: "1 Month Free SEO",
+                desc: "Experience our next-gen SEO architecture. One full month of technical and strategic SEO at no cost for qualified businesses.",
+                icon: Search,
+                cta: "Claim Free Month"
+              },
+              {
+                title: "30-Min Ads Audit",
+                desc: "A deep-dive consultation to identify the structural leaks in your current acquisition funnel and provide a fix roadmap.",
+                icon: Target,
+                cta: "Book Diagnosis"
+              },
+              {
+                title: "Website, App & CRM",
+                desc: "Building mission-critical mobile applications that drive user engagement. Our App lab focuses on low-latency, high-security code architecture for both native and hybrid environments.",
+                icon: BarChart2,
+                cta: "Request Web & app"
+              }
+            ].map((offer, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="p-5 rounded-[40px] border border-white/10 bg-black/40 backdrop-blur-xl hover:border-brand-orange/50 transition-all group"
+              >
+                <div className="w-14 h-14 rounded-2xl bg-brand-orange/10 border border-brand-orange/20 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
+                  <offer.icon className="w-7 h-7 text-brand-orange" />
+                </div>
+                <h3 className="text-xl font-bold mb-4">{offer.title}</h3>
+                <p className="text-white/60 text-sm mb-8 leading-relaxed">
+                  {offer.desc}
+                </p>
+                <Link to="/contact" className="flex items-center gap-2 text-brand-orange font-bold group/link">
+                  {offer.cta} <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
+                </Link>
+              </motion.div>
+            ))}
+          </div>
+        </div>
       </section>
 
       {/* GOOGLE ADS HERO SECTION */}
@@ -323,7 +407,7 @@ export default function Home() {
             </div>
           </div>
           <div className="relative">
-            <div className=" h-auto w-full aspect-square rounded-3xl overflow-hidden ">
+            <div className="hidden md:block h-auto w-full aspect-square rounded-3xl overflow-hidden ">
               <img 
                 src={gridImage} 
                 alt="Structure" 

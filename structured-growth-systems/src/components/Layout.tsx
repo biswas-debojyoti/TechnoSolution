@@ -5,16 +5,20 @@ import { Instagram, Linkedin, Menu, Twitter, X, Youtube } from 'lucide-react';
 import { BsWhatsapp } from "react-icons/bs";
 import WhatsAppSticky from './WhatsAppSticky';
 import MobileCallButton from './MobileCallButton';
+import AnnouncementBar from './AnnouncementBar';
+import OfferRibbon from './OfferRibbon';
 
 const navLinks = [
   { name: 'Home', path: '/' },
   { name: 'Architecture', path: '/architecture' },
   { name: 'Audit', path: '/audit' },
-  { name: 'Agency', path: '/nexzen' },
+  { name: 'Services', path: '/services' },
     { name: 'Offers', path: '/growth-offers' },
   { name: 'Insights', path: '/insights' },
+    { name: 'Knowledge Hub', path: '/knowledge-hub' },
+
   { name: 'Case Studies', path: '/case-studies' },
-  { name: 'Books', path: '/books' },
+  // { name: 'Books', path: '/books' }, 
   { name: 'Blog', path: '/blog' },
   { name: 'About', path: '/about' },
   // { name: 'Work With Me', path: '/work-with-me' },
@@ -34,8 +38,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="min-h-screen flex flex-col studio-bg text-white selection:bg-brand-orange selection:text-black">
+     {/* <AnnouncementBar /> */}
+     <OfferRibbon/>
       <WhatsAppSticky/>
-      <header className="fixed top-0 left-0 right-0 z-50 bg-black/40 backdrop-blur-xl border-b border-white/5">
+      <header className="fixed top-0 left-0 right-0 z-50 bg-black/40 backdrop-blur-xl border-b border-white/5 mt-[42px] md:mt-[32px]">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
           <Link to="/" className="font-display font-bold text-xl tracking-tight">
             <span className="text-brand-orange">NEX</span>Zen
@@ -129,7 +135,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <a href="https://www.instagram.com/diamond_inthe_dust?igsh=MXFwbGY1aWUyOG8yMA==" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors"><Instagram /></a>
             <a href="https://in.linkedin.com/in/sayed-shahid-089086344" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors"><Linkedin /></a>
             <a href="https://calendly.com/greenmileshahid/30min" target="_blank" rel="noopener noreferrer" className="bg-brand-orange text-black px-4 py-2 rounded-full font-medium hover:bg-orange-400 transition-colors">Book a Call</a>
-            <a href="#" className="hover:text-white transition-colors"><Twitter /></a>
+            <a href="https://x.com/NexZenOfficial" className="hover:text-white transition-colors"><Twitter /></a>
           </div>
         </div>
       </footer>

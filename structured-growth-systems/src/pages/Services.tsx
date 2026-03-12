@@ -155,7 +155,7 @@ const faqs = [
   }
 ];
 
-export default function NexZen() {
+export default function Services() {
   return (
     <article className="w-full pt-20 pb-40">
       {/* SEO Metadata (Hidden from UI, but for reference) */}

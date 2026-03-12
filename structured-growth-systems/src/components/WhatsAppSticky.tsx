@@ -17,7 +17,7 @@ const WhatsAppSticky = () => {
       className="
       fixed 
       right-4 
-      bottom-20 
+      bottom-50 
       md:bottom-auto 
       md:top-1/2 
       md:-translate-y-1/2

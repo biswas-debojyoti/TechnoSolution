@@ -40,6 +40,30 @@ const categories = [
 
 const latestArticles = [
   {
+    title: "Meta Ads Creative Testing Guide: The Modular Framework for Scale",
+    excerpt: "The algorithm is now the creative. Learn how to build modular testing systems that identify winning psychological triggers before you scale.",
+    category: "Meta Ads",
+    date: "March 12, 2026",
+    readTime: "15 min read",
+    slug: "meta-ads-creative-testing"
+  },
+  {
+    title: "Meta Ads Funnel Strategy: Mapping the Path to Conversion",
+    excerpt: "Stop asking for a marriage on the first date. Discover the 3-stage funnel architecture that nurtures cold traffic into high-LTV customers.",
+    category: "Meta Ads",
+    date: "March 12, 2026",
+    readTime: "12 min read",
+    slug: "meta-ads-funnel-strategy"
+  },
+  {
+    title: "Meta Ads Targeting Strategy: Beyond Interests and Lookalikes",
+    excerpt: "The shift to algorithm-led targeting. Why broad targeting is the most powerful tool in your arsenal and how to use it correctly.",
+    category: "Meta Ads",
+    date: "March 12, 2026",
+    readTime: "10 min read",
+    slug: "meta-ads-targeting-strategy"
+  },
+  {
     title: "How to Turn Google Ads Into a Predictable Lead Generation System",
     excerpt: "Most companies burn ad budgets chasing random clicks. Learn the structured Google Ads framework that turns paid traffic into consistent leads.",
     category: "Google Ads",

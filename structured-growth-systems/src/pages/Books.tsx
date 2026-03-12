@@ -44,15 +44,15 @@ const books = [
 
 export default function Books() {
   return (
-    <div className="w-full pt-32 pb-40 px-6 max-w-7xl mx-auto">
-      <div className="max-w-3xl mb-24 text-center mx-auto">
+    <div className="w-full pt-32  px-6 max-w-7xl mx-auto">
+      <div className="max-w-3xl mb-2 text-center mx-auto">
         <h1 className="text-5xl md:text-7xl font-display font-bold mb-6">Documented Frameworks</h1>
         <p className="text-xl text-white/60">
           I don't just execute; I document the exact systems that drive results. These are the operating systems behind millions in profitable ad spend.
         </p>
       </div>
 
-      <div className="space-y-40">
+      <div className="space-y-20">
         {books.map((book, i) => (
           <motion.div
             key={i}
