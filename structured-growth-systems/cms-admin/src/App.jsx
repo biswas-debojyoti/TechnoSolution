@@ -1,0 +1,55 @@
+import { Routes, Route, Navigate } from 'react-router-dom'
+import { SWRConfig } from 'swr'
+import { AuthProvider } from './context/AuthContext'
+import { ToastProvider } from './context/ToastContext'
+import { fetcher } from './lib/api'
+
+import ProtectedRoute from './components/auth/ProtectedRoute'
+import AppLayout from './components/layout/AppLayout'
+
+import LoginPage       from './pages/LoginPage'
+import DashboardPage   from './pages/DashboardPage'
+import BlogsPage       from './pages/BlogsPage'
+import BlogFormPage    from './pages/BlogFormPage'
+import InquiriesPage   from './pages/InquiriesPage'
+
+const swrConfig = {
+  fetcher,
+  revalidateOnFocus: false,
+  shouldRetryOnError: false,
+  errorRetryCount: 1,
+  onError: (err) => {
+    // 401 is handled by axios interceptor — swallow here
+    if (err?.response?.status === 401) return
+    console.error('[SWR]', err?.response?.data?.message || err.message)
+  },
+}
+
+export default function App() {
+  return (
+    <SWRConfig value={swrConfig}>
+      <AuthProvider>
+        <ToastProvider>
+          <Routes>
+            {/* Public */}
+            <Route path="/login" element={<LoginPage />} />
+
+            {/* Protected */}
+            <Route element={<ProtectedRoute />}>
+              <Route element={<AppLayout />}>
+                <Route path="/"                  element={<DashboardPage />} />
+                <Route path="/blogs"             element={<BlogsPage />} />
+                <Route path="/blogs/new"         element={<BlogFormPage />} />
+                <Route path="/blogs/:id/edit"    element={<BlogFormPage />} />
+                <Route path="/inquiries"         element={<InquiriesPage />} />
+              </Route>
+            </Route>
+
+            {/* Fallback */}
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </ToastProvider>
+      </AuthProvider>
+    </SWRConfig>
+  )
+}
