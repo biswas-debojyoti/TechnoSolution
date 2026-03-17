@@ -17,14 +17,14 @@ const WhatsAppSticky = () => {
       className="
       fixed 
       right-4 
-      bottom-50 
+      bottom-45 
       md:bottom-auto 
       md:top-1/2 
       md:-translate-y-1/2
       bg-green-500 
       hover:bg-green-600 
       text-white 
-      p-4 
+      p-2
       rounded-full 
       shadow-lg 
       z-50
