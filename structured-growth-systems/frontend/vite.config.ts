@@ -11,6 +11,7 @@ export default defineConfig(({mode}) => {
 //   host: true
 // },
 server: {
+   port: 3002,
     allowedHosts: ['sanford-unsoothing-melvina.ngrok-free.dev']
   },
     resolve: {

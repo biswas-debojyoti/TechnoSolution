@@ -24,6 +24,7 @@ const navLinks = [
   // { name: 'Work With Me', path: '/work-with-me' },
 ];
 
+
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
