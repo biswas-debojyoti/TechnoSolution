@@ -2,6 +2,7 @@
 import { motion } from 'motion/react';
 import { AlertCircle, CheckCircle2, ChevronRight, ShieldCheck, Target, Zap, Globe, MapPin } from 'lucide-react';
 import { useRef, useState } from 'react';
+import emailjs from '@emailjs/browser';
 
 
 
