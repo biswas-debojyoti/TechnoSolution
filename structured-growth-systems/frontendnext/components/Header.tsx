@@ -1,44 +1,44 @@
 "use client";
-import React, { useState } from 'react';
-import { motion } from 'motion/react';
-import {  Menu,  X } from 'lucide-react';
-import WhatsAppSticky from './WhatsAppSticky';
-import MobileCallButton from './MobileCallButton';
-import OfferRibbon from './OfferRibbon';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import React, { useState } from "react";
+import { motion } from "motion/react";
+import { Menu, X } from "lucide-react";
+import WhatsAppSticky from "./WhatsAppSticky";
+import MobileCallButton from "./MobileCallButton";
+import OfferRibbon from "./OfferRibbon";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const navLinks = [
-  { name: 'Home', path: '/' },
-  { name: 'Architecture', path: '/Architecture' },
-  { name: 'Audit', path: '/Audit' },
-  { name: 'Services', path: '/Services' },
-  { name: 'Offers', path: '/Offers' },
-  { name: 'Insights', path: '/Insights' },
-  { name: 'Knowledge Hub', path: '/KnowledgeHub' },
+  { name: "Home", path: "/" },
+  { name: "Architecture", path: "/Architecture" },
+  { name: "Audit", path: "/Audit" },
+  { name: "Services", path: "/Services" },
+  { name: "Offers", path: "/Offers" },
+  { name: "Insights", path: "/Insights" },
+  { name: "Knowledge Hub", path: "/KnowledgeHub" },
 
-  { name: 'Case Studies', path: '/CaseStudies' },
-  // { name: 'Books', path: '/books' }, 
-  { name: 'Blog', path: '/Blog' },
-  { name: 'About', path: '/About' },
+  // { name: 'Case Studies', path: '/CaseStudies' },
+  // { name: 'Books', path: '/books' },
+  { name: "Blog", path: "/Blog" },
+  { name: "About", path: "/About" },
   // { name: 'Work With Me', path: '/contact' },
 ];
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const   location = usePathname();
-
- 
-
+  const location = usePathname();
 
   return (
-   <>  
+    <>
       {/* <AnnouncementBar /> */}
       {/* <OfferRibbon /> */}
       <WhatsAppSticky />
       <header className="fixed top-0 left-0 right-0 z-50 bg-black/40 backdrop-blur-xl border-b border-white/5  ">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-          <Link href="/" className="font-display font-bold text-xl tracking-tight">
+          <Link
+            href="/"
+            className="font-display font-bold text-xl tracking-tight"
+          >
             <span className="text-brand-orange">NEX</span>Zen
           </Link>
 
@@ -48,10 +48,11 @@ export default function Header() {
               <Link
                 key={link.name}
                 href={link.path}
-                className={`text-sm font-medium transition-colors ${location === link.path
-                  ? 'text-brand-orange font-semibold border-b-2 border-brand-orange'
-                  : 'text-white/60 hover:text-white'
-                  }`}
+                className={`text-sm font-medium transition-colors ${
+                  location === link.path
+                    ? "text-brand-orange font-semibold border-b-2 border-brand-orange"
+                    : "text-white/60 hover:text-white"
+                }`}
               >
                 {link.name}
               </Link>
@@ -85,10 +86,9 @@ export default function Header() {
                 key={link.name}
                 href={link.path}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className={`text-lg font-medium ${location === link.path
-                  ? 'text-brand-orange'
-                  : 'text-white/80'
-                  }`}
+                className={`text-lg font-medium ${
+                  location === link.path ? "text-brand-orange" : "text-white/80"
+                }`}
               >
                 {link.name}
               </Link>
@@ -104,9 +104,6 @@ export default function Header() {
         )}
       </header>
       <MobileCallButton />
-     
-       </>
-    
-   
+    </>
   );
 }
