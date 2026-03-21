@@ -34,7 +34,7 @@ router.patch(
   "/:id/status",
   protect,
   updateInquiryStatusValidator,
-  updateInquiryStatus
+  updateInquiryStatus,
 );
 
 // @route  DELETE /api/inquiries/:id

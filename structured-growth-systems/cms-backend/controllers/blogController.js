@@ -1,5 +1,9 @@
 const Blog = require("../models/Blog");
-const { sendSuccess, sendError, sendPaginated } = require("../utils/apiResponse");
+const {
+  sendSuccess,
+  sendError,
+  sendPaginated,
+} = require("../utils/apiResponse");
 
 /**
  * Build a blog document update payload from request fields
@@ -14,7 +18,9 @@ const buildBlogPayload = (body, file) => {
   // EditorJS content can come as stringified JSON or as an object
   if (body.content !== undefined) {
     payload.content =
-      typeof body.content === "string" ? JSON.parse(body.content) : body.content;
+      typeof body.content === "string"
+        ? JSON.parse(body.content)
+        : body.content;
   }
 
   // Handle uploaded image buffer
@@ -61,7 +67,12 @@ const createBlog = async (req, res, next) => {
     const blog = await Blog.create(payload);
     const blogObj = stripImageBuffer(blog);
 
-    return sendSuccess(res, { blog: blogObj }, "Blog created successfully", 201);
+    return sendSuccess(
+      res,
+      { blog: blogObj },
+      "Blog created successfully",
+      201,
+    );
   } catch (error) {
     next(error);
   }
@@ -114,7 +125,7 @@ const getAllBlogs = async (req, res, next) => {
         hasNextPage: page < Math.ceil(total / limit),
         hasPrevPage: page > 1,
       },
-      "Blogs fetched successfully"
+      "Blogs fetched successfully",
     );
   } catch (error) {
     next(error);
@@ -167,6 +178,7 @@ const getBlogImage = async (req, res, next) => {
  * @route   PUT /api/blogs/:id
  * @access  Private (Admin)
  */
+
 const updateBlog = async (req, res, next) => {
   try {
     const payload = buildBlogPayload(req.body, req.file);
@@ -178,7 +190,7 @@ const updateBlog = async (req, res, next) => {
     const blog = await Blog.findByIdAndUpdate(
       req.params.id,
       { $set: payload },
-      { new: true, runValidators: true }
+      { new: true, runValidators: true },
     );
 
     if (!blog) {

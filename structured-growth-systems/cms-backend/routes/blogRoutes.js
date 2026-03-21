@@ -19,7 +19,7 @@ const {
 } = require("../middleware/validationMiddleware");
 
 // @route  GET  /api/blogs
-router.get("/", protect, paginationValidator, getAllBlogs);
+router.get("/", paginationValidator, getAllBlogs);
 
 // @route  POST /api/blogs  (multipart/form-data)
 router.post(
@@ -27,7 +27,7 @@ router.post(
   protect,
   handleUploadErrors("image"),
   createBlogValidator,
-  createBlog
+  createBlog,
 );
 
 // @route  GET /api/blogs/:id/image  — public, serves raw image buffer
@@ -42,7 +42,7 @@ router.put(
   protect,
   handleUploadErrors("image"),
   updateBlogValidator,
-  updateBlog
+  updateBlog,
 );
 
 // @route  DELETE /api/blogs/:id
