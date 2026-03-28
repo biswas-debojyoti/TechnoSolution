@@ -1,14 +1,14 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { 
-  ArrowRight, 
-  Search, 
-  Target, 
-  TrendingUp, 
-  Zap, 
-  CheckCircle2, 
-  ShieldCheck, 
-  Globe, 
+import {
+  ArrowRight,
+  Search,
+  Target,
+  TrendingUp,
+  Zap,
+  CheckCircle2,
+  ShieldCheck,
+  Globe,
   BarChart3,
   ChevronRight
 } from 'lucide-react';
@@ -146,9 +146,8 @@ export default function GrowthOffers() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className={`p-10 md:p-12 rounded-[40px] animated-border-card border border-white/10 relative overflow-hidden flex flex-col ${
-                  offer.isPremium ? 'bg-gradient-to-br from-brand-orange/10 to-transparent' : 'bg-black/40'
-                }`}
+                className={`p-10 md:p-12 rounded-[40px] animated-border-card border border-white/10 relative overflow-hidden flex flex-col ${offer.isPremium ? 'bg-gradient-to-br from-brand-orange/10 to-transparent' : 'bg-black/40'
+                  }`}
               >
                 {offer.isPopular && (
                   <div className="absolute top-8 right-8 px-4 py-1 rounded-full bg-brand-orange text-black text-[10px] font-bold uppercase tracking-widest">
@@ -160,14 +159,14 @@ export default function GrowthOffers() {
                     🔥 Premium
                   </div>
                 )}
-                
+
                 <div className="w-16 h-16 rounded-2xl bg-brand-orange/10 flex items-center justify-center mb-8">
                   <offer.icon className="w-8 h-8 text-brand-orange" />
                 </div>
-                
+
                 <h3 className="text-3xl font-display font-bold mb-2">{offer.title}</h3>
                 <p className="text-brand-orange/80 text-sm font-medium mb-6 uppercase tracking-wider">{offer.subtitle}</p>
-                
+
                 <div className="mb-8">
                   <div className="text-[10px] text-white/40 uppercase tracking-widest font-bold mb-2">Investment</div>
                   <div className="text-2xl font-bold text-white">{offer.price}</div>
@@ -209,9 +208,7 @@ export default function GrowthOffers() {
       </section>
 
       {/* 3. Conversion Trigger Section */}
-      <section className="py-24">
-        <MarketingDiagnosisOffer />
-      </section>
+
 
       {/* 4. Proof Section */}
       <section className="py-32 px-6 border-y border-white/5 relative overflow-hidden">
@@ -246,13 +243,13 @@ export default function GrowthOffers() {
           >
             {/* Ribbon Background */}
             <div className="absolute inset-0 bg-brand-orange rounded-[48px] blur-3xl opacity-10" />
-            
+
             <div className="relative bg-gradient-to-r from-brand-orange to-orange-600 p-[1px] rounded-[48px]">
               <div className="bg-black rounded-[47px] p-12 md:p-24 overflow-hidden relative">
                 <div className="absolute top-0 right-0 p-12 opacity-5">
                   <BarChart3 className="w-64 h-64 text-brand-orange" />
                 </div>
-                
+
                 <div className="grid lg:grid-cols-2 gap-20 items-center relative z-10">
                   <div>
                     <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-brand-orange/20 bg-brand-orange/10 backdrop-blur-sm w-fit mb-8">

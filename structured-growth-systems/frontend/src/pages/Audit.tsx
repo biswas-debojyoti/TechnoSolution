@@ -1,14 +1,14 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
-import { 
-  BarChart3, 
-  ShieldCheck, 
-  Search, 
-  Zap, 
-  TrendingUp, 
-  FileText, 
-  ArrowRight, 
+import {
+  BarChart3,
+  ShieldCheck,
+  Search,
+  Zap,
+  TrendingUp,
+  FileText,
+  ArrowRight,
   Target,
   Activity,
   Layers,
@@ -107,7 +107,7 @@ export default function Audit() {
   return (
     <div className="w-full pt-32 pb-40 px-6 max-w-7xl mx-auto">
       {/* Hero Section */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         className="text-center mb-24"
@@ -119,7 +119,7 @@ export default function Audit() {
           </span>
         </div>
         <h1 className="text-5xl md:text-7xl font-display font-bold leading-tight mb-8">
-          Capital Clarity <br/><span className="text-gradient-orange">Before Scale.</span>
+          Capital Clarity <br /><span className="text-gradient-orange">Before Scale.</span>
         </h1>
         <div className="max-w-3xl mx-auto space-y-8">
           <p className="text-xl text-white/60 leading-relaxed">
@@ -136,9 +136,7 @@ export default function Audit() {
         </div>
       </motion.div>
 
- <section className="py-24">
-        <MarketingDiagnosisOffer />
-      </section>
+
 
       {/* Audit Ribbons */}
       <div className="grid md:grid-cols-2 gap-8 mb-32">
@@ -154,7 +152,7 @@ export default function Audit() {
             <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
               <ribbon.icon className="w-32 h-32 text-brand-orange" />
             </div>
-            
+
             <div className="relative z-10">
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-10 h-10 rounded-lg bg-brand-orange/10 border border-brand-orange/20 flex items-center justify-center">
@@ -193,13 +191,13 @@ export default function Audit() {
           <div className="absolute top-0 right-0 p-12 opacity-5">
             <FileText className="w-64 h-64 text-brand-orange" />
           </div>
-          
+
           <div className="max-w-3xl relative z-10">
             <h2 className="text-4xl font-display font-bold mb-8">What You Receive</h2>
             <p className="text-xl text-white/60 mb-12">
               A structured strategic document including:
             </p>
-            
+
             <div className="grid sm:grid-cols-2 gap-6 mb-12">
               {[
                 "Full diagnostic breakdown",
@@ -225,7 +223,7 @@ export default function Audit() {
             </div>
           </div>
         </div>
-        
+
         <div className="mt-12 text-center">
           <p className="text-sm text-white/40 font-mono uppercase tracking-[0.2em]">
             This audit is designed for brands already spending at scale.

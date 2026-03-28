@@ -42,7 +42,7 @@ export default function About() {
             </span>
           </div>
           <h1 className="text-5xl md:text-7xl font-display font-bold leading-tight mb-8">
-            I build revenue systems, <br/>not just campaigns.
+            I build revenue systems, <br />not just campaigns.
           </h1>
           <div className="prose prose-invert prose-lg max-w-none text-white/70 space-y-6">
             <p>
@@ -71,9 +71,9 @@ export default function About() {
         >
           <div className="aspect-[3/4] rounded-3xl overflow-hidden border border-white/10 relative">
             <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-10" />
-            <img 
-              src="https://drive.google.com/thumbnail?id=1c1Q1D_CpXdXqqT9yYz0_GLsZf2mR3CuU&sz=w800" 
-              alt="Sayed Shahid" 
+            <img
+              src="https://drive.google.com/thumbnail?id=1c1Q1D_CpXdXqqT9yYz0_GLsZf2mR3CuU&sz=w800"
+              alt="Sayed Shahid"
               width="600"
               height="800"
               className="w-full h-full object-cover"
@@ -99,9 +99,7 @@ export default function About() {
       </div>
 
 
- <section className="py-24">
-        <MarketingDiagnosisOffer />
-      </section>
+
       <div className="grid md:grid-cols-2 gap-20 mb-32">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

@@ -8,16 +8,16 @@ import {
   PageShell, TableSkeleton, Empty, StatusBadge,
   ConfirmModal, Pagination, SearchInput, SelectFilter
 } from '../components/ui/index'
-
+ const baseUrl = import.meta.env.VITE_API_URL
 function BlogImage({ blog }) {
-  if (!blog.image?.hasImage) return (
+  if (!blog.imageUrl) return (
     <div className="w-9 h-9 rounded-sm bg-[var(--bg-elevated)] border border-[var(--border)] flex items-center justify-center shrink-0">
       <ImageOff size={12} className="text-[var(--text-muted)]" />
     </div>
   )
   return (
     <img
-      src={blogApi.imageUrl(blog._id)}
+      src={baseUrl + blog.imageUrl}
       alt={blog.heading}
       className="w-9 h-9 rounded-sm object-cover shrink-0 border border-[var(--border)]"
     />

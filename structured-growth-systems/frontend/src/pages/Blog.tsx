@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { 
-  Search, 
-  ArrowRight, 
-  BookOpen, 
-  TrendingUp, 
-  Target, 
-  Zap, 
-  ChevronRight, 
-  Mail, 
-  Globe, 
+import {
+  Search,
+  ArrowRight,
+  BookOpen,
+  TrendingUp,
+  Target,
+  Zap,
+  ChevronRight,
+  Mail,
+  Globe,
   ShieldCheck,
   Filter
 } from 'lucide-react';
@@ -170,16 +170,16 @@ export default function Blog() {
               </span>
             </div>
             <h1 className="text-5xl md:text-7xl font-display font-bold leading-tight mb-8">
-              Growth Insights for <br/><span className="text-gradient-orange">Modern Businesses</span>
+              Growth Insights for <br /><span className="text-gradient-orange">Modern Businesses</span>
             </h1>
             <p className="text-xl text-white/60 max-w-3xl mx-auto leading-relaxed mb-12">
               Actionable strategies on SEO, paid media, and customer acquisition to help businesses scale predictable revenue.
             </p>
-            
+
             <div className="max-w-2xl mx-auto flex flex-col sm:flex-row gap-4 mb-12">
               <div className="relative flex-grow">
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
-                <input 
+                <input
                   type="text"
                   placeholder="Search marketing insights..."
                   value={searchQuery}
@@ -224,9 +224,9 @@ export default function Blog() {
                 </Link>
               </div>
               <div className="aspect-video rounded-3xl bg-white/5 border border-white/10 overflow-hidden relative">
-                <img 
-                  src="https://picsum.photos/seed/ads/1200/800" 
-                  alt="Google Ads Strategy" 
+                <img
+                  src="https://picsum.photos/seed/ads/1200/800"
+                  alt="Google Ads Strategy"
                   className="w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-700"
                   referrerPolicy="no-referrer"
                 />
@@ -306,8 +306,8 @@ export default function Blog() {
                 </p>
                 <div className="flex items-center justify-between pt-6 border-t border-white/5">
                   <span className="text-xs text-white/40 font-mono italic">{article.readTime}</span>
-                  <Link 
-                    to={article.slug ? `/blog/${article.slug}` : "#"} 
+                  <Link
+                    to={article.slug ? `/blog/${article.slug}` : "#"}
                     className="text-sm font-bold flex items-center gap-2 text-white group-hover:text-brand-orange transition-colors"
                   >
                     Read More <ChevronRight className="w-4 h-4" />
@@ -346,9 +346,7 @@ export default function Blog() {
       </section>
 
       {/* 6. Lead Magnet CTA */}
-      <section className="py-24">
-        <MarketingDiagnosisOffer />
-      </section>
+
 
       {/* 7. Newsletter */}
       <section className="px-6">
@@ -359,8 +357,8 @@ export default function Blog() {
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">Join 1500+ growth strategists</h2>
           <p className="text-white/40 mb-10">Get your weekly breakdown of performance marketing</p>
           <form className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto" onSubmit={(e) => e.preventDefault()}>
-            <input 
-              type="email" 
+            <input
+              type="email"
               placeholder="Enter your email"
               className="flex-grow bg-white/5 border border-white/10 rounded-xl px-6 py-4 text-white focus:outline-none focus:border-brand-orange transition-colors"
             />

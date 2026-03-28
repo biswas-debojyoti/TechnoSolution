@@ -4,7 +4,6 @@ import Home from './pages/Home';
 import GlobalArchitecture from './pages/GlobalArchitecture';
 import Audit from './pages/Audit';
 import Insights from './pages/Insights';
-import CaseStudies from './pages/CaseStudies';
 import CaseStudyDetail from './pages/CaseStudyDetail';
 import Books from './pages/Books';
 import About from './pages/About';
@@ -40,8 +39,6 @@ export default function App() {
           <Route path="/audit" element={<Audit />} />
           <Route path="/insights" element={<Insights />} />
           <Route path="/services" element={<Services />} />
-          <Route path="/case-studies" element={<CaseStudies />} />
-          <Route path="/case-studies/:id" element={<CaseStudyDetail />} />
           <Route path="/books" element={<Books />} />
 
 

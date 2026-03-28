@@ -10,17 +10,12 @@ import { usePathname } from "next/navigation";
 
 const navLinks = [
   { name: "Home", path: "/" },
+  { name: "About", path: "/About" },
   { name: "Architecture", path: "/Architecture" },
-  { name: "Audit", path: "/Audit" },
   { name: "Services", path: "/Services" },
-  { name: "Offers", path: "/Offers" },
-  { name: "Insights", path: "/Insights" },
   { name: "Knowledge Hub", path: "/KnowledgeHub" },
-
-  // { name: 'Case Studies', path: '/CaseStudies' },
   // { name: 'Books', path: '/books' },
   { name: "Blog", path: "/Blog" },
-  { name: "About", path: "/About" },
   // { name: 'Work With Me', path: '/contact' },
 ];
 
@@ -48,11 +43,10 @@ export default function Header() {
               <Link
                 key={link.name}
                 href={link.path}
-                className={`text-sm font-medium transition-colors ${
-                  location === link.path
+                className={`text-sm font-medium transition-colors ${location === link.path
                     ? "text-brand-orange font-semibold border-b-2 border-brand-orange"
                     : "text-white/60 hover:text-white"
-                }`}
+                  }`}
               >
                 {link.name}
               </Link>
@@ -86,9 +80,8 @@ export default function Header() {
                 key={link.name}
                 href={link.path}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className={`text-lg font-medium ${
-                  location === link.path ? "text-brand-orange" : "text-white/80"
-                }`}
+                className={`text-lg font-medium ${location === link.path ? "text-brand-orange" : "text-white/80"
+                  }`}
               >
                 {link.name}
               </Link>

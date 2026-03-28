@@ -1,8 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
 import Home from './pages/Home';
-import CaseStudies from './pages/CaseStudies';
-import CaseStudyDetail from './pages/CaseStudyDetail';
 import Books from './pages/Books';
 import About from './pages/About';
 import WorkWithMe from './pages/WorkWithMe';
@@ -13,8 +11,6 @@ export default function App() {
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/case-studies" element={<CaseStudies />} />
-          <Route path="/case-studies/:id" element={<CaseStudyDetail />} />
           <Route path="/books" element={<Books />} />
           <Route path="/about" element={<About />} />
           <Route path="/work-with-me" element={<WorkWithMe />} />

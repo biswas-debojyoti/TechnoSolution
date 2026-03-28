@@ -24,6 +24,7 @@ export default function BlogFormPage() {
   const [imagePreview, setImagePreview] = useState(null)
   const [saving, setSaving] = useState(false)
   const [errors, setErrors] = useState({})
+  const [editorReady, setEditorReady] = useState(false)
 
   // Populate form when editing
   useEffect(() => {
@@ -32,6 +33,8 @@ export default function BlogFormPage() {
       if (blog.content && Object.keys(blog.content).length > 0) setContent(blog.content)
       if (blog.image?.hasImage) setImagePreview(blogApi.imageUrl(id))
     }
+    // Mark editor as ready after data is populated
+    if (!isEdit || blog) setEditorReady(true)
   }, [blog, isEdit])
 
   const handleImageChange = (e) => {
@@ -92,10 +95,10 @@ export default function BlogFormPage() {
         </div>
         <div className="flex flex-1 overflow-hidden p-6 gap-5">
           <div className="flex-1 space-y-4">
-            {[80, 60, 300].map((h,i) => <Skeleton key={i} className={`h-${h === 300 ? 64 : 10}`} />)}
+            {[80, 60, 300].map((h, i) => <Skeleton key={i} className={`h-${h === 300 ? 64 : 10}`} />)}
           </div>
           <div className="w-64 space-y-4">
-            {[1,2,3].map(i => <Skeleton key={i} className="h-24" />)}
+            {[1, 2, 3].map(i => <Skeleton key={i} className="h-24" />)}
           </div>
         </div>
       </div>
@@ -160,11 +163,17 @@ export default function BlogFormPage() {
 
           {/* EditorJS */}
           <div className="card p-4 min-h-[400px]">
-            <RichEditor
-              data={content}
-              onChange={setContent}
-              holder={`editor-${id || 'new'}`}
-            />
+            {editorReady ? (
+              <RichEditor
+                data={content}
+                onChange={setContent}
+                holder={`editor-${id || 'new'}`}
+              />
+            ) : (
+              <div className="flex items-center justify-center h-64">
+                <Spinner size={20} />
+              </div>
+            )}
           </div>
         </div>
 

@@ -1,7 +1,6 @@
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { ArrowLeft, CheckCircle2, TrendingUp, Target, Zap } from 'lucide-react';
-import { caseStudies } from './CaseStudies';
 
 export default function CaseStudyDetail() {
   const { id } = useParams();
@@ -13,9 +12,7 @@ export default function CaseStudyDetail() {
 
   return (
     <div className="w-full pt-32 pb-40 px-6 max-w-4xl mx-auto">
-      <Link to="/case-studies" className="inline-flex items-center gap-2 text-white/60 hover:text-white transition-colors mb-12">
-        <ArrowLeft className="w-4 h-4" /> Back to Case Studies
-      </Link>
+     
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}

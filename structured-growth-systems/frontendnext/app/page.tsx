@@ -32,7 +32,6 @@ import { lazy, Suspense, useEffect, useRef, useState } from "react";
 const InlineWidget = lazy(() =>
   import("react-calendly").then((mod) => ({ default: mod.InlineWidget })),
 );
-const GoogleAdsHero = lazy(() => import("../components/GoogleAdsHero"));
 
 function Counter({
   value,
@@ -187,7 +186,7 @@ export default function Home() {
         <div className="absolute inset-0 z-0">
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-brand-orange/10 rounded-full blur-[120px]" />
           <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-[150px]" />
-          <div className="absolute inset-0 bg-[url('https://picsum.photos/seed/stars/1920/1080?grayscale')] opacity-5 mix-blend-screen" />
+
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-15 items-center">
@@ -205,24 +204,12 @@ export default function Home() {
             </div>
 
             <h1 className="text-2xl md:text-3xl font-display font-bold leading-[1.1] tracking-tight">
-              Scale Your Brand with{" "}
-              <span className="text-brand-orange">NEX</span>
-              <span className="text-gradient-orange ">
-                Zen Structured Growth
-              </span>{" "}
-              Systems
+              Performance Marketing That Turns Ad Spend Into Profit
+
             </h1>
 
             <p className="text-sm text-white/60 leading-relaxed max-w-xl">
-              Managing
-              <span className="font-bold text-brand-orange">
-                {" "}
-                ₹70L+ / $80k / £60k Monthly
-              </span>{" "}
-              Across{" "}
-              <span className="text-brand-orange font-bold">Google & Meta</span>
-              | India • UK • USA. I build structured acquisition systems that
-              scale profitably — and document the frameworks behind them.
+              Scale your business with a performance marketing agency focused on Google Ads, Meta Ads, and measurable revenue growth.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
@@ -230,15 +217,10 @@ export default function Home() {
                 href="/contact"
                 className="btn-glow group relative px-8 py-4 bg-brand-orange text-black rounded-full font-bold text-lg overflow-hidden flex items-center justify-center gap-2 transition-transform hover:scale-105"
               >
-                <span className="relative z-10">Apply for Strategy Call</span>
+                <span className="relative z-10"> Book Strategy Call</span>
                 <ArrowRight className="relative z-10 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
-              <Link
-                href="/CaseStudies"
-                className="px-8 py-4 bg-white/5 border border-white/10 hover:bg-white/10 text-white rounded-full font-bold text-lg flex items-center justify-center gap-2 transition-all"
-              >
-                View Case Studies
-              </Link>
+
             </div>
           </motion.div>
 
@@ -270,9 +252,7 @@ export default function Home() {
 
       <CourseBanner />
 
-      <section className="py-24">
-        <MarketingDiagnosisOffer />
-      </section>
+
 
       {/* STRATEGIC OFFERS SECTION */}
       <section className="py-15 bg-white/[0.02] border-y border-white/5">
@@ -337,10 +317,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* GOOGLE ADS HERO SECTION */}
-      <Suspense fallback={<div className="h-96 bg-[#0c0f14] animate-pulse" />}>
-        <GoogleAdsHero />
-      </Suspense>
+
 
       {/* AUTHORITY SNAPSHOT */}
       <section className="py-24 border-y border-white/5 bg-white/[0.02]">
@@ -586,153 +563,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FEATURED CASE STUDIES */}
-      <section className="py-32 relative overflow-hidden">
-        {/* Subtle Grid Pattern Overlay */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
 
-        {/* Animated Background Gradient Waves */}
-        <div className="absolute inset-0 z-0 opacity-30 pointer-events-none">
-          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-brand-orange/20 rounded-full blur-[120px] animate-pulse" />
-          <div
-            className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-500/20 rounded-full blur-[120px] animate-pulse"
-            style={{ animationDelay: "2s" }}
-          />
-        </div>
-
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="flex justify-between items-end mb-16">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-            >
-              <h2 className="text-4xl md:text-6xl font-display font-bold">
-                Our
-              </h2>
-              <h2 className="text-4xl md:text-5xl font-display font-bold">
-                Featured Case Studies
-              </h2>
-            </motion.div>
-            <Link
-              href="/CaseStudies"
-              className="hidden md:flex items-center gap-2 text-brand-orange hover:text-yellow-300 font-medium group"
-            >
-              View All{" "}
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Link>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                id: 1,
-                bigMetric: (
-                  <>
-                    <span className="text-brand-orange">
-                      <Counter value="312" suffix="%" />
-                    </span>{" "}
-                    Revenue Growth in{" "}
-                    <span className="text-brand-orange">
-                      <Counter value="6" />
-                    </span>{" "}
-                    Months
-                  </>
-                ),
-                title: "Scaling a D2C Apparel Brand in a Saturated Market",
-                metrics: { m1: "+340% ROAS", m2: "$120k Spend" },
-                desc: "How we restructured the entire account architecture to unlock profitable scale after they hit a plateau.",
-                image:
-                  "https://www.gstatic.com/marketing-cms/assets/images/ads/2b/b5/8b6d1e964144bf793a641b690e5d/hero-image-em-ea-2x.png=n-w1600-h992-fcrop64=1,00000000ffffffff-rw",
-              },
-              {
-                id: 2,
-                bigMetric: (
-                  <>
-                    <span className="text-brand-orange">
-                      <Counter value="43" suffix="%" />
-                    </span>{" "}
-                    Reduction in Cost Per Qualified Lead
-                  </>
-                ),
-                title: "B2B SaaS Lead Generation Engine",
-                metrics: { m1: "-45% CPA", m2: "+210% Volume" },
-                desc: "Moving from broad targeting to intent-based search structures, drastically reducing cost per acquisition.",
-                image:
-                  "https://drive.google.com/thumbnail?id=1ZLXUxj7CT9IheErolenruyarL_saB-yj&sz=w1000",
-              },
-              {
-                id: 3,
-                bigMetric: (
-                  <>
-                    <span className="text-brand-orange">
-                      £<Counter value="1.1" suffix="M" />
-                    </span>{" "}
-                    Revenue Added Across{" "}
-                    <span className="text-brand-orange">
-                      <Counter value="2" />
-                    </span>{" "}
-                    Markets
-                  </>
-                ),
-                title: "International Expansion for Luxury E-commerce",
-                metrics: { m1: "4 New Markets", m2: "4.2x ROAS" },
-                desc: "A phased rollout strategy for entering the UK and US markets with localized campaign structures.",
-                image:
-                  "https://drive.google.com/thumbnail?id=1e8r0iQdj4E-5Mk8gkTeBDn1ilkit-uxW&sz=w1000",
-              },
-            ].map((caseStudy, idx) => (
-              <motion.div
-                key={caseStudy.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.1, duration: 0.5 }}
-              >
-                <TiltCard className="group h-full">
-                  <Link
-                    href={`/CaseStudies/${caseStudy.id}`}
-                    className="block h-full p-1 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-sm hover:bg-white/[0.08] transition-colors overflow-hidden"
-                  >
-                    <div className="aspect-[4/3] rounded-2xl overflow-hidden mb-6 border border-white/10 relative">
-                      <div className="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-colors z-10" />
-                      <img
-                        src={caseStudy.image}
-                        alt={caseStudy.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                        referrerPolicy="no-referrer"
-                      />
-                    </div>
-                    <div className="p-5 pt-0 space-y-3">
-                      <h2 className="text-3xl font-display font-bold text-white mb-2 leading-tight">
-                        {caseStudy.bigMetric}
-                      </h2>
-                      <h3 className="text-2xl font-display font-bold group-hover:text-brand-orange transition-colors">
-                        {caseStudy.title}
-                      </h3>
-                      <p className="text-white/60 line-clamp-2">
-                        {caseStudy.desc}
-                      </p>
-                      <div className="flex gap-4 text-sm font-mono text-brand-orange pt-2">
-                        <span>{caseStudy.metrics.m1}</span>
-                        <span>{caseStudy.metrics.m2}</span>
-                      </div>
-                    </div>
-                  </Link>
-                </TiltCard>
-              </motion.div>
-            ))}
-          </div>
-          <div className="mt-12 text-center md:hidden">
-            <Link
-              href="/case-studies"
-              className="inline-flex items-center gap-2 text-brand-orange font-medium"
-            >
-              View All <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
-        </div>
-      </section>
 
       {/* WHO I WORK WITH */}
       <section className="py-32 relative overflow-hidden">
@@ -981,7 +812,7 @@ export default function Home() {
               </h2>
             </div>
             <Link
-              href="/blog"
+              href="/Blog"
               className="group flex items-center gap-3 text-white/60 hover:text-brand-orange transition-colors font-bold text-lg"
             >
               View All Articles{" "}
@@ -989,78 +820,7 @@ export default function Home() {
             </Link>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="group p-8 md:p-12 rounded-[40px] animated-border-card border border-white/10 relative overflow-hidden bg-white/5"
-            >
-              <div className="absolute inset-0 bg-brand-orange/5 blur-[80px] -z-10" />
-              <div className="flex items-center gap-4 mb-8">
-                <span className="text-[10px] font-bold text-brand-orange uppercase tracking-widest px-2 py-1 bg-brand-orange/10 rounded">
-                  Featured
-                </span>
-                <span className="text-xs text-white/40 font-mono">
-                  15 Min Read
-                </span>
-              </div>
-              <h3 className="text-3xl md:text-4xl font-display font-bold mb-6 group-hover:text-brand-orange transition-colors leading-tight">
-                How to Turn Google Ads Into a Predictable Lead Gen System
-              </h3>
-              <p className="text-white/60 mb-10 leading-relaxed text-lg">
-                Most companies waste thousands on ads without a real acquisition
-                system. Here's the framework high-growth companies use to scale
-                leads consistently.
-              </p>
-              <Link
-                href="/blog/google-ads-lead-generation-system"
-                className="btn-premium inline-flex items-center gap-3 px-8 py-4 group"
-              >
-                Read Article{" "}
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
-              </Link>
-            </motion.div>
 
-            <div className="space-y-8">
-              {[
-                {
-                  title: "SEO vs Paid Ads: Which One Drives Better ROI?",
-                  category: "Strategy",
-                  readTime: "12 min",
-                  link: "/blog/seo-vs-paid-ads-roi",
-                },
-                {
-                  title: "Why Most Marketing Agencies Fail to Scale Campaigns",
-                  category: "Performance",
-                  readTime: "10 min",
-                  link: "/blog/why-marketing-campaigns-fail-to-scale",
-                },
-              ].map((post, i) => (
-                <Link key={i} href={post.link} className="block">
-                  <motion.div
-                    initial={{ opacity: 0, x: 20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.1 }}
-                    className="p-8 rounded-3xl border border-white/5 bg-white/[0.02] hover:bg-white/5 hover:border-white/10 transition-all group cursor-pointer h-full"
-                  >
-                    <div className="flex items-center gap-4 mb-4">
-                      <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">
-                        {post.category}
-                      </span>
-                      <span className="text-[10px] text-white/20 font-mono italic">
-                        {post.readTime} read
-                      </span>
-                    </div>
-                    <h4 className="text-xl font-bold group-hover:text-brand-orange transition-colors">
-                      {post.title}
-                    </h4>
-                  </motion.div>
-                </Link>
-              ))}
-            </div>
-          </div>
         </div>
       </section>
 

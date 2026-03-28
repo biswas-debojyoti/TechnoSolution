@@ -104,7 +104,7 @@ export default function KnowledgeHub() {
               ))}
             </ul>
 
-            <Link href="/blog" className="text-sm font-bold flex items-center gap-2 text-white hover:text-brand-orange transition-colors">
+            <Link href="/Blog" className="text-sm font-bold flex items-center gap-2 text-white hover:text-brand-orange transition-colors">
               Explore Articles <ArrowRight className="w-4 h-4" />
             </Link>
           </motion.div>

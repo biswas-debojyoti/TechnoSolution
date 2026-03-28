@@ -89,7 +89,6 @@ const getAllBlogs = async (req, res, next) => {
     const limit = Math.min(100, Math.max(1, parseInt(req.query.limit) || 10));
     const skip = (page - 1) * limit;
 
-    // Build filter
     const filter = {};
     if (req.query.status) {
       if (!["draft", "published"].includes(req.query.status)) {
@@ -106,7 +105,7 @@ const getAllBlogs = async (req, res, next) => {
 
     const [blogs, total] = await Promise.all([
       Blog.find(filter)
-        .select("-image.data -content") // Exclude heavy fields in list view
+        .select("-image.data -content")
         .sort({ createdAt: -1 })
         .skip(skip)
         .limit(limit)
@@ -114,9 +113,17 @@ const getAllBlogs = async (req, res, next) => {
       Blog.countDocuments(filter),
     ]);
 
+    // ✅ Append imageUrl to each blog using the existing image endpoint
+    const blogsWithImageUrl = blogs.map((blog) => ({
+      ...blog,
+      imageUrl: blog.image?.contentType
+        ? `/blogs/${blog._id}/image`
+        : null,
+    }));
+
     return sendPaginated(
       res,
-      blogs,
+      blogsWithImageUrl,
       {
         total,
         page,
@@ -139,18 +146,16 @@ const getAllBlogs = async (req, res, next) => {
  */
 const getBlogById = async (req, res, next) => {
   try {
-    const blog = await Blog.findById(req.params.id);
+    const blog = await Blog.findById(req.params.id); // ✅ no .select() — fetches everything
+    if (!blog) return sendError(res, "Blog not found", 404);
 
-    if (!blog) {
-      return sendError(res, "Blog not found", 404);
-    }
-
-    const blogObj = stripImageBuffer(blog);
+    const blogObj = stripImageBuffer(blog); // ✅ only strips image.data, content untouched
     return sendSuccess(res, { blog: blogObj }, "Blog fetched successfully");
   } catch (error) {
     next(error);
   }
 };
+
 
 /**
  * @desc    Get blog image (serve raw buffer as image response)

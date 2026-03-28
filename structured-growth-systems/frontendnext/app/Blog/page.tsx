@@ -1,378 +1,382 @@
 "use client";
-import React, { useState } from 'react';
-import { motion } from 'motion/react';
-import { 
-  Search, 
-  ArrowRight, 
-  BookOpen, 
-  TrendingUp, 
-  Target, 
-  Zap, 
-  ChevronRight, 
-  Mail, 
-  Globe, 
-  ShieldCheck,
-  Filter
-} from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import { motion } from "motion/react";
+import {
+  Search,
+  ArrowRight,
+  BookOpen,
+  ChevronRight,
+  AlertCircle,
+  Clock,
+  Calendar,
+} from "lucide-react";
 
-const categories = [
-  {
-    name: "Performance Marketing",
-    sub: ["Google Ads", "Meta Ads", "Paid Media Strategy"],
-    icon: TrendingUp
-  },
-  {
-    name: "SEO & Search Visibility",
-    sub: ["SEO Strategy", "Search Ranking", "Content Systems"],
-    icon: Search
-  },
-  {
-    name: "Lead Generation",
-    sub: ["Funnel Optimization", "Conversion Systems", "Customer Acquisition"],
-    icon: Target
-  },
-  {
-    name: "Industry Growth",
-    sub: ["Real Estate", "Health Clinics", "Ecommerce", "SaaS"],
-    icon: Globe
+import MarketingDiagnosisOffer from "@/components/MarketingDiagnosisOffer";
+import Link from "next/link";
+
+// ─── Type — matches actual API response ────────────────────────────────────────
+interface Blog {
+  _id: string;
+  heading: string;
+  subHeading?: string;
+  imageUrl?: string;
+  image?: { contentType?: string };
+  status?: string;
+  views?: number;
+  slug?: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+// ─── Helpers ───────────────────────────────────────────────────────────────────
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "";
+
+function getTitle(blog: Blog): string {
+  return blog.heading ?? "";
+}
+
+function getExcerpt(blog: Blog): string {
+  return blog.subHeading ?? "";
+}
+
+function getImage(blog: Blog): string {
+  if (blog.imageUrl) {
+    // imageUrl is a relative path like "/blogs/:id/image" — prepend base URL
+    return blog.imageUrl.startsWith("http")
+      ? blog.imageUrl
+      : `${BASE_URL}${blog.imageUrl}`;
   }
-];
+  // Fallback placeholder seeded by id
+  return `https://picsum.photos/seed/123/1200/800`;
+}
 
-const latestArticles = [
-  {
-    title: "Meta Ads Creative Testing Guide: The Modular Framework for Scale",
-    excerpt: "The algorithm is now the creative. Learn how to build modular testing systems that identify winning psychological triggers before you scale.",
-    category: "Meta Ads",
-    date: "March 12, 2026",
-    readTime: "15 min read",
-    slug: "meta-ads-creative-testing"
-  },
-  {
-    title: "Meta Ads Funnel Strategy: Mapping the Path to Conversion",
-    excerpt: "Stop asking for a marriage on the first date. Discover the 3-stage funnel architecture that nurtures cold traffic into high-LTV customers.",
-    category: "Meta Ads",
-    date: "March 12, 2026",
-    readTime: "12 min read",
-    slug: "meta-ads-funnel-strategy"
-  },
-  {
-    title: "Meta Ads Targeting Strategy: Beyond Interests and Lookalikes",
-    excerpt: "The shift to algorithm-led targeting. Why broad targeting is the most powerful tool in your arsenal and how to use it correctly.",
-    category: "Meta Ads",
-    date: "March 12, 2026",
-    readTime: "10 min read",
-    slug: "meta-ads-targeting-strategy"
-  },
-  {
-    title: "How to Turn Google Ads Into a Predictable Lead Generation System",
-    excerpt: "Most companies burn ad budgets chasing random clicks. Learn the structured Google Ads framework that turns paid traffic into consistent leads.",
-    category: "Google Ads",
-    date: "March 8, 2026",
-    readTime: "15 min read",
-    slug: "google-ads-lead-generation-system"
-  },
-  {
-    title: "SEO vs Paid Ads: Which One Drives Better ROI?",
-    excerpt: "The ultimate comparison for scaling businesses. We break down the unit economics of both channels.",
-    category: "Strategy",
-    date: "March 8, 2026",
-    readTime: "12 min read",
-    slug: "seo-vs-paid-ads-roi"
-  },
-  {
-    title: "The 2026 Guide to B2B Lead Generation Systems",
-    excerpt: "Stop chasing leads. Build a system that attracts them. A deep dive into modern B2B acquisition architecture.",
-    category: "Lead Gen",
-    date: "March 8, 2026",
-    readTime: "15 min read",
-    slug: "b2b-lead-generation-systems-guide"
-  },
-  {
-    title: "Why Most Marketing Agencies Fail to Scale Campaigns",
-    excerpt: "Scaling isn't just about increasing budget. It's about structural integrity. Here's what's missing in most accounts.",
-    category: "Performance",
-    date: "March 8, 2026",
-    readTime: "10 min read",
-    slug: "why-marketing-campaigns-fail-to-scale"
-  },
-  {
-    title: "The Problem With Random Lead Generation",
-    excerpt: "Many B2B companies rely on scattered tactics that create an unstable pipeline. Discover why predictable growth requires a system.",
-    category: "Lead Gen",
-    date: "March 8, 2026",
-    readTime: "8 min read",
-    slug: "problem-with-random-lead-generation"
-  },
-  {
-    title: "Why Your Google Ads Campaign Is Generating Clicks But No Customers",
-    excerpt: "If your Google Ads campaigns generate traffic but not customers, the issue is usually structural. Learn the key reasons campaigns fail to convert.",
-    category: "Performance",
-    date: "March 8, 2026",
-    readTime: "7 min read",
-    slug: "google-ads-clicks-no-customers"
-  },
-  {
-    title: "The 5 Biggest Mistakes That Kill Google Ads ROI",
-    excerpt: "Many Google Ads campaigns waste budget due to structural mistakes. Here are the five most common issues that reduce advertising ROI.",
-    category: "Performance",
-    date: "March 8, 2026",
-    readTime: "9 min read",
-    slug: "biggest-google-ads-roi-mistakes"
-  },
-  {
-    title: "When Should a Business Hire a Marketing Agency?",
-    excerpt: "Hiring a marketing agency can accelerate growth, but timing matters. Here are the signs your business is ready for external expertise.",
-    category: "Strategy",
-    date: "March 8, 2026",
-    readTime: "8 min read",
-    slug: "when-to-hire-marketing-agency"
+function getSlug(blog: Blog): string {
+  return  blog._id;
+}
+
+function getRawDate(blog: Blog): string {
+  return blog.createdAt ?? blog.updatedAt ?? "";
+}
+
+function getDate(blog: Blog): string {
+  const raw = getRawDate(blog);
+  if (!raw) return "";
+  try {
+    return new Date(raw).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
+  } catch {
+    return raw;
   }
-];
+}
 
-const popularGuides = [
-  {
-    title: "Complete Guide to Google Ads Lead Generation",
-    desc: "The exact framework we use to manage $500k+ in monthly spend.",
-    icon: Zap
-  },
-  {
-    title: "The Ultimate SEO Strategy for High-Growth Companies",
-    desc: "How to build a content engine that ranks for high-intent keywords.",
-    icon: Search
-  },
-  {
-    title: "Paid Media Scaling Framework for $1M+ Businesses",
-    desc: "Advanced capital deployment strategies for market leaders.",
-    icon: TrendingUp
-  }
-];
+/** Sort newest-first so blogs[0] = latest uploaded */
+function sortByDateDesc(blogs: Blog[]): Blog[] {
+  return [...blogs].sort((a, b) => {
+    const da = getRawDate(a) ? new Date(getRawDate(a)).getTime() : 0;
+    const db = getRawDate(b) ? new Date(getRawDate(b)).getTime() : 0;
+    return db - da;
+  });
+}
 
-import MarketingDiagnosisOffer from '@/components/MarketingDiagnosisOffer';
-import Link from 'next/link';
-
-export default function Blog() {
-  const [searchQuery, setSearchQuery] = useState("");
-
+// ─── Skeletons ─────────────────────────────────────────────────────────────────
+function SkeletonFeatured() {
   return (
-    <div className="w-full pt-20 pb-40">
-      {/* 1. Hero Section */}
-      <section className="relative pt-32 pb-24 px-6 overflow-hidden">
-        <div className="absolute inset-0 bg-brand-orange/5 blur-[120px] -z-10" />
-        <div className="max-w-7xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm w-fit mb-8">
-              <BookOpen className="w-4 h-4 text-brand-orange" />
-              <span className="text-sm font-medium tracking-wide text-white/80 uppercase">
-                The Growth Journal
-              </span>
-            </div>
-            <h1 className="text-5xl md:text-7xl font-display font-bold leading-tight mb-8">
-              Growth Insights for <br/><span className="text-gradient-orange">Modern Businesses</span>
-            </h1>
-            <p className="text-xl text-white/60 max-w-3xl mx-auto leading-relaxed mb-12">
-              Actionable strategies on SEO, paid media, and customer acquisition to help businesses scale predictable revenue.
-            </p>
-            
-            <div className="max-w-2xl mx-auto flex flex-col sm:flex-row gap-4 mb-12">
-              <div className="relative flex-grow">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
-                <input 
-                  type="text"
-                  placeholder="Search marketing insights..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-white/5 border border-white/10 rounded-xl pl-12 pr-4 py-4 text-white focus:outline-none focus:border-brand-orange transition-colors"
-                />
-              </div>
-              <Link href="/contact" className="btn-premium px-8 py-4 whitespace-nowrap">
-                Get Free Growth Audit
-              </Link>
-            </div>
-          </motion.div>
+    <div className="animate-pulse rounded-[40px] overflow-hidden bg-white/5 border border-white/10 mb-20">
+      <div className="aspect-[21/8] bg-white/10 w-full" />
+      <div className="p-10 md:p-14 space-y-5">
+        <div className="flex gap-3">
+          <div className="h-5 w-24 rounded-full bg-white/10" />
+          <div className="h-5 w-16 rounded-full bg-white/10" />
         </div>
-      </section>
-
-      {/* 2. Featured Article */}
-      <section className="px-6 mb-32">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="p-8 md:p-16 rounded-[40px] animated-border-card border border-white/10 relative overflow-hidden group"
-          >
-            <div className="absolute inset-0 bg-brand-orange/5 blur-[100px] -z-10" />
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div className="space-y-8">
-                <div className="flex items-center gap-3">
-                  <span className="px-3 py-1 rounded-full bg-brand-orange/10 border border-brand-orange/20 text-[10px] font-bold text-brand-orange uppercase tracking-widest">
-                    Featured Article
-                  </span>
-                  <span className="text-white/40 text-xs font-mono">15 Min Read</span>
-                </div>
-                <h2 className="text-3xl md:text-5xl font-display font-bold leading-tight">
-                  How to Turn Google Ads Into a <span className="text-gradient-orange">Predictable Lead Generation System</span>
-                </h2>
-                <p className="text-lg text-white/60 leading-relaxed">
-                  Most companies waste thousands on ads without a real acquisition system. Here’s the framework high-growth companies use to scale leads consistently without increasing CAC.
-                </p>
-                <Link href="/blog/google-ads-lead-generation-system" className="btn-premium inline-flex items-center gap-3 px-8 py-4 group">
-                  Read Article <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
-                </Link>
-              </div>
-              <div className="aspect-video rounded-3xl bg-white/5 border border-white/10 overflow-hidden relative">
-                <img 
-                  src="https://picsum.photos/seed/ads/1200/800" 
-                  alt="Google Ads Strategy" 
-                  className="w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-700"
-                  referrerPolicy="no-referrer"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* 3. Categories */}
-      <section className="px-6 mb-32">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex items-center justify-between mb-12">
-            <h2 className="text-3xl font-display font-bold">Strategic Categories</h2>
-            <div className="flex items-center gap-2 text-white/40 text-sm font-mono">
-              <Filter className="w-4 h-4" /> Filter by Expertise
-            </div>
-          </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {categories.map((cat, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="p-8 rounded-3xl animated-border-card bg-white/5 border border-white/10 hover:border-brand-orange/30 transition-all group"
-              >
-                <div className="w-12 h-12 rounded-xl bg-brand-orange/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                  <cat.icon className="w-6 h-6 text-brand-orange" />
-                </div>
-                <h3 className="text-xl font-bold mb-4">{cat.name}</h3>
-                <ul className="space-y-2">
-                  {cat.sub.map((s, j) => (
-                    <li key={j} className="text-sm text-white/40 hover:text-brand-orange transition-colors cursor-pointer flex items-center gap-2">
-                      <ChevronRight className="w-3 h-3" /> {s}
-                    </li>
-                  ))}
-                </ul>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 4. Latest Articles */}
-      <section className="px-6 mb-32">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex items-center justify-between mb-12">
-            <h2 className="text-3xl font-display font-bold">Latest Articles</h2>
-            <Link href="#" className="text-brand-orange text-sm font-bold flex items-center gap-2 hover:underline">
-              View All Posts <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
-          <div className="grid md:grid-cols-2 gap-8">
-            {latestArticles.map((article, i) => (
-              <motion.article
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="group p-8 rounded-3xl animated-border-card bg-white/5 border border-white/10 hover:border-brand-orange/30 transition-all"
-              >
-                <div className="flex items-center gap-4 mb-6">
-                  <span className="text-[10px] font-bold text-brand-orange uppercase tracking-widest px-2 py-1 bg-brand-orange/10 rounded">
-                    {article.category}
-                  </span>
-                  <span className="text-xs text-white/40 font-mono">{article.date}</span>
-                </div>
-                <h3 className="text-2xl font-display font-bold mb-4 group-hover:text-brand-orange transition-colors">
-                  {article.title}
-                </h3>
-                <p className="text-white/60 text-sm mb-8 leading-relaxed">
-                  {article.excerpt}
-                </p>
-                <div className="flex items-center justify-between pt-6 border-t border-white/5">
-                  <span className="text-xs text-white/40 font-mono italic">{article.readTime}</span>
-                  <Link 
-                    href={article.slug ? `/blog/${article.slug}` : "#"} 
-                    className="text-sm font-bold flex items-center gap-2 text-white group-hover:text-brand-orange transition-colors"
-                  >
-                    Read More <ChevronRight className="w-4 h-4" />
-                  </Link>
-                </div>
-              </motion.article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 5. Popular Guides */}
-      <section className="px-6 mb-32">
-        <div className="max-w-7xl mx-auto">
-          <div className="p-12 md:p-20 rounded-[40px] bg-white/[0.02] border border-white/5">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-5xl font-display font-bold mb-6">High-Value Growth Guides</h2>
-              <p className="text-white/40 max-w-2xl mx-auto">Long-form strategic frameworks for businesses ready to dominate their market.</p>
-            </div>
-            <div className="grid lg:grid-cols-3 gap-8">
-              {popularGuides.map((guide, i) => (
-                <div key={i} className="p-8 rounded-2xl animated-border-card bg-black/40 border border-white/5 hover:border-brand-orange/30 transition-all group">
-                  <div className="w-12 h-12 rounded-xl bg-brand-orange/10 flex items-center justify-center mb-6">
-                    <guide.icon className="w-6 h-6 text-brand-orange" />
-                  </div>
-                  <h3 className="text-xl font-bold mb-4">{guide.title}</h3>
-                  <p className="text-sm text-white/40 mb-8 leading-relaxed">{guide.desc}</p>
-                  <Link href="#" className="text-brand-orange text-sm font-bold flex items-center gap-2 group-hover:gap-4 transition-all">
-                    Download Guide <ArrowRight className="w-4 h-4" />
-                  </Link>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 6. Lead Magnet CTA */}
-      <section className="py-24">
-        <MarketingDiagnosisOffer />
-      </section>
-
-      {/* 7. Newsletter */}
-      <section className="px-6">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="w-16 h-16 rounded-2xl bg-brand-orange/10 flex items-center justify-center mx-auto mb-8">
-            <Mail className="w-8 h-8 text-brand-orange" />
-          </div>
-          <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">Join 1500+ growth strategists</h2>
-          <p className="text-white/40 mb-10">Get your weekly breakdown of performance marketing</p>
-          <form className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto" onSubmit={(e) => e.preventDefault()}>
-            <input 
-              type="email" 
-              placeholder="Enter your email"
-              className="flex-grow bg-white/5 border border-white/10 rounded-xl px-6 py-4 text-white focus:outline-none focus:border-brand-orange transition-colors"
-            />
-            <button className="btn-premium px-8 py-4 whitespace-nowrap">
-              Subscribe
-            </button>
-          </form>
-          <p className="text-[10px] text-white/20 mt-6 uppercase tracking-widest">No spam. Just high-signal growth data.</p>
-        </div>
-      </section>
+        <div className="h-10 w-2/3 rounded bg-white/10" />
+        <div className="h-5 w-full rounded bg-white/10" />
+        <div className="h-5 w-1/2 rounded bg-white/10" />
+        <div className="h-12 w-44 rounded-xl bg-white/10 mt-2" />
+      </div>
     </div>
   );
 }
 
+function SkeletonCard() {
+  return (
+    <div className="animate-pulse rounded-2xl overflow-hidden bg-white/5 border border-white/10">
+      <div className="aspect-[4/3] bg-white/10 w-full" />
+      <div className="p-5 space-y-3">
+        <div className="h-4 w-20 rounded bg-white/10" />
+        <div className="h-5 w-5/6 rounded bg-white/10" />
+        <div className="h-4 w-full rounded bg-white/10" />
+        <div className="h-4 w-3/4 rounded bg-white/10" />
+      </div>
+    </div>
+  );
+}
+
+// ─── Featured Card ─────────────────────────────────────────────────────────────
+function FeaturedCard({ blog }: { blog: Blog }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 32 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+      className="group relative rounded-[40px] overflow-hidden border border-white/10 hover:border-brand-orange/40 transition-colors duration-500 mb-20"
+    >
+      {/* Full-bleed cover image */}
+      <div
+        className="bg-black/80 bg-center bg-cover bg-no-repeat relative opacity-80"
+        style={{
+          backgroundImage: `url(${getImage(blog)})`,
+        }}
+      >
+
+        <div className="relative aspect-[21/2] overflow-hidden "  >
+          {/* <img
+          src={getImage(blog)}
+          alt={getTitle(blog)}
+          className="w-full h-full object-cover opacity-45 group-hover:opacity-65 group-hover:scale-[1.04] transition-all duration-700 ease-out"
+          referrerPolicy="no-referrer"
+        /> */}
+          <div className="absolute inset-0 " />
+
+          {/* Badges */}
+          <div className="absolute top-7 left-8 flex items-center gap-3">
+            <span className="px-3 py-1.5 rounded-full bg-brand-orange text-black text-[10px] font-black uppercase tracking-[0.15em] shadow-xl">
+              Latest Post
+            </span>
+          </div>
+        </div>
+
+        {/* Content */}
+        <div className="relative px-8 md:px-14 py-10 md:py-12 ">
+          <div className="absolute -top-20 left-1/4 w-96 h-40 bg-brand-orange/8 blur-[80px] pointer-events-none" />
+
+          {getDate(blog) && (
+            <div className="flex items-center gap-2 mb-5 text-white/40 text-xs font-mono">
+              <Calendar className="w-3.5 h-3.5" />
+              {getDate(blog)}
+            </div>
+          )}
+
+          <h2 className="text-3xl md:text-[2.75rem] font-display font-bold leading-tight mb-5 group-hover:text-brand-orange transition-colors duration-300 max-w-4xl">
+            {getTitle(blog)}
+          </h2>
+
+          {getExcerpt(blog) && (
+            <p className="text-white/55 text-base md:text-lg leading-relaxed mb-9 max-w-3xl line-clamp-2">
+              {getExcerpt(blog)}
+            </p>
+          )}
+
+          <Link
+            href={`/blog/${getSlug(blog)}`}
+            className="btn-premium inline-flex items-center gap-3 px-8 py-4 group/btn"
+          >
+            Read Full Article
+            <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-2 transition-transform" />
+          </Link>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+// ─── Grid Card ─────────────────────────────────────────────────────────────────
+function BlogCard({ blog, index }: { blog: Blog; index: number }) {
+  return (
+    <motion.article
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ delay: (index % 3) * 0.07, duration: 0.5, ease: "easeOut" }}
+      className="group flex flex-col rounded-2xl overflow-hidden border border-white/10 hover:border-brand-orange/30 bg-white/[0.03] hover:bg-white/[0.055] transition-all duration-300"
+    >
+      {/* Thumbnail */}
+      <div className="relative aspect-[4/3] overflow-hidden bg-white/5 shrink-0">
+        <img
+          src={getImage(blog)}
+          alt={getTitle(blog)}
+          className="w-full h-full object-cover opacity-55 group-hover:opacity-80 group-hover:scale-[1.06] transition-all duration-600 ease-out"
+          referrerPolicy="no-referrer"
+          loading="lazy"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
+      </div>
+
+      {/* Body */}
+      <div className="flex flex-col flex-grow p-5 md:p-6">
+        {getDate(blog) && (
+          <div className="flex items-center gap-1.5 mb-3 text-white/35 text-[11px] font-mono">
+            <Calendar className="w-3 h-3" />
+            {getDate(blog)}
+          </div>
+        )}
+
+        <h3 className="text-base md:text-lg font-display font-bold leading-snug mb-3 group-hover:text-brand-orange transition-colors duration-300 line-clamp-2">
+          {getTitle(blog)}
+        </h3>
+
+        {getExcerpt(blog) && (
+          <p className="text-white/45 text-sm leading-relaxed line-clamp-2 mb-4 flex-grow">
+            {getExcerpt(blog)}
+          </p>
+        )}
+
+        <div className="mt-auto pt-4 border-t border-white/[0.07]">
+          <Link
+            href={`/blog/${getSlug(blog)}`}
+            className="inline-flex items-center gap-1.5 text-sm font-semibold text-white/60 group-hover:text-brand-orange transition-colors"
+          >
+            Read Article
+            <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          </Link>
+        </div>
+      </div>
+    </motion.article>
+  );
+}
+
+// ─── Page ──────────────────────────────────────────────────────────────────────
+export default function Blog() {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [blogs, setBlogs] = useState<Blog[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // ── Fetch ────────────────────────────────────────────────────────────────
+  useEffect(() => {
+    const controller = new AbortController();
+    async function fetchBlogs() {
+      try {
+        setLoading(true);
+        setError(null);
+        const res = await fetch(`${BASE_URL}/blogs`, {
+          signal: controller.signal,
+        });
+        if (!res.ok) throw new Error(`API responded with status ${res.status}`);
+        const json = await res.json();
+
+        // Handle { data: [] }, { blogs: [] }, or plain []
+        const list: Blog[] = Array.isArray(json)
+          ? json
+          : Array.isArray(json?.data)
+            ? json.data
+            : Array.isArray(json?.blogs)
+              ? json.blogs
+              : [];
+
+        // Newest-first — latest uploaded = featured
+        setBlogs(sortByDateDesc(list));
+      } catch (err: unknown) {
+        if (err instanceof Error && err.name === "AbortError") return;
+        setError(
+          err instanceof Error ? err.message : "Failed to load articles"
+        );
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchBlogs();
+    return () => controller.abort();
+  }, []);
+
+  // ── Search filter ────────────────────────────────────────────────────────
+  const filtered = blogs.filter((b) => {
+    if (!searchQuery.trim()) return true;
+    const q = searchQuery.toLowerCase();
+    return (
+      getTitle(b).toLowerCase().includes(q) ||
+      getExcerpt(b).toLowerCase().includes(q)
+    );
+  });
+
+  const featuredBlog = filtered[0] ?? null;
+  const gridBlogs = filtered.slice(1);
+
+  return (
+    <div className="w-full pt-20 pb-40">
+
+
+      {/* ── Featured (Latest) ─────────────────────────────────────────────────── */}
+      <section className="px-6">
+        <div className="max-w-7xl mx-auto">
+          {loading ? (
+            <SkeletonFeatured />
+          ) : error ? (
+            <div className="p-12 rounded-[40px] border border-red-500/20 bg-red-500/5 text-center space-y-4 mb-20">
+              <AlertCircle className="w-10 h-10 text-red-400 mx-auto" />
+              <p className="text-red-300 font-medium">{error}</p>
+              <button
+                onClick={() => window.location.reload()}
+                className="px-6 py-2 rounded-xl bg-red-500/10 border border-red-500/20 text-red-300 text-sm hover:bg-red-500/20 transition"
+              >
+                Retry
+              </button>
+            </div>
+          ) : featuredBlog ? (
+            <FeaturedCard blog={featuredBlog} />
+          ) : (
+            <p className="text-center text-white/40 py-16 mb-20">
+              No articles found.
+            </p>
+          )}
+        </div>
+      </section>
+
+      {/* ── All Articles Grid ─────────────────────────────────────────────────── */}
+      <section className="px-6 mb-32">
+        <div className="max-w-7xl mx-auto">
+
+          <div className="flex items-center justify-between mb-10">
+            <h2 className="text-3xl font-display font-bold">All Articles</h2>
+            {!loading && !error && gridBlogs.length > 0 && (
+              <span className="text-white/25 text-xs font-mono">
+                {gridBlogs.length} more post{gridBlogs.length !== 1 ? "s" : ""}
+              </span>
+            )}
+          </div>
+
+          {/* Skeletons */}
+          {loading && (
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[...Array(6)].map((_, i) => <SkeletonCard key={i} />)}
+            </div>
+          )}
+
+          {/* Error */}
+          {!loading && error && (
+            <div className="flex flex-col items-center gap-4 py-16 text-center">
+              <AlertCircle className="w-10 h-10 text-red-400" />
+              <p className="text-white/50">{error}</p>
+            </div>
+          )}
+
+          {/* Empty */}
+          {!loading && !error && gridBlogs.length === 0 && (
+            <p className="text-center text-white/30 py-14">
+              {searchQuery.trim()
+                ? `No other articles match "${searchQuery}".`
+                : "No more articles yet — check back soon."}
+            </p>
+          )}
+
+          {/* Grid */}
+          {!loading && !error && gridBlogs.length > 0 && (
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {gridBlogs.map((blog, i) => (
+                <BlogCard key={blog._id} blog={blog} index={i} />
+              ))}
+            </div>
+          )}
+
+        </div>
+      </section>
+
+      {/* ── CTA ───────────────────────────────────────────────────────────────── */}
+
+
+    </div>
+  );
+}

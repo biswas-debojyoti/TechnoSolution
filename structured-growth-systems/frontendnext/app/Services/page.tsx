@@ -1,18 +1,18 @@
 "use client";
 import React from 'react';
 import { motion } from 'motion/react';
-import { 
-  Search, 
-  MousePointer2, 
-  Share2, 
-  Code2, 
-  Mail, 
-  Smartphone, 
-  CheckCircle2, 
-  ArrowRight, 
-  BarChart3, 
-  Zap, 
-  Target, 
+import {
+  Search,
+  MousePointer2,
+  Share2,
+  Code2,
+  Mail,
+  Smartphone,
+  CheckCircle2,
+  ArrowRight,
+  BarChart3,
+  Zap,
+  Target,
   TrendingUp,
   HelpCircle,
   Globe
@@ -125,7 +125,7 @@ const processSteps = [
 ];
 
 const industries = [
-  "Real Estate", "Health Clinics", "Cosmetic Brands", "Fashion Brands", 
+  "Real Estate", "Health Clinics", "Cosmetic Brands", "Fashion Brands",
   "E-commerce", "SaaS", "Startups", "Local Businesses", "Personal Brands"
 ];
 
@@ -182,7 +182,7 @@ export default function Services() {
               </span>
             </div>
             <h1 className="text-5xl md:text-8xl font-display font-bold leading-tight mb-8">
-              Engineer <span className="text-gradient-orange">Profitable Scale.</span> <br/>Not Just More Traffic.
+              Engineer <span className="text-gradient-orange">Profitable Scale.</span> <br />Not Just More Traffic.
             </h1>
             <p className="text-2xl text-white/80 font-medium mb-6">
               The ROI-Driven <strong>Digital Marketing Agency</strong> for Performance Brands.
@@ -203,9 +203,7 @@ export default function Services() {
         </div>
       </header>
 
- <section className="py-24">
-        <MarketingDiagnosisOffer />
-      </section>
+
 
       {/* About Section */}
       <section className="py-32 px-6 bg-white/[0.02]">
@@ -327,13 +325,12 @@ export default function Services() {
             {industries.map((industry) => {
               const isSpecial = ["Real Estate", "Health Clinics", "Cosmetic Brands", "Fashion Brands"].includes(industry);
               return (
-                <span 
-                  key={industry} 
-                  className={`animated-border-tag rounded-full transition-all hover:scale-105 ${
-                    isSpecial 
-                      ? 'px-6 py-5 text-xl font-bold text-white' 
+                <span
+                  key={industry}
+                  className={`animated-border-tag rounded-full transition-all hover:scale-105 ${isSpecial
+                      ? 'px-6 py-5 text-xl font-bold text-white'
                       : 'px-6 py-5 text-xl font-bold text-white'
-                  }`}
+                    }`}
                 >
                   {industry}
                 </span>
@@ -348,7 +345,7 @@ export default function Services() {
         <div className="max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-20 items-center">
             <div>
-              <h2 className="text-4xl md:text-6xl font-display font-bold mb-12">Why Partner with <br/>NexZen Creative?</h2>
+              <h2 className="text-4xl md:text-6xl font-display font-bold mb-12">Why Partner with <br />NexZen Creative?</h2>
               <div className="space-y-8">
                 {[
                   { title: "Data-Driven Performance Analytics", desc: "We eliminate guesswork. We utilize advanced <strong>attribution modeling</strong> and economic analysis to make decisions based on real profit, not vanity metrics." },
@@ -392,7 +389,7 @@ export default function Services() {
           <div className="space-y-6">
             {faqs.map((faq, i) => (
               <section key={i} className="p-8 rounded-2xl bg-white/5 border border-white/10">
-                <h3 className="text-xl font-bold mb-4 text-white/90">{i+1}. {faq.question}</h3>
+                <h3 className="text-xl font-bold mb-4 text-white/90">{i + 1}. {faq.question}</h3>
                 <p className="text-white/60 leading-relaxed">{faq.answer}</p>
               </section>
             ))}
@@ -406,7 +403,7 @@ export default function Services() {
           <div className="absolute inset-0 bg-black/20" />
           <div className="relative z-10">
             <h2 className="text-4xl md:text-7xl font-display font-bold text-white mb-8">
-              Ready to Accelerate Your <br/>Business Growth?
+              Ready to Accelerate Your <br />Business Growth?
             </h2>
             <p className="text-xl md:text-2xl text-white/80 mb-12 max-w-3xl mx-auto">
               Don't leave your revenue to chance. Partner with a <strong>digital marketing agency</strong> that understands the fundamental architecture of scale.

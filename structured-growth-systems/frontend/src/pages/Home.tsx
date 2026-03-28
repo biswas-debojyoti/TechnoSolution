@@ -110,7 +110,7 @@ export default function Home() {
   }, []);
 
 
- const structuredData = {
+  const structuredData = {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
     "name": "Sayad Shahid | Growth Strategist",
@@ -130,7 +130,7 @@ export default function Home() {
   };
   return (
     <div className="w-full">
-      <SEO 
+      <SEO
         title="Sayad Shahid | Growth Strategist & Performance Marketer"
         description="Engineering structured acquisition systems for high-growth brands. Specializing in Meta Ads, Google Ads, and Performance Marketing."
         structuredData={structuredData}
@@ -157,15 +157,15 @@ export default function Home() {
                 Performance Marketing Strategist & Author
               </span>
             </div>
-            
+
             <h1 className="text-2xl md:text-3xl font-display font-bold leading-[1.1] tracking-tight">
               Scale Your Brand with  <span className='text-brand-orange'>NEX</span><span className="text-gradient-orange ">Zen Structured Growth</span> Systems
             </h1>
-            
+
             <p className="text-sm text-white/60 leading-relaxed max-w-xl">Managing
               <span className='font-bold text-brand-orange'> ₹70L+ / $80k / £60k Monthly</span> Across <span className='text-brand-orange font-bold'>Google & Meta</span>| India • UK • USA. I build structured acquisition systems that scale profitably — and document the frameworks behind them.
             </p>
-            
+
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
               <Link to="/work-with-me" className="btn-glow group relative px-8 py-4 bg-brand-orange text-black rounded-full font-bold text-lg overflow-hidden flex items-center justify-center gap-2 transition-transform hover:scale-105">
                 <span className="relative z-10">Apply for Strategy Call</span>
@@ -186,9 +186,9 @@ export default function Home() {
             <div className="profile-wrapper h-100 w-100 mx-auto">
               <div className="rotating-ring"></div>
               <div className="profile-image-container ">
-                <img 
-                  src="https://drive.google.com/thumbnail?id=1c1Q1D_CpXdXqqT9yYz0_GLsZf2mR3CuU&sz=w800" 
-                  alt="Sayed Shahid" 
+                <img
+                  src="https://drive.google.com/thumbnail?id=1c1Q1D_CpXdXqqT9yYz0_GLsZf2mR3CuU&sz=w800"
+                  alt="Sayed Shahid"
                   width="320"
                   height="320"
                   className="w-full h-full object-cover shadow-2xl"
@@ -205,12 +205,10 @@ export default function Home() {
 
       <CourseBanner />
 
-      <section className="py-24">
-        <MarketingDiagnosisOffer />
-      </section>
 
 
-        {/* STRATEGIC OFFERS SECTION */}
+
+      {/* STRATEGIC OFFERS SECTION */}
       <section className="py-15 bg-white/[0.02] border-y border-white/5">
         <div className="max-w-5xl mx-auto px-6">
           <div className="text-center mb-20">
@@ -290,11 +288,11 @@ export default function Home() {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                whileHover={{ 
+                whileHover={{
                   y: -10,
                   transition: { duration: 0.3, ease: "easeOut" }
                 }}
-                transition={{ 
+                transition={{
                   delay: i * 0.1,
                   duration: 0.8,
                   ease: [0.21, 0.45, 0.32, 0.9]
@@ -303,7 +301,7 @@ export default function Home() {
               >
                 {/* Subtle Floating Motion */}
                 <motion.div
-                  animate={{ 
+                  animate={{
                     y: [0, -4, 0],
                   }}
                   transition={{
@@ -321,7 +319,7 @@ export default function Home() {
                       stat.value
                     )}
                   </div>
-                  <motion.div 
+                  <motion.div
                     initial={{ opacity: 0, y: 5 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ delay: i * 0.1 + 0.4, duration: 0.5 }}
@@ -335,7 +333,7 @@ export default function Home() {
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-brand-orange/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1500 ease-in-out" />
                 </div>
-                
+
                 {/* Background Glow */}
                 <div className="absolute -bottom-12 -right-12 w-24 h-24 bg-brand-orange/5 rounded-full blur-2xl group-hover:bg-brand-orange/10 transition-colors duration-500" />
               </motion.div>
@@ -345,8 +343,8 @@ export default function Home() {
           <div className="flex flex-col md:flex-row justify-center items-center gap-12">
             <div className="w-full max-w-[320px] h-[400px] rounded-xl overflow-hidden bg-white/5 border border-white/10">
               <Suspense fallback={<div className="w-full h-full bg-white/5 animate-pulse" />}>
-                <InlineWidget 
-                  url="https://calendly.com/greenmileshahid/30min" 
+                <InlineWidget
+                  url="https://calendly.com/greenmileshahid/30min"
                   styles={{ height: '100%', width: '100%' }}
                   pageSettings={{
                     backgroundColor: '0c0f14',
@@ -360,9 +358,9 @@ export default function Home() {
             </div>
 
             <div className="flex flex-col items-center gap-8">
-              <a 
-                href="https://calendly.com/greenmileshahid/30min" 
-                target="_blank" 
+              <a
+                href="https://calendly.com/greenmileshahid/30min"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="px-8 py-4 bg-brand-orange text-black rounded-full font-bold text-lg hover:scale-105 transition-transform shadow-lg shadow-brand-orange/20"
               >
@@ -382,7 +380,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
           <div>
             <h2 className="text-4xl md:text-5xl font-display font-bold leading-tight mb-8">
-              Most Brands Don't Fail Because of Ads.<br/>
+              Most Brands Don't Fail Because of Ads.<br />
               <span className="text-white/40">They Fail Because of Structure.</span>
             </h2>
             <div className="space-y-6 text-lg text-white/70">
@@ -401,17 +399,17 @@ export default function Home() {
                 ))}
               </ul>
               <p className="pt-6 text-xl font-medium text-white">
-                Performance marketing isn't about hacks.<br/>
+                Performance marketing isn't about hacks.<br />
                 <span className="text-brand-orange">It's about disciplined systems.</span>
               </p>
             </div>
           </div>
           <div className="relative">
             <div className="hidden md:block h-auto w-full aspect-square rounded-3xl overflow-hidden ">
-              <img 
-                src={gridImage} 
-                alt="Structure" 
-              
+              <img
+                src={gridImage}
+                alt="Structure"
+
                 className=" md:h-150 w-auto object-cover rounded-3xl opacity-50 hover:opacity-80 transition-opacity duration-700"
                 referrerPolicy="no-referrer"
               />
@@ -426,7 +424,7 @@ export default function Home() {
           <div className="max-w-3xl mb-20">
             <h2 className="text-4xl md:text-6xl font-display font-bold leading-tight mb-0"><span className='text-brand-orange'>NEX</span>Zen</h2>
             <h2 className="text-4xl md:text-5xl font-display font-bold leading-tight mb-6">
-             Structured Growth Systems, Not Random Optimization.
+              Structured Growth Systems, Not Random Optimization.
             </h2>
             <p className="text-xl text-white/60">If you're spending at scale, structure isn't optional.</p>
           </div>
@@ -472,7 +470,7 @@ export default function Home() {
       <section className="py-32 relative overflow-hidden">
         {/* Subtle Grid Pattern Overlay */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
-        
+
         {/* Animated Background Gradient Waves */}
         <div className="absolute inset-0 z-0 opacity-30 pointer-events-none">
           <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-brand-orange/20 rounded-full blur-[120px] animate-pulse" />
@@ -532,9 +530,9 @@ export default function Home() {
                   <Link to={`/case-studies/${caseStudy.id}`} className="block h-full p-1 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-sm hover:bg-white/[0.08] transition-colors overflow-hidden">
                     <div className="aspect-[4/3] rounded-2xl overflow-hidden mb-6 border border-white/10 relative">
                       <div className="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-colors z-10" />
-                      <img 
-                        src={caseStudy.image} 
-                        alt={caseStudy.title} 
+                      <img
+                        src={caseStudy.image}
+                        alt={caseStudy.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                         referrerPolicy="no-referrer"
                       />
@@ -579,11 +577,11 @@ export default function Home() {
             >
               <h2 className="text-4xl md:text-5xl font-display font-bold mb-6">“If Your Brand Is Spending ₹4L+/Month on Ads — Read This.”</h2>
               <p className="text-xl text-white/60 mb-8">
-                If you want experimentation, we're not aligned.<br/>
+                If you want experimentation, we're not aligned.<br />
                 <span className="text-white font-medium">If you want scalable systems, let's talk.</span>
               </p>
-              <Link 
-                to="/work-with-me" 
+              <Link
+                to="/work-with-me"
                 className="inline-flex items-center gap-2 px-8 py-4 bg-brand-orange text-black rounded-full font-bold hover:bg-yellow-300 transition-all hover:scale-105 active:scale-95 shadow-lg shadow-brand-orange/20"
               >
                 Book Strategy Call <ArrowRight className="w-5 h-5" />
@@ -722,8 +720,8 @@ export default function Home() {
             ].map((book, i) => (
               <div key={i} className="flex flex-col md:flex-row gap-8 items-center md:items-start group">
                 <div className="w-48 shrink-0 aspect-[2/3] rounded-lg border border-white/20 overflow-hidden relative shadow-2xl shadow-black/50 group-hover:-translate-y-2 transition-transform duration-500">
-                  <img 
-                    src={book.image} 
+                  <img
+                    src={book.image}
                     alt={book.title}
                     className="w-full h-full object-cover"
                     referrerPolicy="no-referrer"
@@ -744,9 +742,9 @@ export default function Home() {
                     ))}
                   </ul>
                   <a href="https://greenmiles.gumroad.com/l/google-ads-mastery-os" target="_blank" rel="noopener noreferrer">
-                  <button className="px-6 py-2.5 rounded-full border border-white/20 hover:bg-white hover:text-black transition-colors font-semibold text-sm">
-                    Buy Now
-                  </button>
+                    <button className="px-6 py-2.5 rounded-full border border-white/20 hover:bg-white hover:text-black transition-colors font-semibold text-sm">
+                      Buy Now
+                    </button>
                   </a>
                 </div>
               </div>
@@ -755,7 +753,7 @@ export default function Home() {
         </div>
       </section>
 
-   {/* LATEST FROM THE JOURNAL */}
+      {/* LATEST FROM THE JOURNAL */}
       <section className="py-32 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row items-end justify-between mb-16 gap-8">
@@ -767,7 +765,7 @@ export default function Home() {
                 </span>
               </div>
               <h2 className="text-4xl md:text-6xl font-display font-bold leading-tight">
-                Strategic Insights for <br/><span className="text-gradient-orange">Market Dominance</span>
+                Strategic Insights for <br /><span className="text-gradient-orange">Market Dominance</span>
               </h2>
             </div>
             <Link to="/blog" className="group flex items-center gap-3 text-white/60 hover:text-brand-orange transition-colors font-bold text-lg">
@@ -856,7 +854,7 @@ export default function Home() {
             className="p-12 md:p-20 rounded-[40px] animated-border-card border border-white/10 relative overflow-hidden text-center"
           >
             <div className="absolute inset-0 bg-brand-orange/5 blur-[120px] -z-10" />
-            
+
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm w-fit mb-8">
               <Zap className="w-4 h-4 text-brand-orange" />
               <span className="text-sm font-medium tracking-wide text-white/80 uppercase">
@@ -865,9 +863,9 @@ export default function Home() {
             </div>
 
             <h2 className="text-4xl md:text-6xl font-display font-bold mb-8 leading-tight">
-              Turn Traffic Into <br/><span className="text-gradient-orange">Predictable Revenue</span>
+              Turn Traffic Into <br /><span className="text-gradient-orange">Predictable Revenue</span>
             </h2>
-            
+
             <p className="text-xl text-white/60 max-w-3xl mx-auto leading-relaxed mb-12">
               NexZen Creative builds <strong>structured SEO and paid media acquisition systems</strong> designed to turn random clicks into real customers and scalable revenue. We deliver economic clarity before capital expansion.
             </p>
@@ -912,10 +910,10 @@ export default function Home() {
           <div className="golden-wave wave-3" />
           <div className="absolute inset-0 bg-black/40" /> {/* Dark overlay for readability */}
         </div>
-        
+
         <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
           <h2 className="text-5xl md:text-7xl font-display font-bold mb-8 leading-tight">
-            Ready to Build Your <br/>Growth Engine?
+            Ready to Build Your <br />Growth Engine?
           </h2>
           <p className="text-xl text-white/60 mb-12 max-w-2xl mx-auto">
             Stop relying on random optimization. Let's engineer a structured system for your brand's growth.

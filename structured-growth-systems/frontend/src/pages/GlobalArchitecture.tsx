@@ -88,9 +88,7 @@ export default function GlobalArchitecture() {
         </p>
       </motion.div>
 
-      <section className="py-24">
-        <MarketingDiagnosisOffer />
-      </section>
+
 
       {/* LAYER 1: MARKET SPECIFIC */}
       <section className="mb-32">
