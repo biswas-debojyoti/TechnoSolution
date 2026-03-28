@@ -14,6 +14,7 @@ const navLinks = [
   { name: "Architecture", path: "/Architecture" },
   { name: "Services", path: "/Services" },
   { name: "Knowledge Hub", path: "/KnowledgeHub" },
+  
   // { name: 'Books', path: '/books' },
   { name: "Blog", path: "/Blog" },
   // { name: 'Work With Me', path: '/contact' },
