@@ -21,6 +21,7 @@ function StatusMenu({ inquiry, onUpdated }) {
   const toast = useToast()
 
   const handleChange = async (status) => {
+    
     if (status === inquiry.status) { setOpen(false); return }
     setLoading(true)
     try {
@@ -45,7 +46,7 @@ function StatusMenu({ inquiry, onUpdated }) {
       {open && (
         <>
           <div className="fixed inset-0 z-10" onClick={() => setOpen(false)} />
-          <div className="absolute z-20 left-0 top-full mt-1 w-32 bg-[var(--bg-elevated)] border border-[var(--border-light)] rounded-sm shadow-xl py-1">
+          <div className="absolute z-50 left-0 top-full mt-1 w-32 bg-[var(--bg-elevated)] border border-[var(--border-light)] rounded-sm shadow-xl py-1">
             {STATUS_OPTIONS.map(o => (
               <button key={o.value} onClick={() => handleChange(o.value)}
                 className={'flex w-full items-center gap-2 px-3 py-2 text-xs hover:bg-[var(--bg-hover)] transition-colors ' +
@@ -117,7 +118,7 @@ export default function InquiriesPage() {
         </div>
       )}
 
-      <div className="card m-4 overflow-hidden">
+      <div className="card m-4 ">
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b border-[var(--border)] bg-[var(--bg-elevated)]">

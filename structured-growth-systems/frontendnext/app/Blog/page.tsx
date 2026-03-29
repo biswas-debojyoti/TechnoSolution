@@ -51,7 +51,7 @@ function getImage(blog: Blog): string {
 }
 
 function getSlug(blog: Blog): string {
-  return  blog._id;
+  return blog._id;
 }
 
 function getRawDate(blog: Blog): string {
@@ -123,58 +123,57 @@ function FeaturedCard({ blog }: { blog: Blog }) {
       transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
       className="group relative rounded-[40px] overflow-hidden border border-white/10 hover:border-brand-orange/40 transition-colors duration-500 mb-20"
     >
-      {/* Full-bleed cover image */}
-      <div
-        className="bg-black/80 bg-center bg-cover bg-no-repeat relative opacity-80"
-        style={{
-          backgroundImage: `url(${getImage(blog)})`,
-        }}
-      >
+      <div className="grid md:grid-cols-2 gap-0">
 
-        <div className="relative aspect-[21/2] overflow-hidden "  >
-          {/* <img
-          src={getImage(blog)}
-          alt={getTitle(blog)}
-          className="w-full h-full object-cover opacity-45 group-hover:opacity-65 group-hover:scale-[1.04] transition-all duration-700 ease-out"
-          referrerPolicy="no-referrer"
-        /> */}
-          <div className="absolute inset-0 " />
+        {/* LEFT SIDE IMAGE */}
+        <div className="relative h-[160px] md:h-[300px] overflow-hidden">
+          <img
+            src={getImage(blog)}
+            alt={getTitle(blog)}
+            className="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700"
+          />
 
-          {/* Badges */}
-          <div className="absolute top-7 left-8 flex items-center gap-3">
+          {/* Badge */}
+          <div className="absolute top-5 left-5">
             <span className="px-3 py-1.5 rounded-full bg-brand-orange text-black text-[10px] font-black uppercase tracking-[0.15em] shadow-xl">
               Latest Post
             </span>
           </div>
         </div>
 
-        {/* Content */}
-        <div className="relative px-8 md:px-14 py-10 md:py-12 ">
-          <div className="absolute -top-20 left-1/4 w-96 h-40 bg-brand-orange/8 blur-[80px] pointer-events-none" />
+        {/* RIGHT SIDE CONTENT */}
+        <div className="relative px-6 md:px-12 py-8 md:py-12 flex flex-col justify-center bg-black/60">
 
+          {/* Glow */}
+          <div className="absolute -top-20 left-1/3 w-72 h-40 bg-brand-orange/10 blur-[80px]" />
+
+          {/* Date */}
           {getDate(blog) && (
-            <div className="flex items-center gap-2 mb-5 text-white/40 text-xs font-mono">
+            <div className="flex items-center gap-2 mb-4 text-white/40 text-xs font-mono">
               <Calendar className="w-3.5 h-3.5" />
               {getDate(blog)}
             </div>
           )}
 
-          <h2 className="text-3xl md:text-[2.75rem] font-display font-bold leading-tight mb-5 group-hover:text-brand-orange transition-colors duration-300 max-w-4xl">
+          {/* Title */}
+          <h2 className="text-2xl md:text-[2.4rem] font-display font-bold leading-tight mb-4 group-hover:text-brand-orange transition-colors duration-300">
             {getTitle(blog)}
           </h2>
 
+          {/* Excerpt */}
           {getExcerpt(blog) && (
-            <p className="text-white/55 text-base md:text-lg leading-relaxed mb-9 max-w-3xl line-clamp-2">
+            <p className="text-white/55 text-sm md:text-base leading-relaxed mb-6 line-clamp-3">
               {getExcerpt(blog)}
             </p>
           )}
 
+          {/* CTA */}
           <Link
             href={`/Blog/${getSlug(blog)}`}
-            className="btn-premium inline-flex items-center gap-3 px-8 py-4 group/btn"
+            className="btn-premium inline-flex items-center gap-3 px-6 py-3 w-fit"
           >
             Read Full Article
-            <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-2 transition-transform" />
+            <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
           </Link>
         </div>
       </div>
@@ -193,7 +192,7 @@ function BlogCard({ blog, index }: { blog: Blog; index: number }) {
       className="group flex flex-col rounded-2xl overflow-hidden border border-white/10 hover:border-brand-orange/30 bg-white/[0.03] hover:bg-white/[0.055] transition-all duration-300"
     >
       {/* Thumbnail */}
-      <div className="relative aspect-[4/3] overflow-hidden bg-white/5 shrink-0">
+      <div className="relative aspect-[4/1] overflow-hidden bg-white/5 shrink-0">
         <img
           src={getImage(blog)}
           alt={getTitle(blog)}

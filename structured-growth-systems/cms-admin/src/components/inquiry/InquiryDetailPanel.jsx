@@ -121,10 +121,10 @@ export default function InquiryDetailPanel({ inquiry, onClose, onStatusChange, o
 
         {/* Footer */}
         <div className="px-5 py-4 border-t border-[var(--border)] shrink-0 flex items-center justify-between">
-          <a href={'mailto:' + inquiry.email}
+          {/* <a href={'mailto:' + inquiry.email}
             className="btn-primary text-xs py-1.5 px-3">
             <Mail size={12} /> Reply by email
-          </a>
+          </a> */}
           <button onClick={() => onDelete?.(inquiry)} className="btn-danger text-xs py-1.5 px-3">
             <Trash2 size={12} /> Delete
           </button>

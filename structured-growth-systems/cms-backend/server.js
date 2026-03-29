@@ -46,7 +46,7 @@ app.set("trust proxy", 1);
 // ─── Rate Limiters ────────────────────────────────────────────────────────────
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 20,
+  max: 200,
   standardHeaders: true,
   legacyHeaders: false,
   message: { success: false, message: "Too many login attempts. Try again in 15 minutes." },
@@ -54,7 +54,7 @@ const authLimiter = rateLimit({
 
 const inquiryLimiter = rateLimit({
   windowMs: 60 * 60 * 1000, // 1 hour
-  max: 10,
+  max: 100,
   standardHeaders: true,
   legacyHeaders: false,
   message: { success: false, message: "Too many inquiries submitted. Try again later." },

@@ -578,14 +578,15 @@ export default function Home() {
               viewport={{ once: true }}
             >
               <h2 className="text-4xl md:text-5xl font-display font-bold mb-6">
-                “If Your Brand Is Spending ₹4L+/Month on Ads — Read This.”
+                “Scale Your Revenue with Performance Marketing”
               </h2>
               <p className="text-xl text-white/60 mb-8">
-                If you want experimentation, we're not aligned.
+                That Actually Converts
+We build scalable systems using Google & Meta Ads for brands serious about growth.
                 <br />
-                <span className="text-white font-medium">
+                {/* <span className="text-white font-medium">
                   If you want scalable systems, let's talk.
-                </span>
+                </span> */}
               </p>
               <Link
                 href="/contact"
