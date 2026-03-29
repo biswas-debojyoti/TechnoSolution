@@ -10,7 +10,6 @@ import { usePathname } from "next/navigation";
 
 const navLinks = [
   { name: "Home", path: "/" },
-  { name: "About", path: "/About" },
   { name: "Architecture", path: "/Architecture" },
   { name: "Services", path: "/Services" },
   { name: "Knowledge Hub", path: "/KnowledgeHub" },

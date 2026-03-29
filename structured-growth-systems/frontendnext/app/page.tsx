@@ -29,6 +29,17 @@ import SEO from "../components/SEO";
 import CourseBanner from "../components/CourseBanner";
 import Link from "next/link";
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
+import Problem from "@/components/HomeComponent/Problem";
+import SystemPositioning from "@/components/HomeComponent/SystemPositioning";
+import EntryPoints from "@/components/HomeComponent/EntryPoints";
+import Offer from "@/components/HomeComponent/Offer";
+import Process from "@/components/HomeComponent/Process";
+import Authority from "@/components/HomeComponent/Authority";
+import Differentiation from "@/components/HomeComponent/Differentiation";
+import Services from "@/components/HomeComponent/Services";
+import Insights from "@/components/HomeComponent/Insights";
+import Footer from "@/components/HomeComponent/Footer";
+// import Services from "./Services/page";
 const InlineWidget = lazy(() =>
   import("react-calendly").then((mod) => ({ default: mod.InlineWidget })),
 );
@@ -212,7 +223,7 @@ export default function Home() {
               Scale your business with a performance marketing agency focused on Google Ads, Meta Ads, and measurable revenue growth.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 pt-4">
+            {/* <div className="flex flex-col sm:flex-row gap-4 pt-4">
               <Link
                 href="/contact"
                 className="btn-glow group relative px-8 py-4 bg-brand-orange text-black rounded-full font-bold text-lg overflow-hidden flex items-center justify-center gap-2 transition-transform hover:scale-105"
@@ -221,6 +232,33 @@ export default function Home() {
                 <ArrowRight className="relative z-10 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
 
+            </div> */}
+            <div className="flex flex-col sm:flex-row gap-4 mb-6">
+              <a
+                href="tel:8383997723">
+                <button className="px-8 py-4 bg-brand-orange text-background font-bold rounded-full flex items-center justify-center gap-2 hover:scale-105 transition-transform group">
+                  Book Free Strategy Call
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </button>
+              </a>
+              <Link
+                href="/contact">
+                <button className="btn-glow group relative px-8 py-4 bg-brand-orange text-black rounded-full font-bold text-lg overflow-hidden flex items-center justify-center gap-2 transition-transform hover:scale-105">
+                  Get Free Ad Audit
+                </button>
+              </Link>
+            </div>
+              <div className="flex flex-wrap gap-6">
+              {[
+                "$500K+ Ad Spend Managed",
+                "Multi-Market (India | UK | USA)",
+                "Profit-Focused Scaling Systems"
+              ].map((stat) => (
+                <div key={stat} className="flex items-center gap-2 text-xs font-medium text-#A1A1AA uppercase">
+                  <CheckCircle2 className="w-4 h-4 text-[#FF6A00]" />
+                  {stat}
+                </div>
+              ))}
             </div>
           </motion.div>
 
@@ -249,686 +287,20 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
+      {/* <CourseBanner /> */}
 
-      <CourseBanner />
+      <Problem />
+      <SystemPositioning/>
+      <EntryPoints/>
+      <Offer/>
+      <Process/>
+      <Authority/>
+      <Differentiation/>
+      <Services/>
+     <Insights/>
+     {/* <Footer/> */}
 
-
-
-      {/* STRATEGIC OFFERS SECTION */}
-      <section className="py-15 bg-white/[0.02] border-y border-white/5">
-        <div className="max-w-5xl mx-auto px-6">
-          <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-6xl font-display font-bold mb-6">
-              Strategic{" "}
-              <span className="text-gradient-orange">Growth Entry Points</span>
-            </h2>
-            <p className="text-xl text-white/60 max-w-2xl mx-auto">
-              High-leverage opportunities to experience the Structured Growth
-              System with zero initial risk.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                title: "1 Month Free SEO",
-                desc: "Experience our next-gen SEO architecture. One full month of technical and strategic SEO at no cost for qualified businesses.",
-                icon: Search,
-                cta: "Claim Free Month",
-              },
-              {
-                title: "30-Min Ads Audit",
-                desc: "A deep-dive consultation to identify the structural leaks in your current acquisition funnel and provide a fix roadmap.",
-                icon: Target,
-                cta: "Book Diagnosis",
-              },
-              {
-                title: "Website, App & CRM",
-                desc: "Building mission-critical mobile applications that drive user engagement. Our App lab focuses on low-latency, high-security code architecture for both native and hybrid environments.",
-                icon: BarChart2,
-                cta: "Request Web & app",
-              },
-            ].map((offer, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="p-5 rounded-[40px] border border-white/10 bg-black/40 backdrop-blur-xl hover:border-brand-orange/50 transition-all group"
-              >
-                <div className="w-14 h-14 rounded-2xl bg-brand-orange/10 border border-brand-orange/20 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
-                  <offer.icon className="w-7 h-7 text-brand-orange" />
-                </div>
-                <h3 className="text-xl font-bold mb-4">{offer.title}</h3>
-                <p className="text-white/60 text-sm mb-8 leading-relaxed">
-                  {offer.desc}
-                </p>
-                <Link
-                  href="/contact"
-                  className="flex items-center gap-2 text-brand-orange font-bold group/link"
-                >
-                  {offer.cta}{" "}
-                  <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
-                </Link>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-
-
-      {/* AUTHORITY SNAPSHOT */}
-      <section className="py-24 border-y border-white/5 bg-white/[0.02]">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-display font-bold mb-6">
-              Execution First. Authority Earned.
-            </h2>
-            <p className="text-xl text-white/60 font-serif italic">
-              Results build credibility. Frameworks build longevity.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
-            {[
-              {
-                label: "Total Ad Spend Managed",
-                value: "500",
-                prefix: "$",
-                suffix: "k+",
-              },
-              {
-                label: "Years in Performance Marketing",
-                value: "7",
-                suffix: "+",
-              },
-              { label: "Scaling Experience", value: "Multi-Market" },
-              { label: "Author of", value: "Google Ads Mastery OS" },
-            ].map((stat, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                whileHover={{
-                  y: -10,
-                  transition: { duration: 0.3, ease: "easeOut" },
-                }}
-                transition={{
-                  delay: i * 0.1,
-                  duration: 0.8,
-                  ease: [0.21, 0.45, 0.32, 0.9],
-                }}
-                className="relative flex flex-col items-center text-center p-8 rounded-2xl bg-white/5 border border-white/10 group overflow-hidden"
-              >
-                {/* Subtle Floating Motion */}
-                <motion.div
-                  animate={{
-                    y: [0, -4, 0],
-                  }}
-                  transition={{
-                    duration: 5,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: i * 0.4,
-                  }}
-                  className="w-full relative z-10"
-                >
-                  <div className="text-3xl md:text-4xl font-display font-bold text-brand-orange mb-2">
-                    {/^\d/.test(stat.value) ? (
-                      <Counter
-                        value={stat.value}
-                        prefix={stat.prefix}
-                        suffix={stat.suffix}
-                      />
-                    ) : (
-                      stat.value
-                    )}
-                  </div>
-                  <motion.div
-                    initial={{ opacity: 0, y: 5 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.1 + 0.4, duration: 0.5 }}
-                    className="text-sm text-white/60 uppercase tracking-wider font-medium"
-                  >
-                    {stat.label}
-                  </motion.div>
-                </motion.div>
-
-                {/* Soft Glow Accent Sweep */}
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-brand-orange/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1500 ease-in-out" />
-                </div>
-
-                {/* Background Glow */}
-                <div className="absolute -bottom-12 -right-12 w-24 h-24 bg-brand-orange/5 rounded-full blur-2xl group-hover:bg-brand-orange/10 transition-colors duration-500" />
-              </motion.div>
-            ))}
-          </div>
-
-          <div className="flex flex-col md:flex-row justify-center items-center gap-12">
-            <div className="w-full max-w-[320px] h-[400px] rounded-xl overflow-hidden bg-white/5 border border-white/10">
-              <Suspense
-                fallback={
-                  <div className="w-full h-full bg-white/5 animate-pulse" />
-                }
-              >
-                <InlineWidget
-                  url="https://calendly.com/greenmileshahid/30min"
-                  styles={{ height: "100%", width: "100%" }}
-                  pageSettings={{
-                    backgroundColor: "0c0f14",
-                    hideEventTypeDetails: true,
-                    hideLandingPageDetails: true,
-                    primaryColor: "facc15",
-                    textColor: "ffffff",
-                  }}
-                />
-              </Suspense>
-            </div>
-
-            <div className="flex flex-col items-center gap-8">
-              <a
-                href="https://calendly.com/greenmileshahid/30min"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-8 py-4 bg-brand-orange text-black rounded-full font-bold text-lg hover:scale-105 transition-transform shadow-lg shadow-brand-orange/20"
-              >
-                Schedule An Appointment
-              </a>
-
-              <div
-                className="badge-base LI-profile-badge"
-                data-locale="en_US"
-                data-size="large"
-                data-theme="dark"
-                data-type="VERTICAL"
-                data-vanity="sayed-shahid-089086344"
-                data-version="v1"
-              >
-                <a
-                  className="badge-base__link LI-simple-link"
-                  href="https://in.linkedin.com/in/sayed-shahid-089086344?trk=profile-badge"
-                >
-                  SAYED SHAHID
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* PROBLEM POSITIONING */}
-      <section className="py-32 relative">
-        <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
-          <div>
-            <h2 className="text-4xl md:text-5xl font-display font-bold leading-tight mb-8">
-              Most Brands Don't Fail Because of Ads.
-              <br />
-              <span className="text-white/40">
-                They Fail Because of Structure.
-              </span>
-            </h2>
-            <div className="space-y-6 text-lg text-white/70">
-              <p>Scaling breaks when:</p>
-              <ul className="space-y-4">
-                {[
-                  "Tracking is unreliable",
-                  "Campaign architecture is messy",
-                  "Budgets increase without control variables",
-                  "ROAS is chased without margin clarity",
-                ].map((item, i) => (
-                  <li key={i} className="flex items-center gap-3">
-                    <div className="w-1.5 h-1.5 rounded-full bg-red-500" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-              <p className="pt-6 text-xl font-medium text-white">
-                Performance marketing isn't about hacks.
-                <br />
-                <span className="text-brand-orange">
-                  It's about disciplined systems.
-                </span>
-              </p>
-            </div>
-          </div>
-          <div className="relative">
-            <div className="hidden md:block h-auto w-full aspect-square rounded-3xl overflow-hidden ">
-              {/* <img 
-                src={gridImage} 
-                alt="Structure" 
-              
-                className=" md:h-150 w-auto object-cover rounded-3xl opacity-50 hover:opacity-80 transition-opacity duration-700"
-                referrerPolicy="no-referrer"
-              /> */}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* WHAT I DO */}
-      <section className="py-32 bg-white/[0.02] border-y border-white/5">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="max-w-3xl mb-20">
-            <h2 className="text-4xl md:text-6xl font-display font-bold leading-tight mb-0">
-              <span className="text-brand-orange">NEX</span>Zen
-            </h2>
-            <h2 className="text-4xl md:text-5xl font-display font-bold leading-tight mb-6">
-              Structured Growth Systems, Not Random Optimization.
-            </h2>
-            <p className="text-xl text-white/60">
-              If you're spending at scale, structure isn't optional.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                icon: <Target className="w-8 h-8 text-brand-orange" />,
-                title: "Performance Marketing Systems",
-                desc: "Google & Meta campaigns engineered for controlled scaling.",
-              },
-              {
-                icon: <BarChart2 className="w-8 h-8 text-brand-orange" />,
-                title: "Growth Architecture",
-                desc: "Funnel mapping, data integrity, and structured testing cycles.",
-              },
-              {
-                icon: <Zap className="w-8 h-8 text-brand-orange" />,
-                title: "Strategic Advisory",
-                desc: "High-level decision support for brands expanding aggressively.",
-              },
-            ].map((service, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="p-8 rounded-3xl bg-[#0c0f14] border border-white/10 hover:border-brand-orange/50 transition-colors group"
-              >
-                <div className="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
-                  {service.icon}
-                </div>
-                <h3 className="text-2xl font-display font-bold mb-4">
-                  {service.title}
-                </h3>
-                <p className="text-white/60 leading-relaxed">{service.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-
-
-      {/* WHO I WORK WITH */}
-      <section className="py-32 relative overflow-hidden">
-        {/* Subtle Grid Pattern Overlay */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
-
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="mb-20 text-center max-w-3xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-            >
-              <h2 className="text-4xl md:text-5xl font-display font-bold mb-6">
-                “Scale Your Revenue with Performance Marketing”
-              </h2>
-              <p className="text-xl text-white/60 mb-8">
-                That Actually Converts
-We build scalable systems using Google & Meta Ads for brands serious about growth.
-                <br />
-                {/* <span className="text-white font-medium">
-                  If you want scalable systems, let's talk.
-                </span> */}
-              </p>
-              <Link
-                href="/contact"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-brand-orange text-black rounded-full font-bold hover:bg-yellow-300 transition-all hover:scale-105 active:scale-95 shadow-lg shadow-brand-orange/20"
-              >
-                Book Strategy Call <ArrowRight className="w-5 h-5" />
-              </Link>
-            </motion.div>
-          </div>
-
-          <div className="grid lg:grid-cols-3 gap-8">
-            {/* My Approach */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="h-full"
-            >
-              <TiltCard className="h-full group">
-                <div className="p-8 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-sm h-full flex flex-col hover:bg-white/[0.08] transition-colors">
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="p-3 rounded-2xl bg-brand-orange/10 group-hover:scale-110 group-hover:rotate-12 transition-transform duration-500">
-                      <Zap className="w-6 h-6 text-brand-orange" />
-                    </div>
-                    <h3 className="text-2xl font-display font-bold">
-                      My Approach
-                    </h3>
-                  </div>
-                  <p className="text-white/60 mb-6">
-                    I build scalable systems that combine:
-                  </p>
-                  <ul className="space-y-4 flex-grow">
-                    {[
-                      "Advanced audience segmentation & buyer psychology",
-                      "Creative testing frameworks (100+ variants tested monthly)",
-                      "ROAS optimization (consistently achieving 4-8X ROAS)",
-                      "Profit-first scaling strategies (not just revenue chasing)",
-                      "Data-driven decision making with real-time analytics",
-                    ].map((item, i) => (
-                      <li key={i} className="flex gap-3 text-white/80 text-sm">
-                        <div className="w-1.5 h-1.5 rounded-full bg-brand-orange mt-1.5 shrink-0" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </TiltCard>
-            </motion.div>
-
-            {/* Who I Help */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1, duration: 0.5 }}
-              className="h-full"
-            >
-              <TiltCard className="h-full group">
-                <div className="p-8 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-sm h-full flex flex-col hover:bg-white/[0.08] transition-colors">
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="p-3 rounded-2xl bg-brand-orange/10 group-hover:scale-110 group-hover:rotate-12 transition-transform duration-500">
-                      <Target className="w-6 h-6 text-brand-orange" />
-                    </div>
-                    <h3 className="text-2xl font-display font-bold">
-                      Who I Help
-                    </h3>
-                  </div>
-                  <ul className="space-y-4 flex-grow">
-                    {[
-                      "eCommerce brands scaling beyond 7-figures",
-                      "D2C founders wanting predictable ad performance",
-                      "SaaS companies needing qualified lead generation",
-                      "Service businesses wanting consistent client acquisition",
-                      "Agencies seeking white-label performance marketing",
-                    ].map((item, i) => (
-                      <li key={i} className="flex gap-3 text-white/80 text-sm">
-                        <CheckCircle2 className="w-5 h-5 text-brand-orange shrink-0" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </TiltCard>
-            </motion.div>
-
-            {/* Track Record */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2, duration: 0.5 }}
-              className="h-full"
-            >
-              <TiltCard className="h-full group">
-                <div className="p-8 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-sm h-full flex flex-col hover:bg-white/[0.08] transition-colors">
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="p-3 rounded-2xl bg-brand-orange/10 group-hover:scale-110 group-hover:rotate-12 transition-transform duration-500">
-                      <Trophy className="w-6 h-6 text-brand-orange" />
-                    </div>
-                    <h3 className="text-2xl font-display font-bold">
-                      Track Record
-                    </h3>
-                  </div>
-                  <ul className="space-y-4 flex-grow">
-                    {[
-                      "Managed multi-million dollar campaigns across 50+ industries",
-                      "Reduced CAC by 60% while scaling acquisition 3X",
-                      "Generated 10,000+ qualified leads for B2B services",
-                      'Authored "Google Ads Mastery OS" - the operating system for serious performance marketers',
-                    ].map((item, i) => (
-                      <li key={i} className="flex gap-3 text-white/80 text-sm">
-                        <div className="w-1.5 h-1.5 rounded-full bg-brand-orange mt-1.5 shrink-0" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </TiltCard>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* BOOKS SECTION */}
-      <section className="py-32 bg-white/[0.02] border-y border-white/5">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-5xl font-display font-bold mb-6">
-              Documented Frameworks
-            </h2>
-            <p className="text-xl text-white/60 max-w-2xl mx-auto">
-              I don't just execute; I document the exact systems that drive
-              results.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-16 max-w-5xl mx-auto">
-            {[
-              {
-                title: "Google Ads Mastery OS 2026",
-                desc: "The complete operating system for structuring, scaling, and optimizing Google Ads campaigns profitably.",
-                takeaways: [
-                  "Campaign Architecture",
-                  "Bidding Strategies",
-                  "Search Term Control",
-                ],
-                image:
-                  "https://drive.google.com/thumbnail?id=1o1WyLxyQ3ZVcc750BeimWFL_iahaJT99&sz=w1000",
-              },
-              {
-                title: "Meta Scaling Playbook",
-                desc: "Advanced frameworks for testing creatives, managing budgets, and scaling Meta ads without breaking ROAS.",
-                takeaways: [
-                  "Creative Testing Loops",
-                  "Account Consolidation",
-                  "Scaling Rules",
-                ],
-                image:
-                  "https://drive.google.com/thumbnail?id=14oQhOd-iv6qksvRn6sfsiWVicqNloFff&sz=w1000",
-              },
-            ].map((book, i) => (
-              <div
-                key={i}
-                className="flex flex-col md:flex-row gap-8 items-center md:items-start group"
-              >
-                <div className="w-48 shrink-0 aspect-[2/3] rounded-lg border border-white/20 overflow-hidden relative shadow-2xl shadow-black/50 group-hover:-translate-y-2 transition-transform duration-500">
-                  <img
-                    src={book.image}
-                    alt={book.title}
-                    className="w-full h-full object-cover"
-                    referrerPolicy="no-referrer"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-                  <div className="absolute bottom-4 left-4 right-4 text-center font-display font-bold text-sm">
-                    {book.title}
-                  </div>
-                </div>
-                <div className="space-y-6 text-center md:text-left">
-                  <h3 className="text-2xl font-display font-bold">
-                    {book.title}
-                  </h3>
-                  <p className="text-white/60 leading-relaxed">{book.desc}</p>
-                  <ul className="space-y-2 text-sm text-white/80 font-medium">
-                    {book.takeaways.map((t, j) => (
-                      <li
-                        key={j}
-                        className="flex items-center gap-2 justify-center md:justify-start"
-                      >
-                        <BookOpen className="w-4 h-4 text-brand-orange" /> {t}
-                      </li>
-                    ))}
-                  </ul>
-                  <a
-                    href="https://greenmiles.gumroad.com/l/google-ads-mastery-os"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <button className="px-6 py-2.5 rounded-full border border-white/20 hover:bg-white hover:text-black transition-colors font-semibold text-sm">
-                      Buy Now
-                    </button>
-                  </a>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* LATEST FROM THE JOURNAL */}
-      <section className="py-32 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row items-end justify-between mb-16 gap-8">
-            <div className="max-w-2xl">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm w-fit mb-6">
-                <BookOpen className="w-4 h-4 text-brand-orange" />
-                <span className="text-sm font-medium tracking-wide text-white/80 uppercase">
-                  The Growth Journal
-                </span>
-              </div>
-              <h2 className="text-4xl md:text-6xl font-display font-bold leading-tight">
-                Strategic Insights for <br />
-                <span className="text-gradient-orange">Market Dominance</span>
-              </h2>
-            </div>
-            <Link
-              href="/Blog"
-              className="group flex items-center gap-3 text-white/60 hover:text-brand-orange transition-colors font-bold text-lg"
-            >
-              View All Articles{" "}
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
-            </Link>
-          </div>
-
-
-        </div>
-      </section>
-
-      {/* AGENCY PREVIEW SECTION */}
-      <section className="py-32 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="p-12 md:p-20 rounded-[40px] animated-border-card border border-white/10 relative overflow-hidden text-center"
-          >
-            <div className="absolute inset-0 bg-brand-orange/5 blur-[120px] -z-10" />
-
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm w-fit mb-8">
-              <Zap className="w-4 h-4 text-brand-orange" />
-              <span className="text-sm font-medium tracking-wide text-white/80 uppercase">
-                NexZen Creative Agency
-              </span>
-            </div>
-
-            <h2 className="text-4xl md:text-6xl font-display font-bold mb-8 leading-tight">
-              Turn Traffic Into <br />
-              <span className="text-gradient-orange">Predictable Revenue</span>
-            </h2>
-
-            <p className="text-xl text-white/60 max-w-3xl mx-auto leading-relaxed mb-12">
-              NexZen Creative builds{" "}
-              <strong>structured SEO and paid media acquisition systems</strong>{" "}
-              designed to turn random clicks into real customers and scalable
-              revenue. We deliver economic clarity before capital expansion.
-            </p>
-
-            <div className="grid md:grid-cols-3 gap-8 mb-16 max-w-5xl mx-auto">
-              {[
-                { label: "Paid Media Managed", value: "$500K+" },
-                { label: "Global Reach", value: "India • UK • USA" },
-                { label: "Core Focus", value: "CAC • ROAS • LTV" },
-              ].map((item, i) => (
-                <div
-                  key={i}
-                  className="p-6 rounded-2xl bg-white/5 border border-white/5"
-                >
-                  <div className="text-2xl font-bold text-brand-orange mb-1">
-                    {item.value}
-                  </div>
-                  <div className="text-xs text-white/40 uppercase tracking-widest font-bold">
-                    {item.label}
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-12">
-              <Link
-                href="/contact"
-                className="btn-premium px-10 py-5 text-lg group w-full sm:w-auto"
-              >
-                Book Strategy Call
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </Link>
-              <Link
-                href="/nexzen"
-                className="px-10 py-5 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all text-lg font-bold w-full sm:w-auto"
-              >
-                Explore Our Services
-              </Link>
-            </div>
-
-            <p className="text-white/40 text-sm font-medium tracking-wide">
-              Trusted by growth-focused brands across{" "}
-              <span className="text-white/60">
-                E-commerce, Health Clinics, SaaS, and Startups
-              </span>
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* FINAL CTA */}
-      <section className="py-40 relative overflow-hidden">
-        {/* Golden Flow Background */}
-        <div className="golden-flow-container">
-          <div className="golden-wave wave-1" />
-          <div className="golden-wave wave-2" />
-          <div className="golden-wave wave-3" />
-          <div className="absolute inset-0 bg-black/40" />{" "}
-          {/* Dark overlay for readability */}
-        </div>
-
-        <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-5xl md:text-7xl font-display font-bold mb-8 leading-tight">
-            Ready to Build Your <br />
-            Growth Engine?
-          </h2>
-          <p className="text-xl text-white/60 mb-12 max-w-2xl mx-auto">
-            Stop relying on random optimization. Let's engineer a structured
-            system for your brand's growth.
-          </p>
-          <Link
-            href="/contact"
-            className="btn-glow inline-flex items-center gap-3 px-10 py-5 bg-brand-orange text-black rounded-full font-bold text-xl hover:scale-105 transition-transform"
-          >
-            Work With Me <ArrowRight className="w-6 h-6" />
-          </Link>
-        </div>
-      </section>
+      
     </div>
   );
 }

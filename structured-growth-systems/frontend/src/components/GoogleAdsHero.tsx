@@ -3,7 +3,7 @@ import { Search, PlayCircle, ShoppingCart, AppWindow } from "lucide-react";
 
 export default function GoogleAdsHero() {
   return (
-    <section className="relative overflow-hidden bg-[#0c0f14] text-white py-24">
+    <section className="relative overflow-hidden bg-[#0c0f14] text-white py-10">
 
       {/* Animated Gradient Background */}
       <div className="absolute inset-0 -z-10">

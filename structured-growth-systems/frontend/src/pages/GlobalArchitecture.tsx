@@ -150,7 +150,7 @@ export default function GlobalArchitecture() {
       </section>
 
       {/* LAYER 2: ECONOMIC CONTROL */}
-      <section className="mb-32 py-24 section-matte rounded-3xl px-12">
+      <section className="mb-32 py-10 section-matte rounded-3xl px-12">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-xl font-bold uppercase tracking-[0.3em] text-white mb-6">Layer 02 — Economic Control System</h2>
@@ -248,7 +248,7 @@ export default function GlobalArchitecture() {
       </section>
 
       {/* SYSTEM ARCHITECTURE DIAGRAM (CSS REPRESENTATION) */}
-      <section className="mb-32 py-24 border-y border-white/5 relative overflow-hidden">
+      <section className="mb-32 py-10 border-y border-white/5 relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(249,115,22,0.05)_0%,transparent_70%)]" />
         <div className="max-w-5xl mx-auto relative z-10">
           <div className="text-center mb-16">

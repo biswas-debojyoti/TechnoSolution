@@ -136,7 +136,7 @@ export default function GrowthOffers() {
       </section>
 
       {/* 2. Growth Offers Grid */}
-      <section className="py-24 px-6">
+      <section className="py-10 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-8">
             {offers.map((offer, i) => (
