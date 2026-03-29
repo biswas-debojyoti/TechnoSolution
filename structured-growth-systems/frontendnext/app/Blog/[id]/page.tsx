@@ -139,7 +139,7 @@ export default function BlogDetail() {
   // ── Error ──────────────────────────────────────────────────────────────
   if (error || !blog) {
     return (
-      <div className="w-full pt-28 pb-40 min-h-screen flex items-center justify-center px-6">
+      <div className="w-full pt-28 pb-40 min-h-screen flex  items-center justify-center px-6">
         <div className="max-w-md w-full text-center space-y-6">
           {/* <div className="w-16 h-16 rounded-full bg-red-500/10 border border-red-500/20 flex items-center justify-center mx-auto">
             <AlertCircle className="w-8 h-8 text-red-400" />
