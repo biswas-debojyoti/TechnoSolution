@@ -11,6 +11,7 @@ import {
   BookOpen,
 } from "lucide-react";
 import Link from "next/link";
+import Spinner from "@/components/Spinner";
 
 // ─── Type ──────────────────────────────────────────────────────────────────────
 interface BlogDetail {
@@ -30,17 +31,17 @@ interface BlogDetail {
 // ─── Helpers ───────────────────────────────────────────────────────────────────
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "";
 
-function getImage(blog: BlogDetail): string {
-  if (blog.imageUrl) {
-    return blog.imageUrl.startsWith("http")
-      ? blog.imageUrl
-      : `${BASE_URL}${blog.imageUrl}`;
+function getImage(blog: BlogDetail): any {
+  if (blog?.imageUrl) {
+    return blog?.imageUrl.startsWith("http")
+      ? blog?.imageUrl
+      : `${BASE_URL}${blog?.imageUrl}`;
   }
   return `https://picsum.photos/seed/123/1600/900`;
 }
 
-function getDate(blog: BlogDetail): string {
-  const raw = blog.createdAt ?? blog.updatedAt ?? "";
+function getDate(blog: BlogDetail): any {
+  const raw = blog?.createdAt ?? blog?.updatedAt ?? "";
   if (!raw) return "";
   try {
     return new Date(raw).toLocaleDateString("en-US", {
@@ -54,10 +55,12 @@ function getDate(blog: BlogDetail): string {
 }
 
 function estimateReadTime(html?: string): string {
-  if (!html) return "5 min read";
+  if (!html || typeof html !== "string") return "5 min read";
+
   const text = html.replace(/<[^>]+>/g, " ");
   const words = text.trim().split(/\s+/).length;
   const mins = Math.max(1, Math.round(words / 200));
+
   return `${mins} min read`;
 }
 
@@ -87,7 +90,7 @@ function SkeletonDetail() {
 // ─── Page ──────────────────────────────────────────────────────────────────────
 export default function BlogDetail() {
   const params = useParams();
-  // Reads /blog/[id] — the folder must be named [id]
+  // Reads /Blog/[id] — the folder must be named [id]
   const id = params?.id as string;
 
   const [blog, setBlog] = useState<BlogDetail | null>(null);
@@ -138,16 +141,17 @@ export default function BlogDetail() {
     return (
       <div className="w-full pt-28 pb-40 min-h-screen flex items-center justify-center px-6">
         <div className="max-w-md w-full text-center space-y-6">
-          <div className="w-16 h-16 rounded-full bg-red-500/10 border border-red-500/20 flex items-center justify-center mx-auto">
+          {/* <div className="w-16 h-16 rounded-full bg-red-500/10 border border-red-500/20 flex items-center justify-center mx-auto">
             <AlertCircle className="w-8 h-8 text-red-400" />
           </div>
           <h2 className="text-2xl font-display font-bold">
-            {error === "Article not found." ? "Article Not Found" : "Something Went Wrong"}
+           <AlertCircle className="w-8 h-8 text-red-400" />
           </h2>
           <p className="text-white/50 text-sm">{error ?? "Unable to load this article."}</p>
-          {/* ✅ Link only — no router.back() */}
+          */}
+          <Spinner/>
           <Link
-            href="/blog"
+            href="/Blog"
             className="inline-block px-6 py-3 rounded-xl bg-brand-orange text-black text-sm font-bold hover:bg-brand-orange/90 transition"
           >
             ← Back to All Articles
@@ -165,19 +169,19 @@ export default function BlogDetail() {
       <div className="relative w-full aspect-[21/8] overflow-hidden bg-black">
         <img
           src={getImage(blog)}
-          alt={blog.heading}
+          alt={blog?.heading}
           className="w-full h-full object-cover opacity-40"
           referrerPolicy="no-referrer"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/10" />
 
         {/*
-          ✅ Link href="/blog" — always client-side, never reloads
+          ✅ Link href="/Blog" — always client-side, never reloads
           Replaces the old: <button onClick={() => router.back()}>
         */}
         <div className="absolute top-8 left-6 md:left-12">
           <Link
-            href="/blog"
+            href="/Blog"
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white/80 text-sm hover:bg-white/20 transition"
           >
             <ArrowLeft className="w-4 h-4" />
@@ -206,15 +210,15 @@ export default function BlogDetail() {
             )}
             <span className="flex items-center gap-1.5">
               <Clock className="w-3.5 h-3.5" />
-              {estimateReadTime(blog.content)}
+              {estimateReadTime(blog?.content)}
             </span>
-            {(blog.views ?? 0) > 0 && (
+            {(blog?.views ?? 0) > 0 && (
               <span className="flex items-center gap-1.5">
                 <Eye className="w-3.5 h-3.5" />
-                {blog.views?.toLocaleString()} views
+                {blog?.views?.toLocaleString()} views
               </span>
             )}
-            {blog.status === "published" && (
+            {blog?.status === "published" && (
               <span className="px-2.5 py-1 rounded-full bg-green-500/10 border border-green-500/20 text-green-400 text-[10px] uppercase tracking-widest font-bold">
                 Published
               </span>
@@ -222,12 +226,12 @@ export default function BlogDetail() {
           </div>
 
           <h1 className="text-4xl md:text-6xl font-display font-bold leading-tight mb-5 text-white">
-            {blog.heading}
+            {blog?.heading}
           </h1>
 
-          {blog.subHeading && (
+          {blog?.subHeading && (
             <p className="text-xl md:text-2xl text-white/50 leading-relaxed font-light">
-              {blog.subHeading}
+              {blog?.subHeading}
             </p>
           )}
         </motion.div>
@@ -239,7 +243,7 @@ export default function BlogDetail() {
           transition={{ duration: 0.65, delay: 0.15, ease: "easeOut" }}
           className="pt-12"
         >
-          {blog.content ? (
+          {blog?.content ? (
             <div
               className="
                 prose prose-invert max-w-none
@@ -282,7 +286,7 @@ export default function BlogDetail() {
                 prose-th:text-brand-orange prose-th:font-bold prose-th:border-white/10
                 prose-td:border-white/10
               "
-              dangerouslySetInnerHTML={{ __html: blog.content }}
+              dangerouslySetInnerHTML={{ __html: blog?.content }}
             />
           ) : (
             <div className="flex flex-col items-center gap-4 py-20 text-center">
@@ -300,11 +304,11 @@ export default function BlogDetail() {
           className="mt-20 pt-10 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4"
         >
           {/*
-            ✅ Link href="/blog" — client-side nav, no reload
+            ✅ Link href="/Blog" — client-side nav, no reload
             Old code: <button onClick={() => router.back()}>
           */}
           <Link
-            href="/blog"
+            href="/Blog"
             className="inline-flex items-center gap-2 text-sm text-white/50 hover:text-white transition"
           >
             <ArrowLeft className="w-4 h-4" />
@@ -312,7 +316,7 @@ export default function BlogDetail() {
           </Link>
 
           <Link
-            href="/blog"
+            href="/Blog"
             className="btn-premium inline-flex items-center gap-2 px-6 py-3 text-sm"
           >
             <BookOpen className="w-4 h-4" />
@@ -324,3 +328,4 @@ export default function BlogDetail() {
     </div>
   );
 }
+

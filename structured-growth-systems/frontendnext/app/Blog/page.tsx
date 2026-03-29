@@ -170,7 +170,7 @@ function FeaturedCard({ blog }: { blog: Blog }) {
           )}
 
           <Link
-            href={`/blog/${getSlug(blog)}`}
+            href={`/Blog/${getSlug(blog)}`}
             className="btn-premium inline-flex items-center gap-3 px-8 py-4 group/btn"
           >
             Read Full Article
@@ -225,7 +225,7 @@ function BlogCard({ blog, index }: { blog: Blog; index: number }) {
 
         <div className="mt-auto pt-4 border-t border-white/[0.07]">
           <Link
-            href={`/blog/${getSlug(blog)}`}
+            href={`/Blog/${getSlug(blog)}`}
             className="inline-flex items-center gap-1.5 text-sm font-semibold text-white/60 group-hover:text-brand-orange transition-colors"
           >
             Read Article

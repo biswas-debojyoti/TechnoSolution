@@ -31,10 +31,10 @@ router.post(
 );
 
 // @route  GET /api/blogs/:id/image  — public, serves raw image buffer
-router.get("/:id/image", mongoIdValidator, getBlogImage);
+router.get("/:id/image",  getBlogImage);
 
 // @route  GET /api/blogs/:id
-router.get("/:id", protect, mongoIdValidator, getBlogById);
+router.get("/:id",   getBlogById);
 
 // @route  PUT /api/blogs/:id  (multipart/form-data)
 router.put(

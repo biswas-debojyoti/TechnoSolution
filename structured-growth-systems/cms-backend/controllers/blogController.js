@@ -5,6 +5,57 @@ const {
   sendPaginated,
 } = require("../utils/apiResponse");
 
+
+const convertEditorJSToHTML = (content) => {
+  if (!content || !content.blocks) return "";
+
+  return content.blocks
+    .map((block) => {
+      switch (block.type) {
+        case "header":
+          return `<h${block.data.level}>${block.data.text}</h${block.data.level}>`;
+
+        case "paragraph":
+          return `<p>${block.data.text}</p>`;
+
+        case "list":
+          const tag = block.data.style === "ordered" ? "ol" : "ul";
+          const items = block.data.items
+            .map((item) => `<li>${item.trim()}</li>`)
+            .join("");
+          return `<${tag}>${items}</${tag}>`;
+
+        case "image":
+          return `<img src="${block.data.file?.url ?? ""}" alt="${block.data.caption ?? ""}" />`;
+
+        case "quote":
+          return `<blockquote>${block.data.text}<cite>${block.data.caption ?? ""}</cite></blockquote>`;
+
+        case "code":
+          return `<pre><code>${block.data.code}</code></pre>`;
+
+        case "delimiter":
+          return `<hr />`;
+
+        case "table": {
+          const rows = block.data.content
+            .map((row) => {
+              const cells = row
+                .map((cell) => `<td>${cell}</td>`)
+                .join("");
+              return `<tr>${cells}</tr>`;
+            })
+            .join("");
+          return `<table>${rows}</table>`;
+        }
+
+        default:
+          return "";
+      }
+    })
+    .filter(Boolean)
+    .join("\n");
+};
 /**
  * Build a blog document update payload from request fields
  */
@@ -146,10 +197,23 @@ const getAllBlogs = async (req, res, next) => {
  */
 const getBlogById = async (req, res, next) => {
   try {
-    const blog = await Blog.findById(req.params.id); // ✅ no .select() — fetches everything
+    const blog = await Blog.findById(req.params.id);
     if (!blog) return sendError(res, "Blog not found", 404);
 
-    const blogObj = stripImageBuffer(blog); // ✅ only strips image.data, content untouched
+    // Increment views
+    blog.views = (blog.views || 0) + 1;
+    await blog.save();
+
+    const blogObj = stripImageBuffer(blog);
+
+    // ✅ Append imageUrl (same pattern as getAllBlogs)
+    blogObj.imageUrl = blog.image?.data
+      ? `/blogs/${blog._id}/image`
+      : null;
+
+    // ✅ Convert EditorJS blocks → HTML string
+    blogObj.content = convertEditorJSToHTML(blog.content);
+
     return sendSuccess(res, { blog: blogObj }, "Blog fetched successfully");
   } catch (error) {
     next(error);
