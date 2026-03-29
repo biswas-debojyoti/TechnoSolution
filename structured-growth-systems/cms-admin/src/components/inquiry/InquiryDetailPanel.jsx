@@ -125,6 +125,7 @@ export default function InquiryDetailPanel({ inquiry, onClose, onStatusChange, o
             className="btn-primary text-xs py-1.5 px-3">
             <Mail size={12} /> Reply by email
           </a> */}
+          
           <button onClick={() => onDelete?.(inquiry)} className="btn-danger text-xs py-1.5 px-3">
             <Trash2 size={12} /> Delete
           </button>
