@@ -29,7 +29,7 @@ function Footer() {
             <div className="text-sm text-white/60 space-y-2">
             <p>
               <a 
-                href="https://www.google.com/maps/dir//Kestopur+VIP+Bus+Stand,+Shubham+Road,+Raghunathpur,+Rabindrapally,+Baguiati,+Kolkata,+West+Bengal+700101/@22.6008609,88.4194256,2498m/data=!3m2!1e3!4b1!4m17!1m7!3m6!1s0x3a0275b8db540fd3:0x8e096edfe32c2ff3!2sKestopur+VIP+Bus+Stand!8m2!3d22.6032989!4d88.424016!16s%2Fg%2F11h7fy3zg3!4m8!1m0!1m5!1m1!1s0x3a0275b8db540fd3:0x8e096edfe32c2ff3!2m2!1d88.424016!2d22.6032989!3e9?entry=ttu&g_ep=EgoyMDI2MDMyNC4wIKXMDSoASAFQAw%3D%3D" 
+                href="https://share.google/xx81WY2feERTz6Tx7" 
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-white transition-colors"
@@ -61,7 +61,7 @@ className='flex gap-3'
               <a href="https://youtube.com/@nexzencreativeofficial?si=iCuA12C_JP74X1qn" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
                 <Youtube />
               </a>
-              <a href="https://www.instagram.com/diamond_inthe_dust?igsh=MXFwbGY1aWUyOG8yMA==" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+              <a href="https://www.instagram.com/nexzen.agency/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
                 <Instagram />
               </a>
               <a href="https://in.linkedin.com/in/sayed-shahid-089086344" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
