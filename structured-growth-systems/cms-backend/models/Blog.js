@@ -20,7 +20,13 @@ const blogSchema = new mongoose.Schema(
       },
       contentType: {
         type: String,
-        enum: ["image/jpeg", "image/jpg", "image/png", "image/webp", "image/gif"],
+        enum: [
+          "image/jpeg",
+          "image/jpg",
+          "image/png",
+          "image/webp",
+          "image/gif",
+        ],
       },
     },
     content: {
@@ -48,7 +54,7 @@ const blogSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 // Auto-generate slug from heading before saving

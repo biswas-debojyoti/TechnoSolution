@@ -11,7 +11,18 @@ import { usePathname } from "next/navigation";
 const navLinks = [
   { name: "Home", path: "/" },
   { name: "Architecture", path: "/Architecture" },
-  { name: "Services", path: "/Services" },
+  {
+    name: "Services",
+    path: "/Services",
+    link: [
+      { name: "SEO", path: "/Seo" },
+      { name: "Ad Agency", path: "/Add-Agency" },
+      { name: "Content", path: "/Content" },
+      { name: "Social Media", path: "/Social-Media" },
+      { name: "Web Design", path: "/Web-Design" },
+      { name: "Mobile App", path: "/Mobile-App" },
+    ],
+  },
   { name: "Knowledge Hub", path: "/KnowledgeHub" },
   // { name: 'Books', path: '/books' },
   { name: "Blog", path: "/Blog" },
@@ -39,17 +50,35 @@ export default function Header() {
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                href={link.path}
-                className={`text-sm font-medium transition-colors ${location === link.path
-                    ? "text-brand-orange font-semibold border-b-2 border-brand-orange"
-                    : "text-white/60 hover:text-white"
+              <div key={link.name} className="relative group">
+                <Link
+                  href={link.path}
+                  className={`text-sm font-medium transition-colors ${
+                    location === link.path
+                      ? "text-brand-orange font-semibold border-b-2 border-brand-orange"
+                      : "text-white/60 hover:text-white"
                   }`}
-              >
-                {link.name}
-              </Link>
+                >
+                  {link.name}
+                </Link>
+
+                {/* Dropdown */}
+                {link.link && (
+                  <div className="absolute top-6 left-0 hidden group-hover:flex flex-col bg-black border border-white/10 rounded-xl shadow-lg py-2 min-w-[180px] z-50">
+                    {link.link.map((sublink) => (
+                      <Link
+                        key={sublink.name}
+                        href={sublink.path}
+                        className="px-4 py-2 text-sm text-white/70 hover:text-white hover:bg-white/10 transition"
+                      >
+                        {sublink.name}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
             ))}
+
             <Link
               href="/contact"
               className="px-5 py-2.5 rounded-full bg-white text-black text-sm font-semibold hover:bg-brand-orange transition-colors"
@@ -79,8 +108,9 @@ export default function Header() {
                 key={link.name}
                 href={link.path}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className={`text-lg font-medium ${location === link.path ? "text-brand-orange" : "text-white/80"
-                  }`}
+                className={`text-lg font-medium ${
+                  location === link.path ? "text-brand-orange" : "text-white/80"
+                }`}
               >
                 {link.name}
               </Link>
