@@ -17,7 +17,7 @@ export default function Differentiation() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-5xl font-bold mb-6"
+            className="text-4xl md:text-3xl font-bold mb-6"
           >
             Most Agencies Run Ads. <br />
             <span className="text-primary-accent">We Fix The System Behind Them.</span>

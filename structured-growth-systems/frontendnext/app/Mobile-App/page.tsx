@@ -32,6 +32,7 @@ import {
   Layout,
   Smartphone as MobileIcon,
 } from "lucide-react";
+import Link from "next/link";
 
 // --- Components ---
 
@@ -61,7 +62,7 @@ const Button = ({
 };
 
 const Section = ({ children, className = "", id = "" }: any) => (
-  <section id={id} className={`py-20 px-6 md:py-32 ${className}`}>
+  <section id={id} className={`py-20 px-6 md:py-10 ${className}`}>
     <div className="max-w-6xl mx-auto">{children}</div>
   </section>
 );
@@ -90,7 +91,7 @@ const Hero = () => (
         className="text-left"
       >
         <Badge>Mobile App Design & Development</Badge>
-        <h1 className="text-5xl md:text-8xl font-black tracking-tighter mb-8 leading-[0.95] uppercase">
+        <h1 className="text-3xl md:text-4xl font-black tracking-tighter mb-8 leading-[0.95] uppercase">
           Downloads Don’t Grow Your Business. <br />
           <span className="text-orange-500">Retention Does.</span>
         </h1>
@@ -137,7 +138,7 @@ const Hero = () => (
         className="relative hidden lg:block"
       >
         {/* Phone Mockup */}
-        <div className="relative w-[320px] h-[650px] mx-auto bg-neutral-900 rounded-[3rem] border-[8px] border-neutral-800 shadow-[0_0_100px_rgba(249,115,22,0.15)] overflow-hidden">
+        <div className="relative w-[320px] h-[450px] mx-auto bg-neutral-900 rounded-[3rem] border-[8px] border-neutral-800 shadow-[0_0_100px_rgba(249,115,22,0.15)] overflow-hidden">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-neutral-800 rounded-b-2xl z-20" />
           <img
             src="https://picsum.photos/seed/app-ui/600/1200"
@@ -151,7 +152,7 @@ const Hero = () => (
           <motion.div
             animate={{ y: [0, -10, 0] }}
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-1/4 -right-12 p-4 rounded-2xl bg-neutral-800/90 border border-neutral-700 backdrop-blur-md shadow-2xl z-30"
+            className="absolute top-1/4 right-12 p-4 rounded-2xl bg-neutral-800/90 border border-neutral-700 backdrop-blur-md shadow-2xl z-30"
           >
             <TrendingUp className="text-green-500 mb-2" size={24} />
             <p className="text-xs font-bold uppercase tracking-widest text-neutral-400">
@@ -168,7 +169,7 @@ const Hero = () => (
               ease: "easeInOut",
               delay: 1,
             }}
-            className="absolute bottom-1/4 -left-12 p-4 rounded-2xl bg-neutral-800/90 border border-neutral-700 backdrop-blur-md shadow-2xl z-30"
+            className="absolute bottom-1/4 left-12 p-4 rounded-2xl bg-neutral-800/90 border border-neutral-700 backdrop-blur-md shadow-2xl z-30"
           >
             <Users className="text-blue-500 mb-2" size={24} />
             <p className="text-xs font-bold uppercase tracking-widest text-neutral-400">
@@ -194,7 +195,7 @@ const Pain = () => (
         whileInView={{ opacity: 1, x: 0 }}
         viewport={{ once: true }}
       >
-        <h2 className="text-4xl md:text-5xl font-bold mb-8 leading-tight">
+        <h2 className="text-4xl md:text-3xl font-bold mb-8 leading-tight">
           Why Most Apps Fail <br />
           <span className="text-neutral-500 underline decoration-orange-500/50 underline-offset-8">
             Within 90 Days
@@ -263,7 +264,7 @@ const Pain = () => (
 const Reframe = () => (
   <Section>
     <div className="text-center mb-20">
-      <h2 className="text-4xl md:text-5xl font-bold mb-6">
+      <h2 className="text-4xl md:text-3xl font-bold mb-6">
         A Mobile App Is Not a Product. <br />
         <span className="text-orange-500">It’s a Retention Engine.</span>
       </h2>
@@ -326,7 +327,7 @@ const Framework = () => (
   <Section className="bg-neutral-900/50">
     <div className="text-center mb-20">
       <Badge>The NEXZen System</Badge>
-      <h2 className="text-4xl md:text-6xl font-bold mb-6">
+      <h2 className="text-4xl md:text-4xl font-bold mb-6">
         The NEXZen App Growth Framework
       </h2>
     </div>
@@ -417,7 +418,7 @@ const Framework = () => (
 const UseCases = () => (
   <Section>
     <div className="text-center mb-20">
-      <h2 className="text-4xl md:text-5xl font-bold">
+      <h2 className="text-4xl md:text-3xl font-bold">
         Built for Real Businesses
       </h2>
     </div>
@@ -505,11 +506,11 @@ const UseCases = () => (
 const ProcessTimeline = () => (
   <Section
     id="process"
-    className="bg-[#0B0F19] relative overflow-hidden py-24 md:py-40"
+    className="bg-[#0B0F19] relative overflow-hidden py-10 md:py-10"
   >
-    <div className="text-center mb-16 md:mb-24">
+    <div className="text-center mb-10 md:mb-10">
       <Badge>Our Workflow</Badge>
-      <h2 className="text-3xl md:text-5xl font-bold mb-6">
+      <h2 className="text-3xl md:text-3xl font-bold mb-6">
         How We Build Your{" "}
         <span className="text-orange-500">Retention Engine</span>
       </h2>
@@ -573,7 +574,7 @@ const IndustriesGrid = () => (
   <Section id="industries" className="bg-[#0B0F19]">
     <div className="text-center mb-16">
       <Badge>Industry Expertise</Badge>
-      <h2 className="text-3xl md:text-5xl font-bold mb-6">
+      <h2 className="text-3xl md:text-3xl font-bold mb-6">
         Solutions for Every{" "}
         <span className="text-orange-500">Business Scenario</span>
       </h2>
@@ -634,7 +635,7 @@ const NextGenFeatures = () => (
     <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
       <div className="max-w-2xl">
         <Badge>Core Features</Badge>
-        <h2 className="text-4xl md:text-5xl font-bold mb-6 uppercase tracking-tighter">
+        <h2 className="text-4xl md:text-3xl font-bold mb-6 uppercase tracking-tighter">
           Next-Gen Features That Fuel Exceptional{" "}
           <span className="text-orange-500">Mobile Experience</span>
         </h2>
@@ -699,10 +700,10 @@ const NextGenFeatures = () => (
 );
 
 const TechStack = () => (
-  <Section id="tech" className="bg-[#0B0F19] relative overflow-hidden py-24">
+  <Section id="tech" className="bg-[#0B0F19] relative overflow-hidden py-10">
     <div className="text-center mb-16">
       <Badge>Our Tech Stack</Badge>
-      <h2 className="text-3xl md:text-5xl font-bold mb-6 uppercase tracking-tighter">
+      <h2 className="text-3xl md:text-3xl font-bold mb-6 uppercase tracking-tighter">
         Built with <span className="text-orange-500">Modern Technologies</span>
       </h2>
       <p className="text-neutral-400 max-w-2xl mx-auto">
@@ -837,19 +838,12 @@ const CaseStudies = () => {
       <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
         <div className="max-w-2xl">
           <Badge>Success Stories</Badge>
-          <h2 className="text-4xl md:text-7xl font-black uppercase tracking-tighter">
+          <h2 className="text-3xl md:text-4xl font-black uppercase tracking-tighter">
             How We Helped Top Brands Build{" "}
             <span className="text-orange-500">Winning Apps</span>
           </h2>
         </div>
-        <div className="flex gap-4">
-          <button className="px-8 py-3 rounded-full border border-neutral-800 hover:border-orange-500 transition-all text-xs font-black uppercase tracking-widest">
-            Skip
-          </button>
-          <button className="px-8 py-3 rounded-full bg-orange-600 hover:bg-orange-50 transition-all text-xs font-black uppercase tracking-widest flex items-center gap-2 shadow-[0_0_30px_rgba(249,115,22,0.2)]">
-            View all cases <ArrowRight size={14} />
-          </button>
-        </div>
+       
       </div>
 
       <div className="mb-12 overflow-x-auto pb-4 scrollbar-hide">
@@ -895,7 +889,7 @@ const CaseStudies = () => {
               {current.title}
             </span>
           </div>
-          <h3 className="text-3xl md:text-5xl font-black text-white mb-8 leading-tight uppercase tracking-tighter">
+          <h3 className="text-3xl md:text-3xl font-black text-white mb-8 leading-tight uppercase tracking-tighter">
             {current.title}: {activeTab} Platform
           </h3>
           <p className="text-xl md:text-2xl text-neutral-400 mb-12 leading-relaxed font-medium">
@@ -904,7 +898,7 @@ const CaseStudies = () => {
 
           <div className="flex gap-16 mb-12">
             <div>
-              <p className="text-4xl md:text-6xl font-black text-white mb-2 tracking-tighter">
+              <p className="text-4xl md:text-4xl font-black text-white mb-2 tracking-tighter">
                 {current.downloads}
               </p>
               <p className="text-xs font-black text-neutral-500 uppercase tracking-[0.2em]">
@@ -912,7 +906,7 @@ const CaseStudies = () => {
               </p>
             </div>
             <div>
-              <p className="text-4xl md:text-6xl font-black text-white mb-2 tracking-tighter flex items-center gap-3">
+              <p className="text-4xl md:4xl font-black text-white mb-2 tracking-tighter flex items-center gap-3">
                 {current.conversion}{" "}
                 <TrendingUp size={32} className="text-green-500" />
               </p>
@@ -921,13 +915,16 @@ const CaseStudies = () => {
               </p>
             </div>
           </div>
-
+          <Link  href="/contact">
+          
           <Button
             variant="outline"
-            className="w-fit border-white/20 text-white hover:bg-white hover:text-neutral-950 px-10 py-5 text-lg"
+            className="w-fit border-white/20 text-white hover:text-neutral-950 px-10 py-5 text-lg"
           >
             Let&apos;s Build Yours <ArrowRight size={20} />
           </Button>
+          </Link>
+
         </div>
       </motion.div>
     </Section>
@@ -977,7 +974,7 @@ const FAQ = () => {
       <div className="grid lg:grid-cols-[400px_1fr] gap-20">
         <div>
           <Badge>Got Questions?</Badge>
-          <h2 className="text-5xl md:text-7xl font-black mb-8 uppercase tracking-tighter">
+          <h2 className="text-3xl md:text-4xl font-black mb-8 uppercase tracking-tighter">
             Frequently <br /> <span className="text-orange-500">Asked</span>
           </h2>
           <p className="text-xl text-neutral-400 leading-relaxed">
@@ -1081,7 +1078,7 @@ const Offer = () => (
 
     <div className="relative z-10 grid md:grid-cols-2 gap-16 items-center">
       <div>
-        <h2 className="text-4xl md:text-6xl font-black mb-8 leading-tight">
+        <h2 className="text-4xl md:text-4xl font-black mb-8 leading-tight">
           Get a Mobile App <br /> Growth Audit
         </h2>
         <p className="text-xl text-orange-100 mb-10">
@@ -1113,7 +1110,7 @@ const Offer = () => (
 );
 
 const Footer = () => (
-  <footer className="py-24 px-6 bg-[#0B0F19] border-t border-neutral-900 relative overflow-hidden">
+  <footer className="py-10 px-6 bg-[#0B0F19] border-t border-neutral-900 relative overflow-hidden">
     <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-full max-w-4xl opacity-10 pointer-events-none">
       <div className="absolute bottom-0 left-1/4 w-[500px] h-[500px] bg-orange-600 rounded-full blur-[150px]" />
     </div>
@@ -1127,7 +1124,7 @@ const Footer = () => (
             </div>
             NEX<span className="text-orange-500">Zen</span>
           </div>
-          <h2 className="text-4xl md:text-6xl font-black mb-10 tracking-tighter uppercase leading-[0.9]">
+          <h2 className="text-4xl md:text-4xl font-black mb-10 tracking-tighter uppercase leading-[0.9]">
             Every User You Lose Is <br />{" "}
             <span className="text-orange-500">Revenue</span> You Already Paid
             For.
@@ -1351,11 +1348,7 @@ export default function LandingPage() {
       </div>
 
       {/* Sticky CTA for Mobile */}
-      <div className="fixed bottom-8 left-8 right-8 z-50 md:hidden">
-        <Button className="w-full shadow-[0_20px_50px_rgba(249,115,22,0.4)] py-6 text-lg">
-          Get App Strategy
-        </Button>
-      </div>
+    
     </main>
   );
 }

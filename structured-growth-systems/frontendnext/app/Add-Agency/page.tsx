@@ -22,61 +22,11 @@ import {
   Menu,
   X,
 } from "lucide-react";
+import Link from "next/link";
 
 // --- Components ---
 
-const Navbar = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
 
-  useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? "bg-black/80 backdrop-blur-md py-4 border-b border-white/10" : "bg-transparent py-6"}`}
-    >
-      <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-brand-orange rounded-lg flex items-center justify-center font-bold text-black italic">
-            N
-          </div>
-          <span className="text-xl font-display font-bold tracking-tighter">
-            NEX<span className="text-brand-orange">ZEN</span>
-          </span>
-        </div>
-        <div className="hidden md:flex items-center gap-8 text-sm font-medium text-white/70">
-          <a
-            href="#system"
-            className="hover:text-brand-orange transition-colors"
-          >
-            Framework
-          </a>
-          <a
-            href="#industries"
-            className="hover:text-brand-orange transition-colors"
-          >
-            Industries
-          </a>
-          <a
-            href="#proof"
-            className="hover:text-brand-orange transition-colors"
-          >
-            Results
-          </a>
-          <button className="bg-brand-orange text-black px-5 py-2.5 rounded-full font-bold hover:scale-105 transition-transform">
-            Get Free Audit
-          </button>
-        </div>
-        <button className="md:hidden text-white">
-          <Menu size={24} />
-        </button>
-      </div>
-    </nav>
-  );
-};
 
 const HeroContent = () => {
   const searchParams = useSearchParams();
@@ -101,7 +51,7 @@ const HeroContent = () => {
   }
 
   return (
-    <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden">
+    <section className="relative pt-10 pb-10 md:pt-15 md:pb-10 overflow-hidden">
       {/* Background Blurs */}
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-brand-orange/10 blur-[120px] rounded-full -z-10" />
       <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500/5 blur-[120px] rounded-full -z-10" />
@@ -115,7 +65,7 @@ const HeroContent = () => {
           <span className="inline-block px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-bold tracking-widest uppercase mb-6 text-brand-orange">
             The Conversion Agency
           </span>
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold tracking-tight leading-[1.1] mb-8">
+          <h1 className="text-3xl md:text-7xl lg:text-4xl font-display font-bold tracking-tight leading-[1.1] mb-8">
             Turn Ad Spend Into <br />
             <span className="orange-gradient-text">Predictable Revenue</span>
           </h1>
@@ -171,11 +121,11 @@ const PainSection = () => {
   ];
 
   return (
-    <section className="py-24 bg-white/[0.02]">
+    <section className="py-10 bg-white/[0.02]">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid md:grid-cols-2 gap-16 items-center">
           <div>
-            <h2 className="text-4xl md:text-5xl font-display font-bold mb-8 leading-tight">
+            <h2 className="text-4xl md:text-3xl font-display font-bold mb-8 leading-tight">
               If You’re Running Ads <br />
               But Not Scaling,{" "}
               <span className="text-brand-orange">This Is Why</span>
@@ -232,7 +182,7 @@ const PainSection = () => {
 
 const ReframeSection = () => {
   return (
-    <section className="py-24 text-center">
+    <section className="py-10 text-center">
       <div className="max-w-4xl mx-auto px-6">
         <h2 className="text-4xl md:text-6xl font-display font-bold mb-8">
           Ads Don’t Generate Revenue. <br />
@@ -299,10 +249,10 @@ const SystemSection = () => {
   ];
 
   return (
-    <section id="system" className="py-24 relative">
+    <section id="system" className="py-10 relative">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-display font-bold mb-4">
+          <h2 className="text-4xl md:text-3xl font-display font-bold mb-4">
             The <span className="text-brand-orange">NEXZen</span>{" "}
             Traffic-to-Conversion Framework
           </h2>
@@ -345,7 +295,7 @@ const FunnelVisual = () => {
   ];
 
   return (
-    <section className="py-24 bg-white/[0.02]">
+    <section className="py-10 bg-white/[0.02]">
       <div className="max-w-7xl mx-auto px-6 text-center">
         <h2 className="text-4xl font-display font-bold mb-16">
           How Your Customers Actually Convert
@@ -415,7 +365,7 @@ const IndustrySection = () => {
   ];
 
   return (
-    <section id="industries" className="py-24">
+    <section id="industries" className="py-10">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-display font-bold mb-4">
@@ -492,15 +442,15 @@ const ProofSection = () => {
   ];
 
   return (
-    <section id="proof" className="py-24 bg-white/[0.02]">
-      <div className="max-w-7xl mx-auto px-6">
+    <section id="proof" className="py-10 bg-white/[0.02]">
+      <div className="max-w-9xl mx-auto px-2">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-display font-bold mb-4">
             What This Looks Like in Action
           </h2>
           <p className="text-white/60">Real systems delivering real results.</p>
         </div>
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-8">
           {results.map((res, i) => (
             <div
               key={i}
@@ -510,7 +460,7 @@ const ProofSection = () => {
               <div className="text-sm font-bold text-white/40 uppercase mb-2">
                 {res.label}
               </div>
-              <div className="text-5xl font-display font-bold text-brand-orange mb-4">
+              <div className="text-3xl font-display font-bold text-brand-orange mb-4">
                 {res.value}
               </div>
               <div className="font-bold text-lg mb-1">{res.metric}</div>
@@ -525,8 +475,8 @@ const ProofSection = () => {
 
 const ObjectionSection = () => {
   return (
-    <section className="py-24">
-      <div className="max-w-4xl mx-auto px-6">
+    <section className="py-10">
+      <div className="max-w-9xl mx-auto px-1">
         <div className="glass-card p-12 border-brand-orange/20">
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-8 text-center italic">
             “We Tried Ads Before. It Didn’t Work.”
@@ -568,10 +518,10 @@ const ObjectionSection = () => {
 
 const OfferSection = () => {
   return (
-    <section className="py-24 relative overflow-hidden">
+    <section className="py-10 relative overflow-hidden">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand-orange/5 blur-[150px] rounded-full -z-10" />
-      <div className="max-w-5xl mx-auto px-6">
-        <div className="glass-card p-12 md:p-20 text-center relative">
+      <div className="max-w-9xl mx-auto px-1">
+        <div className="glass-card p-12 md:p-10 text-center relative">
           <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-brand-orange text-black px-6 py-2 rounded-full font-bold text-sm uppercase tracking-widest">
             Limited Availability
           </div>
@@ -599,97 +549,20 @@ const OfferSection = () => {
               </div>
             ))}
           </div>
-
-          <button className="bg-brand-orange text-black px-10 py-5 rounded-full font-bold text-xl hover:scale-105 transition-transform shadow-lg shadow-brand-orange/20">
-            Get My Audit Now
-          </button>
+          <Link href="/contact">
+            <button className="bg-brand-orange text-black px-10 py-5 rounded-full font-bold text-xl hover:scale-105 transition-transform shadow-lg shadow-brand-orange/20">
+              Get My Audit Now
+            </button>
+          </Link>
         </div>
       </div>
     </section>
   );
 };
 
-const Footer = () => {
-  return (
-    <footer className="py-24 border-t border-white/5">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-display font-bold mb-6">
-            Every Click You Pay For Should <br />
-            Move You Closer to Revenue.
-          </h2>
-          <p className="text-xl text-white/40 mb-10">
-            If it doesn’t — your system is broken.
-          </p>
-          <button className="bg-white text-black px-8 py-4 rounded-full font-bold hover:bg-brand-orange hover:text-black transition-colors">
-            Fix My Ads System
-          </button>
-        </div>
 
-        <div className="flex flex-col md:flex-row justify-between items-center gap-8 pt-12 border-t border-white/5">
-          <div className="flex items-center gap-2">
-            <div className="w-6 h-6 bg-brand-orange rounded flex items-center justify-center font-bold text-black text-xs italic">
-              N
-            </div>
-            <span className="font-display font-bold tracking-tighter">
-              NEXZEN
-            </span>
-          </div>
-          <div className="text-white/40 text-sm">
-            © 2026 NEXZen Ads Agency. All rights reserved.
-          </div>
-          <div className="flex gap-6">
-            <a
-              href="#"
-              className="text-white/40 hover:text-white transition-colors"
-            >
-              <Linkedin size={20} />
-            </a>
-            <a
-              href="#"
-              className="text-white/40 hover:text-white transition-colors"
-            >
-              <Facebook size={20} />
-            </a>
-            <a
-              href="#"
-              className="text-white/40 hover:text-white transition-colors"
-            >
-              <BarChart3 size={20} />
-            </a>
-          </div>
-        </div>
-      </div>
-    </footer>
-  );
-};
 
-const StickyCTA = () => {
-  const [isVisible, setIsVisible] = useState(false);
 
-  useEffect(() => {
-    const handleScroll = () => setIsVisible(window.scrollY > 800);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  return (
-    <AnimatePresence>
-      {isVisible && (
-        <motion.div
-          initial={{ y: 100 }}
-          animate={{ y: 0 }}
-          exit={{ y: 100 }}
-          className="fixed bottom-6 left-0 right-0 z-40 px-6 md:hidden"
-        >
-          <button className="w-full bg-brand-orange text-black py-4 rounded-full font-bold text-lg shadow-2xl sticky-cta-shadow">
-            Get My Free Audit
-          </button>
-        </motion.div>
-      )}
-    </AnimatePresence>
-  );
-};
 
 // --- Main Page ---
 
@@ -708,8 +581,8 @@ export default function LandingPage() {
       <ProofSection />
       <ObjectionSection />
       <OfferSection />
-      <Footer />
-      <StickyCTA />
+
+
     </main>
   );
 }

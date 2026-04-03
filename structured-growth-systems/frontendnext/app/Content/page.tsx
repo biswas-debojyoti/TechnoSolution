@@ -95,7 +95,7 @@ export default function LandingPage() {
       {/* Navigation */}
 
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+      <section className="relative pt-10 pb-10 lg:pt-10 lg:pb-10 overflow-hidden">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10">
           <div className="absolute top-0 left-1/4 w-96 h-96 bg-orange-500/10 rounded-full blur-[120px]" />
           <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-orange-600/10 rounded-full blur-[120px]" />
@@ -119,7 +119,7 @@ export default function LandingPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight text-white mb-8 leading-[0.9]"
+            className="text-3xl md:text-7xl lg:text-4xl font-black tracking-tight text-white mb-8 leading-[0.9]"
           >
             Leads Don&apos;t Convert Because <br className="hidden lg:block" />
             <span className="text-orange-500">You Stop Showing Up.</span>
@@ -206,11 +206,11 @@ export default function LandingPage() {
       </section>
 
       {/* Pain Section */}
-      <section className="py-24 bg-zinc-900/30">
+      <section className="py-10 bg-zinc-900/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <motion.div {...fadeIn}>
-              <h2 className="text-4xl md:text-5xl font-black text-white mb-6 leading-tight">
+              <h2 className="text-4xl md:text-3xl font-black text-white mb-6 leading-tight">
                 Why Your Leads Go Cold <br />
                 <span className="text-zinc-600">(And Never Come Back)</span>
               </h2>
@@ -246,7 +246,7 @@ export default function LandingPage() {
                 </span>
                 .
               </p>
-              <p className="text-4xl md:text-5xl font-black text-orange-500">
+              <p className="text-4xl md:text-3xl font-black text-orange-500">
                 They have a nurture and retention problem.
               </p>
 
@@ -280,7 +280,7 @@ export default function LandingPage() {
       </section>
 
       {/* Reframe Section with Live Data Visualization */}
-      <section className="py-24 overflow-hidden">
+      <section className="py-10 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.h2
             {...fadeIn}
@@ -476,7 +476,7 @@ export default function LandingPage() {
       </section>
 
       {/* Core System Section */}
-      <section id="system" className="py-24 bg-zinc-900">
+      <section id="system" className="py-10 bg-zinc-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-20">
             <motion.h2
@@ -661,11 +661,11 @@ export default function LandingPage() {
       </section>
 
       {/* Use Cases Section - Bento Grid Layout */}
-      <section id="use-cases" className="py-24">
+      <section id="use-cases" className="py-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.h2
             {...fadeIn}
-            className="text-4xl md:text-5xl font-black text-white mb-16 text-center"
+            className="text-4xl md:text-3xl font-black text-white mb-16 text-center"
           >
             What This Looks Like <br className="md:hidden" />{" "}
             <span className="text-orange-500">In Action</span>
@@ -825,11 +825,11 @@ export default function LandingPage() {
       </section>
 
       {/* Process Section */}
-      <section id="process" className="py-24 bg-zinc-900/50">
+      <section id="process" className="py-10 bg-zinc-900/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <motion.div {...fadeIn}>
-              <h2 className="text-4xl md:text-5xl font-black text-white mb-6">
+              <h2 className="text-4xl md:text-3xl font-black text-white mb-6">
                 How We Turn <br />
                 <span className="text-orange-500">Content Into Revenue</span>
               </h2>
@@ -910,7 +910,7 @@ export default function LandingPage() {
       </section>
 
       {/* Objection Section */}
-      <section className="py-24">
+      <section className="py-10">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             {...fadeIn}

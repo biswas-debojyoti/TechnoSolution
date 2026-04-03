@@ -81,7 +81,7 @@ export default function Architecture() {
             The <span className='text-brand-orange'>NEX</span>Zen Global Performance Architecture™
           </span>
         </div>
-        <h1 className="text-5xl md:text-7xl font-display font-bold leading-tight mb-8">
+        <h1 className="text-3xl md:text-7xl font-display font-bold leading-tight mb-8">
           Premium Cross-Market <br /><span className="text-gradient-orange">Growth Engineering</span>
         </h1>
         <p className="text-xl text-white/60 max-w-3xl mx-auto leading-relaxed">

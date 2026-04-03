@@ -5,6 +5,7 @@ const {
   createBlog,
   getAllBlogs,
   getBlogById,
+  getBlogBySlug,
   getBlogImage,
   updateBlog,
   deleteBlog,
@@ -33,8 +34,8 @@ router.post(
 // @route  GET /api/blogs/:id/image  — public, serves raw image buffer
 router.get("/:id/image",  getBlogImage);
 
-// @route  GET /api/blogs/:id
-router.get("/:id",   getBlogById);
+// @route  GET /api/blogs/blog-by-slug
+router.get("/:slug", getBlogBySlug);   // 👈 ADD THIS
 
 // @route  PUT /api/blogs/:id  (multipart/form-data)
 router.put(

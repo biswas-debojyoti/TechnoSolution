@@ -28,7 +28,7 @@ export default function Problem() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-3xl md:text-5xl font-bold mb-6"
+            className="text-3xl md:text-3xl font-bold mb-6"
           >
             Most Brands Don't Fail Because of Ads. <br />
             <span className="text-primary-accent">They Fail Because of Broken Systems.</span>

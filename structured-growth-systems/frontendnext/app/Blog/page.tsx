@@ -50,8 +50,8 @@ function getImage(blog: Blog): string {
   return `https://picsum.photos/seed/123/1200/800`;
 }
 
-function getSlug(blog: Blog): string {
-  return blog._id;
+function getSlug(blog: Blog): any {
+  return blog?.slug;
 }
 
 function getRawDate(blog: Blog): string {

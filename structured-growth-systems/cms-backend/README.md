@@ -262,5 +262,6 @@ Valid statuses: `new` | `contacted` | `closed`
 
 ```bash
 # Generate a secure JWT secret
-node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
+
+#node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
 ```

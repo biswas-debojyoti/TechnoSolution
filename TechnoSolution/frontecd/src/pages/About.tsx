@@ -3,6 +3,7 @@ import { ArrowRight, CheckCircle2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 
+
 export default function About() {
   useEffect(() => {
     const script = document.createElement('script');

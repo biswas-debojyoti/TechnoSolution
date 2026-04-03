@@ -195,23 +195,22 @@ const getAllBlogs = async (req, res, next) => {
  * @route   GET /api/blogs/:id
  * @access  Private (Admin)
  */
-const getBlogById = async (req, res, next) => {
-  try {
-    const blog = await Blog.findById(req.params.id);
-    if (!blog) return sendError(res, "Blog not found", 404);
 
+const getBlogBySlug = async (req, res, next) => {
+  try {
+    const { slug } = req.params;
+    const blog = await Blog.findOne({ slug });
+    if (!blog) return sendError(res, "Blog not found", 404);
     // Increment views
     blog.views = (blog.views || 0) + 1;
     await blog.save();
-
     const blogObj = stripImageBuffer(blog);
-
-    // ✅ Append imageUrl (same pattern as getAllBlogs)
+    // Image URL
     blogObj.imageUrl = blog.image?.data
       ? `/blogs/${blog._id}/image`
       : null;
 
-    // ✅ Convert EditorJS blocks → HTML string
+    // Convert content
     blogObj.content = convertEditorJSToHTML(blog.content);
 
     return sendSuccess(res, { blog: blogObj }, "Blog fetched successfully");
@@ -219,7 +218,6 @@ const getBlogById = async (req, res, next) => {
     next(error);
   }
 };
-
 
 /**
  * @desc    Get blog image (serve raw buffer as image response)
@@ -295,7 +293,7 @@ const deleteBlog = async (req, res, next) => {
 module.exports = {
   createBlog,
   getAllBlogs,
-  getBlogById,
+  getBlogBySlug,
   getBlogImage,
   updateBlog,
   deleteBlog,

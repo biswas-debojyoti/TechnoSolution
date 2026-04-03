@@ -31,11 +31,11 @@ const seedAdmin = async () => {
       role: "superadmin",
     });
 
-    console.log("✅ Admin created successfully!");
-    console.log(`   Email   : ${admin.email}`);
-    console.log(`   Role    : ${admin.role}`);
-    console.log(`   ID      : ${admin._id}`);
-    console.log("\n⚠️  IMPORTANT: Change the default password immediately after first login.");
+    // console.log("✅ Admin created successfully!");
+    // console.log(`   Email   : ${admin.email}`);
+    // console.log(`   Role    : ${admin.role}`);
+    // console.log(`   ID      : ${admin._id}`);
+    // console.log("\n⚠️  IMPORTANT: Change the default password immediately after first login.");
   } catch (error) {
     console.error("❌ Seed failed:", error.message);
   } finally {

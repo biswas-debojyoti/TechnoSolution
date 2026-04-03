@@ -19,7 +19,6 @@ https.get(url, (res) => {
       redirectRes.pipe(file);
       file.on('finish', () => {
         file.close();
-        console.log('Download completed');
       });
     });
   } else {
@@ -27,7 +26,6 @@ https.get(url, (res) => {
     res.pipe(file);
     file.on('finish', () => {
       file.close();
-      console.log('Download completed');
     });
   }
 }).on('error', (err) => {

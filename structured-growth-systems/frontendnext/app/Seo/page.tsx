@@ -22,89 +22,12 @@ import {
   X,
 } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
+import { DigitalAssetEngine } from "../Web-Design/page";
 
 // --- Components ---
 
-const Navbar = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? "bg-[#050505]/80 backdrop-blur-md border-b border-white/10 py-4" : "bg-transparent py-6"}`}
-    >
-      <div className="container mx-auto px-6 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-accent rounded-full flex items-center justify-center">
-            <span className="text-black font-bold text-lg">N</span>
-          </div>
-          <span className="text-xl font-display font-bold tracking-tight">
-            NEXZen<span className="text-accent">Creative</span>
-          </span>
-        </div>
-
-        <div className="hidden md:flex items-center gap-8 text-sm font-medium text-white/70">
-          <a href="#" className="hover:text-accent transition-colors">
-            Architecture
-          </a>
-          <a href="#" className="hover:text-accent transition-colors">
-            Process
-          </a>
-          <a href="#" className="hover:text-accent transition-colors">
-            Results
-          </a>
-          <a href="#" className="hover:text-accent transition-colors">
-            FAQ
-          </a>
-        </div>
-
-        <div className="hidden md:block">
-          <button className="bg-accent hover:bg-accent/90 text-black px-6 py-2.5 rounded-full text-sm font-bold transition-all transform hover:scale-105 active:scale-95">
-            Get SEO Blueprint
-          </button>
-        </div>
-
-        <button
-          className="md:hidden text-white"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-        >
-          {mobileMenuOpen ? <X /> : <Menu />}
-        </button>
-      </div>
-
-      {/* Mobile Menu */}
-      {mobileMenuOpen && (
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="md:hidden absolute top-full left-0 right-0 bg-[#050505] border-b border-white/10 p-6 flex flex-col gap-4"
-        >
-          <a href="#" className="text-lg font-medium">
-            Architecture
-          </a>
-          <a href="#" className="text-lg font-medium">
-            Process
-          </a>
-          <a href="#" className="text-lg font-medium">
-            Results
-          </a>
-          <a href="#" className="text-lg font-medium">
-            FAQ
-          </a>
-          <button className="bg-accent text-black px-6 py-3 rounded-full font-bold">
-            Get SEO Blueprint
-          </button>
-        </motion.div>
-      )}
-    </nav>
-  );
-};
 
 const Hero = () => {
   return (
@@ -131,7 +54,7 @@ const Hero = () => {
                 AI-Powered Search (SGE) Ready
               </span>
             </div>
-            <h1 className="text-5xl md:text-8xl font-display font-bold leading-[0.9] tracking-tighter mb-8">
+            <h1 className="text-3xl md:text-4xl font-display font-bold leading-[0.9] tracking-tighter mb-8">
               Your Website Isn’t Invisible. <br />
               <span className="text-white/40 italic">
                 It’s Structurally Irrelevant to Google.
@@ -177,15 +100,10 @@ const Hero = () => {
           </motion.div>
         </div>
       </div>
+      <div className="hidden md:bloc">
+      <DigitalAssetEngine/>
 
-      {/* Decorative Scroll Indicator */}
-      <motion.div
-        animate={{ y: [0, 10, 0] }}
-        transition={{ duration: 2, repeat: Infinity }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-30"
-      >
-        <div className="w-[1px] h-12 bg-gradient-to-b from-white to-transparent" />
-      </motion.div>
+      </div>
     </section>
   );
 };
@@ -215,7 +133,7 @@ const PainPoints = () => {
   ];
 
   return (
-    <section className="py-24 bg-white/5 relative overflow-hidden">
+    <section className="py-10 bg-white/5 relative overflow-hidden">
       <div className="container mx-auto px-6">
         <div className="max-w-3xl mb-16">
           <h2 className="text-4xl md:text-6xl font-display font-bold mb-6">
@@ -257,7 +175,7 @@ const PainPoints = () => {
 
 const Reframe = () => {
   return (
-    <section className="py-24 relative">
+    <section className="py-10 relative">
       <div className="container mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div>
@@ -393,7 +311,7 @@ const Architecture = () => {
   ];
 
   return (
-    <section className="py-24 bg-white/5">
+    <section className="py-10 bg-white/5">
       <div className="container mx-auto px-6">
         <div className="text-center max-w-3xl mx-auto mb-20">
           <h2 className="text-4xl md:text-6xl font-display font-bold mb-6">
@@ -471,7 +389,7 @@ const Process = () => {
   ];
 
   return (
-    <section className="py-24">
+    <section className="py-10">
       <div className="container mx-auto px-6">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-20">
           <div className="max-w-2xl">
@@ -491,7 +409,7 @@ const Process = () => {
         <div className="grid md:grid-cols-3 gap-x-12 gap-y-16">
           {steps.map((step, idx) => (
             <div key={idx} className="relative">
-              <div className="text-accent font-display text-8xl font-bold opacity-10 absolute -top-10 -left-6 -z-10">
+              <div className="text-accent font-display text-4xl font-bold opacity-10 absolute -top-10 -left-6 -z-10">
                 {idx + 1}
               </div>
               <h3 className="text-2xl font-bold mb-4">{step.title}</h3>
@@ -509,7 +427,7 @@ const Process = () => {
 
 const Results = () => {
   return (
-    <section className="py-24 bg-accent text-black overflow-hidden relative">
+    <section className="py-10 bg-accent text-white overflow-hidden relative">
       {/* Background Noise/Texture */}
       <div className="absolute inset-0 bg-noise opacity-10" />
 
@@ -519,7 +437,7 @@ const Results = () => {
             <h2 className="text-4xl md:text-6xl font-display font-bold mb-8 leading-tight">
               What This Actually Changes in Your Business
             </h2>
-            <div className="grid sm:grid-cols-2 gap-8">
+            <div className="grid grid-cols-2  gap-8">
               {[
                 {
                   title: "Predictable Leads",
@@ -542,7 +460,7 @@ const Results = () => {
                   icon: <TrendingUp />,
                 },
               ].map((item, i) => (
-                <div key={i} className="flex flex-col gap-3">
+                <div key={i} className="grid sm:grid-col-2 gap-3">
                   <div className="w-10 h-10 rounded-full bg-black/10 flex items-center justify-center">
                     {item.icon}
                   </div>
@@ -629,7 +547,7 @@ const CaseStudies = () => {
   ];
 
   return (
-    <section className="py-24">
+    <section className="py-10">
       <div className="container mx-auto px-6">
         <h2 className="text-4xl md:text-6xl font-display font-bold mb-16 text-center">
           Proof in the System
@@ -702,7 +620,7 @@ const FAQ = () => {
   const [openIdx, setOpenIdx] = useState(0);
 
   return (
-    <section className="py-24 bg-white/5">
+    <section className="py-10 bg-white/5">
       <div className="container mx-auto px-6">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-4xl md:text-6xl font-display font-bold mb-16 text-center">
@@ -774,7 +692,7 @@ const Pricing = () => {
   ];
 
   return (
-    <section className="py-24">
+    <section className="py-10">
       <div className="container mx-auto px-6">
         <div className="text-center mb-20">
           <h2 className="text-4xl md:text-6xl font-display font-bold mb-6">
@@ -811,11 +729,13 @@ const Pricing = () => {
                   </li>
                 ))}
               </ul>
+              <Link href="/contact">
               <button
-                className={`w-full py-4 rounded-full font-bold transition-all ${i === 1 ? "bg-accent text-black hover:bg-accent/90" : "bg-white/5 border border-white/10 hover:bg-white/10"}`}
+                className={`w-full py-4 rounded-full font-bold transition-all ${i === 1 ? "bg-white text-black hover:bg-accent/90" : "bg-white/5 border border-white/10 hover:bg-white/10"}`}
               >
                 Book Strategy Call
               </button>
+              </Link>
             </div>
           ))}
         </div>
@@ -826,7 +746,7 @@ const Pricing = () => {
 
 const FinalCTA = () => {
   return (
-    <section className="py-24 relative overflow-hidden">
+    <section className="py-10 relative overflow-hidden">
       <div className="absolute inset-0 bg-accent/5 -z-10" />
       <div className="container mx-auto px-6 text-center">
         <div className="max-w-4xl mx-auto">
@@ -834,7 +754,7 @@ const FinalCTA = () => {
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
           >
-            <h2 className="text-5xl md:text-8xl font-display font-bold mb-8 leading-[0.9] tracking-tighter">
+            <h2 className="text-3xl md:text-4xl font-display font-bold mb-8 leading-[0.9] tracking-tighter">
               Every Day You Delay SEO, You Fund Your{" "}
               <span className="text-accent">Competitor’s Growth.</span>
             </h2>
@@ -842,9 +762,11 @@ const FinalCTA = () => {
               The earlier you build authority, the harder it is to beat you.
               Stop renting attention and start owning your market.
             </p>
-            <button className="bg-accent hover:bg-accent/90 text-black px-12 py-6 rounded-full text-2xl font-bold transition-all transform hover:scale-105 active:scale-95 shadow-[0_0_40px_rgba(255,99,33,0.3)]">
-              Get Your SEO Growth Plan
-            </button>
+            <Link href="/contact" className="inline-block mb-4">
+              <button className=" text-white text-black px-12 py-6 rounded-full text-2xl font-bold transition-all transform hover:scale-105 active:scale-95 shadow-[0_0_40px_rgba(255,99,33,0.3)]">
+                Get Your SEO Growth Plan
+              </button>
+            </Link>
           </motion.div>
         </div>
       </div>
@@ -852,34 +774,7 @@ const FinalCTA = () => {
   );
 };
 
-const Footer = () => {
-  return (
-    <footer className="py-12 border-t border-white/10">
-      <div className="container mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-8">
-        <div className="flex items-center gap-2">
-          <div className="w-6 h-6 bg-accent rounded-full flex items-center justify-center">
-            <span className="text-black font-bold text-xs">N</span>
-          </div>
-          <span className="text-lg font-display font-bold tracking-tight">
-            NEXZen<span className="text-accent">Creative</span>
-          </span>
-        </div>
-        <p className="text-white/40 text-sm">
-          © 2026 NEXZen Creative. All rights reserved. Built for the next
-          generation of search.
-        </p>
-        <div className="flex gap-6 text-white/40 text-sm">
-          <a href="#" className="hover:text-white transition-colors">
-            Privacy
-          </a>
-          <a href="#" className="hover:text-white transition-colors">
-            Terms
-          </a>
-        </div>
-      </div>
-    </footer>
-  );
-};
+
 
 // --- Main Page ---
 
@@ -910,7 +805,7 @@ export default function SEOPage() {
       <FAQ />
       <Pricing />
       <FinalCTA />
-      <Footer />
+      {/* <Footer /> */}
 
       {/* Sticky CTA for Mobile/Desktop */}
       <motion.div
@@ -918,13 +813,7 @@ export default function SEOPage() {
         animate={{ y: 0 }}
         className="fixed bottom-6 right-6 z-50 md:bottom-10 md:right-10"
       >
-        <button className="bg-accent text-black p-4 md:px-8 md:py-4 rounded-full font-bold shadow-2xl flex items-center gap-2 group">
-          <span className="hidden md:inline">Book Your Audit</span>
-          <BarChart3
-            size={20}
-            className="group-hover:rotate-12 transition-transform"
-          />
-        </button>
+
       </motion.div>
     </main>
   );

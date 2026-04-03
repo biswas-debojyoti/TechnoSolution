@@ -21,12 +21,13 @@ import {
   Smartphone,
   Gauge,
 } from "lucide-react";
+import Link from "next/link";
 
 // --- Components ---
 
 const CaseStudySection = () => {
   return (
-    <section className="py-24 md:py-32 bg-black overflow-hidden">
+    <section className="py-10 md:py-10 bg-black overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
         <div className="mb-16 md:mb-24">
           <h2 className="text-4xl md:text-6xl font-bold tracking-tight max-w-4xl">
@@ -111,10 +112,12 @@ const CaseStudySection = () => {
               ))}
             </div>
 
-            <button className="w-full md:w-auto px-10 py-5 bg-white text-black font-bold rounded-full hover:bg-zinc-200 transition-all flex items-center justify-center gap-2 group">
-              Explore Case Study
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </button>
+            <Link href="/contact" className="z-10">
+              <button className="w-full md:w-auto px-10 py-5 bg-white text-black font-bold rounded-full hover:bg-zinc-200 transition-all flex items-center justify-center gap-2 group">
+                Explore Case Study
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </button>
+            </Link>
           </motion.div>
         </div>
       </div>
@@ -256,7 +259,7 @@ const LaptopMockup = ({ className }: { className?: string }) => {
   );
 };
 
-const DigitalAssetEngine = () => {
+export const DigitalAssetEngine = () => {
   return (
     <div className="relative w-full aspect-square max-w-[500px] mx-auto flex items-center justify-center">
       {/* Background Glow */}
@@ -301,6 +304,27 @@ const DigitalAssetEngine = () => {
           delay: 4.5,
         },
         { icon: Globe, label: "Global", color: "text-orange-400", delay: 6 },
+        {
+          icon: ShoppingCart,
+          label: "eCommerce",
+          color: "text-blue-400",
+          delay: 0,
+        },
+        {
+          icon: BarChart3,
+          label: "Analytics",
+          color: "text-green-400",
+          delay: 1.5,
+        },
+        { icon: Layout, label: "UX/UI", color: "text-purple-400", delay: 3 },
+          {
+          icon: Target,
+          label: "Conversion",
+          color: "text-red-400",
+          delay: 4.5,
+        },
+        { icon: Globe, label: "Global", color: "text-orange-400", delay: 6 },
+        
       ].map((module, i) => (
         <motion.div
           key={i}
@@ -507,7 +531,7 @@ export default function WebDesignLP() {
       {/* Navigation */}
 
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden">
+      <section className="relative pt-10 pb-10 md:pt-10 md:pb-10 overflow-hidden">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <motion.div
@@ -519,7 +543,7 @@ export default function WebDesignLP() {
                 <Zap className="w-3 h-3" />
                 Performance-First Design
               </div>
-              <h1 className="text-5xl md:text-7xl font-bold tracking-tight leading-[1.1] mb-8">
+              <h1 className="text-3xl md:text-5xl font-bold tracking-tight leading-[1.1] mb-8">
                 We Don’t Just <span className="text-zinc-500">Design</span>{" "}
                 Websites. <br />
                 <span className="text-white">We Engineer Digital Assets.</span>
@@ -590,10 +614,10 @@ export default function WebDesignLP() {
       <CaseStudySection />
 
       {/* Portfolio Section */}
-      <section id="portfolio" className="py-24 md:py-32">
+      <section id="portfolio" className="py-10 md:py-10">
         <div className="max-w-7xl mx-auto px-6">
           <div className="mb-20 text-center">
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">
+            <h2 className="text-4xl md:text-3xl font-bold tracking-tight mb-6">
               Designed to Outperform.
             </h2>
             <p className="text-zinc-400 text-lg max-w-2xl mx-auto">
@@ -658,7 +682,7 @@ export default function WebDesignLP() {
       </section>
 
       {/* Reframe Section */}
-      <section className="py-24 md:py-32 bg-zinc-950 relative overflow-hidden">
+      <section className="py-10 md:py-10 bg-zinc-950 relative overflow-hidden">
         {/* Background Laptop Mockup with Depth of Field */}
         <motion.div
           initial={{ opacity: 0, x: 100, rotate: -5 }}
@@ -705,11 +729,11 @@ export default function WebDesignLP() {
       </section>
 
       {/* The System Section */}
-      <section id="system" className="py-24 md:py-32">
+      <section id="system" className="py-10 md:py-10">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-col lg:flex-row gap-20 items-center">
             <div className="flex-1">
-              <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-8">
+              <h2 className="text-4xl md:text-3xl font-bold tracking-tight mb-8">
                 The NEXZen Web <br />
                 Conversion Framework
               </h2>
@@ -793,10 +817,10 @@ export default function WebDesignLP() {
       </section>
 
       {/* Process Section */}
-      <section id="process" className="py-24 md:py-32 bg-zinc-950">
+      <section id="process" className="py-10 md:py-20 bg-zinc-950">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">
+            <h2 className="text-4xl md:text-3xl font-bold tracking-tight mb-6">
               From Idea to High-Performance
             </h2>
             <p className="text-zinc-400 text-lg">
@@ -828,14 +852,14 @@ export default function WebDesignLP() {
       </section>
 
       {/* Visual Reference Section */}
-      <section className="py-24 md:py-32 bg-zinc-950/50">
+      <section className="py-10 md:py-10 bg-zinc-950/50">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-col md:flex-row items-end justify-between gap-8 mb-16">
             <div className="max-w-2xl">
               <h2 className="text-sm uppercase tracking-[0.3em] font-mono text-orange-500 mb-4">
                 The Reference Strategy
               </h2>
-              <h3 className="text-4xl md:text-5xl font-bold tracking-tight">
+              <h3 className="text-4xl md:text-3xl font-bold tracking-tight">
                 Inspired by Global <br />
                 Design Standards
               </h3>
@@ -915,18 +939,12 @@ export default function WebDesignLP() {
             ))}
           </div>
 
-          <div className="mt-16 p-8 md:p-12 bg-orange-500/5 border border-orange-500/10 rounded-3xl text-center">
-            <p className="text-lg text-zinc-300 italic">
-              &quot;We don&apos;t copy. We apply proven systems that have been
-              tested across millions of users to ensure your website performs
-              from day one.&quot;
-            </p>
-          </div>
+
         </div>
       </section>
 
       {/* Final Offer Section */}
-      <section className="py-24 md:py-48 relative overflow-hidden">
+      <section className="py-10 md:py-10 relative overflow-hidden">
         <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-px bg-gradient-to-r from-transparent via-orange-500/50 to-transparent" />
         <div className="max-w-4xl mx-auto px-6 text-center">
           <motion.div
@@ -934,7 +952,7 @@ export default function WebDesignLP() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-5xl md:text-7xl font-bold tracking-tight mb-8">
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-8">
               Get a Website Audit + Design Direction
             </h2>
             <p className="text-xl text-zinc-400 mb-12 leading-relaxed">
@@ -942,9 +960,11 @@ export default function WebDesignLP() {
               conversion gaps, and a clear design improvement roadmap.
             </p>
             <div className="flex flex-col items-center gap-6">
-              <button className="px-12 py-6 bg-white text-black font-black text-xl rounded-full hover:bg-zinc-200 transition-all shadow-[0_0_40px_rgba(255,255,255,0.2)]">
-                Request My Audit
-              </button>
+              <Link href="/contact" className="z-10">
+                <button className="px-12 py-6 bg-white text-black font-black text-xl rounded-full hover:bg-zinc-200 transition-all shadow-[0_0_40px_rgba(255,255,255,0.2)]">
+                  Request My Audit
+                </button>
+              </Link>
               <div className="flex items-center gap-8 text-sm font-mono text-zinc-500 uppercase tracking-widest">
                 <div className="flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 text-orange-500" /> UX

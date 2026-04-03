@@ -23,7 +23,7 @@ export default function Offer() {
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-accent/10 border border-primary-accent/20 text-primary-accent text-[10px] font-bold tracking-widest uppercase mb-6">
                 Limited Time Offer
               </div>
-              <h2 className="text-4xl md:text-5xl font-extrabold mb-6 leading-tight">
+              <h2 className="text-4xl md:text-3xl font-extrabold mb-6 leading-tight">
                 Fix Your Ads. <br />
                 <span className="text-primary-accent">Scale Your Agency.</span>
               </h2>
@@ -32,7 +32,7 @@ export default function Offer() {
               </p>
               
               <div className="flex items-baseline gap-2 mb-8">
-                <span className="text-5xl font-black text-primary-accent">$20</span>
+                <span className="text-3xl font-black text-primary-accent">$20</span>
                 <span className="text-text-secondary font-bold">/ month</span>
               </div>
              <Link href="/contact" className="w-full">

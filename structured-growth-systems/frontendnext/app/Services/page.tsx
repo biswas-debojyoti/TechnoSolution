@@ -188,7 +188,7 @@ const faqs = [
 
 export default function Services() {
   return (
-    <article className="w-full pt-20 pb-40">
+    <article className="w-full pt-20 ">
       {/* SEO Metadata (Hidden from UI, but for reference) */}
       {/* 
         Meta Title: Digital Marketing Agency | NexZen Creative | Scale Your Brand
@@ -197,7 +197,7 @@ export default function Services() {
       */}
 
       {/* Hero Section */}
-      <header className="relative pt-32 pb-24 px-6 overflow-hidden">
+      <header className="relative pt-10 pb-10 px-6 overflow-hidden">
         <div className="absolute inset-0 bg-brand-orange/5 blur-[120px] -z-10" />
         <div className="max-w-7xl mx-auto text-center">
           <motion.div
@@ -211,7 +211,7 @@ export default function Services() {
                 NexZen Creative: Digital Growth Architects
               </span>
             </div>
-            <h1 className="text-5xl md:text-8xl font-display font-bold leading-tight mb-8">
+            <h1 className="text-3xl md:text-4xl font-display font-bold leading-tight mb-8">
               Engineer{" "}
               <span className="text-gradient-orange">Profitable Scale.</span>{" "}
               <br />
@@ -249,14 +249,14 @@ export default function Services() {
       </header>
 
       {/* About Section */}
-      <section className="py-32 px-6 bg-white/[0.02]">
+      <section className="py-10 px-6 bg-white/[0.02]">
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20 items-center">
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-4xl md:text-5xl font-display font-bold mb-8">
+            <h2 className="text-4xl md:text-3xl font-display font-bold mb-8">
               About NexZen Creative: Your Growth Partner
             </h2>
             <div className="prose prose-invert prose-lg text-white/70 space-y-6">
@@ -311,7 +311,7 @@ export default function Services() {
       </section>
 
       {/* Services Section */}
-      <section id="services" className="py-32 px-6">
+      <section id="services" className="py-10 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-24">
             <h2 className="text-4xl md:text-6xl font-display font-bold mb-8">
@@ -358,7 +358,7 @@ export default function Services() {
       </section>
 
       {/* Process Section */}
-      <section className="py-32 px-6 bg-brand-orange/5">
+      <section className="py-10 px-6 bg-brand-orange/5">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-24">
             <h2 className="text-4xl md:text-6xl font-display font-bold mb-8">
@@ -388,10 +388,10 @@ export default function Services() {
       </section>
 
       {/* Industries Section */}
-      <section className="py-32 px-6">
+      <section className="py-10 px-6">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-display font-bold mb-6">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl md:text-3xl font-display font-bold mb-6">
               Specialized Industry Expertise
             </h2>
             <p className="text-white/40 mb-10">
@@ -425,7 +425,7 @@ export default function Services() {
       </section>
 
       {/* Why Choose Us */}
-      <section className="py-32 px-6 bg-white/[0.02]">
+      <section className="py-10 px-6 bg-white/[0.02]">
         <div className="max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-20 items-center">
             <div>
@@ -485,10 +485,10 @@ export default function Services() {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-32 px-6">
+      <section className="py-10 px-6">
         <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-5xl font-display font-bold mb-6 flex items-center justify-center gap-4">
+          <div className="text-center mb-10">
+            <h2 className="text-4xl md:text-3xl font-display font-bold mb-6 flex items-center justify-center gap-4">
               <HelpCircle className="w-10 h-10 text-brand-orange" /> Frequently
               Asked Questions
             </h2>
@@ -510,11 +510,11 @@ export default function Services() {
       </section>
 
       {/* CTA Section */}
-      <footer className="py-32 px-6">
-        <div className="max-w-7xl mx-auto p-16 md:p-24 rounded-[40px] bg-gradient-to-br from-brand-orange to-orange-700 text-center relative overflow-hidden">
+      <footer className="py-10 px-6">
+        <div className="max-w-7xl mx-auto p-10 md:p-10 rounded-[40px] bg-gradient-to-br from-brand-orange to-orange-700 text-center relative overflow-hidden">
           <div className="absolute inset-0 bg-black/20" />
           <div className="relative z-10">
-            <h2 className="text-4xl md:text-7xl font-display font-bold text-white mb-8">
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-8">
               Ready to Accelerate Your <br />
               Business Growth?
             </h2>

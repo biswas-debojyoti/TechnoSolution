@@ -73,7 +73,7 @@ export default function KnowledgeHub() {
             Topical Authority — Knowledge Hub
           </span>
         </div>
-        <h1 className="text-5xl md:text-8xl font-display font-bold leading-tight mb-8">
+        <h1 className="text-3xl md:text-4xl font-display font-bold leading-tight mb-8">
           The Growth <br/><span className="text-gradient-orange">Knowledge Hub</span>
         </h1>
         <p className="text-xl text-white/60 max-w-3xl mx-auto leading-relaxed">

@@ -144,53 +144,12 @@ function TiltCard({
 }
 
 export default function Home() {
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://platform.linkedin.com/badges/js/profile.js";
-    script.async = true;
-    script.defer = true;
-    document.body.appendChild(script);
 
-    // Re-initialize LinkedIn badges if the script is already loaded
-    const interval = setInterval(() => {
-      if ((window as any).LInkedIn) {
-        (window as any).LInkedIn.Badges.init();
-        clearInterval(interval);
-      }
-    }, 1000);
 
-    return () => {
-      document.body.removeChild(script);
-      clearInterval(interval);
-    };
-  }, []);
-
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "ProfessionalService",
-    name: "Sayad Shahid | Growth Strategist",
-    image: "https://sayadshahid.com/og-image.jpg",
-    description:
-      "Engineering structured acquisition systems for high-growth brands. Specializing in Meta Ads, Google Ads, and Performance Marketing.",
-    url: "https://sayadshahid.com",
-    telephone: "",
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: "Mumbai",
-      addressCountry: "IN",
-    },
-    sameAs: [
-      "https://in.linkedin.com/in/sayed-shahid-089086344",
-      "https://twitter.com/sayadshahid",
-    ],
-  };
+ 
   return (
     <div className="w-full">
-      {/* <SEO 
-        title="Sayad Shahid | Growth Strategist & Performance Marketer"
-        description="Engineering structured acquisition systems for high-growth brands. Specializing in Meta Ads, Google Ads, and Performance Marketing."
-        structuredData={structuredData}
-      /> */}
+   
       {/* HERO SECTION */}
       <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden pt-20 pb-32">
         {/* Background Elements */}
@@ -272,7 +231,7 @@ export default function Home() {
               <div className="rotating-ring"></div>
               <div className="profile-image-container ">
                 <img
-                  src="https://drive.google.com/thumbnail?id=1c1Q1D_CpXdXqqT9yYz0_GLsZf2mR3CuU&sz=w800"
+                  src="/image/profileImage.jpeg"
                   alt="Sayed Shahid"
                   width="320"
                   height="320"

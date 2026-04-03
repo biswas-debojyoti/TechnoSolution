@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import AutoContactModal from "@/components/AutoContactModal";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,6 +36,7 @@ export default function RootLayout({
         <main className="flex-1 md:mt-10">
           {children}
         </main>   
+        <AutoContactModal/>
 
         <Footer />  
       </body>

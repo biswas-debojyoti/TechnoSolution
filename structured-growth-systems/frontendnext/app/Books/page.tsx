@@ -47,7 +47,7 @@ export default function Books() {
   return (
     <div className="w-full pt-32  px-6 max-w-7xl mx-auto">
       <div className="max-w-3xl mb-2 text-center mx-auto">
-        <h1 className="text-5xl md:text-7xl font-display font-bold mb-6">Documented Frameworks</h1>
+        <h1 className="text-3xl md:text-7xl font-display font-bold mb-6">Documented Frameworks</h1>
         <p className="text-xl text-white/60">
           I don't just execute; I document the exact systems that drive results. These are the operating systems behind millions in profitable ad spend.
         </p>
@@ -77,7 +77,7 @@ export default function Books() {
 
             <div className="w-full lg:w-2/3 space-y-10">
               <div>
-                <h2 className="text-4xl md:text-5xl font-display font-bold mb-4">{book.title}</h2>
+                <h2 className="text-4xl md:text-3xl font-display font-bold mb-4">{book.title}</h2>
                 <p className="text-2xl text-brand-orange font-serif italic mb-6">{book.subtitle}</p>
                 <p className="text-lg text-white/70 leading-relaxed">{book.desc}</p>
               </div>

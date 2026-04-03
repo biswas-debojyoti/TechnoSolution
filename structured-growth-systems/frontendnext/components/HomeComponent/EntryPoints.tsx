@@ -35,7 +35,7 @@ export default function EntryPoints() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-5xl font-bold mb-6"
+            className="text-4xl md:text-3xl font-bold mb-6"
           >
             Start With What You Need
           </motion.h2>

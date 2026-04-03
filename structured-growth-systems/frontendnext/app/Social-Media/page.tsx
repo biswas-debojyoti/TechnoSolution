@@ -19,6 +19,7 @@ import {
   Quote,
 } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 // --- Components ---
 
@@ -127,10 +128,10 @@ const AdMockup = ({
 );
 
 const Hero = () => (
-  <Section className="min-h-[100vh] flex flex-col items-center justify-center text-center relative overflow-hidden pt-32">
+  <Section className="min-h-[100vh] flex flex-col items-center justify-center text-center relative overflow-hidden pt-10">
     {/* Background Elements */}
     <div className="absolute top-1/4 -left-20 w-[500px] h-[500px] bg-[#FF6321]/10 blur-[150px] rounded-full animate-pulse" />
-    <div className="absolute bottom-1/4 -right-20 w-[500px] h-[500px] bg-[#FF6321]/5 blur-[150px] rounded-full animate-pulse" />
+    <div className="absolute bottom-1/4 -right-20 w-[400px] h-[500px] bg-[#FF6321]/5 blur-[150px] rounded-full animate-pulse" />
 
     <motion.div
       initial={{ opacity: 0, y: 30 }}
@@ -139,7 +140,7 @@ const Hero = () => (
       className="z-10 mb-20"
     >
       <Badge>Pattern Break + Emotional Hook</Badge>
-      <h1 className="text-6xl md:text-[10rem] font-black tracking-tighter leading-[0.85] mb-8">
+      <h1 className="text-3xl md:text-4xl font-black tracking-tighter leading-[0.85] mb-8">
         Your Ads Don’t Fail <br />
         <span className="text-[#FF6321] drop-shadow-[0_0_30px_rgba(255,99,33,0.3)]">
           Because of Budget.
@@ -157,22 +158,7 @@ const Hero = () => (
         <Button className="text-lg px-10 py-5">
           Get Free Creative + Funnel Audit <ArrowRight size={22} />
         </Button>
-        <div className="flex items-center gap-4 text-white/40 font-bold uppercase tracking-widest text-xs">
-          <div className="flex -space-x-2">
-            {[1, 2, 3].map((i) => (
-              <div
-                key={i}
-                className="w-8 h-8 rounded-full border-2 border-[#050505] bg-white/10 overflow-hidden relative"
-              >
-                <img
-                  src={`https://picsum.photos/seed/user${i}/32/32`}
-                  alt="User"
-                />
-              </div>
-            ))}
-          </div>
-          <span>Trusted by 50+ Brands</span>
-        </div>
+     
       </div>
     </motion.div>
 
@@ -238,7 +224,7 @@ const Problem = () => (
         </div>
       </div>
       <div className="glass p-12 rounded-3xl relative">
-        <div className="absolute -top-6 -right-6 w-24 h-24 bg-[#FF6321] rounded-full flex items-center justify-center font-black text-2xl rotate-12">
+        <div className="absolute -top-10 right-6 w-24 h-24 bg-[#FF6321] rounded-full flex items-center justify-center font-black text-2xl rotate-12">
           STOP
         </div>
         <p className="text-3xl md:text-4xl font-display italic leading-tight mb-8">
@@ -259,7 +245,7 @@ const Problem = () => (
 const Reframe = () => (
   <Section className="text-center">
     <Badge>The Reframe</Badge>
-    <h2 className="text-4xl md:text-7xl font-black mb-12 max-w-4xl mx-auto leading-tight">
+    <h2 className="tex3-4xl md:text-4xl font-black mb-12 max-w-4xl mx-auto leading-tight">
       Social Ads Are Not Advertising. <br />
       <span className="text-[#FF6321]">They’re Behavioral Engineering.</span>
     </h2>
@@ -358,11 +344,11 @@ const CoreSystem = () => {
       <div className="text-center mb-20">
         <Badge>Our Weapon</Badge>
         <h2 className="text-4xl md:text-6xl font-black">
-          The NEXZen Paid Social Engine
+          The NEXZen Paid Social Engine 
         </h2>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-8">
+      <div className="grid md:grid-cols-2 gap-4">
         {systems.map((sys, i) => (
           <motion.div
             key={i}
@@ -445,7 +431,7 @@ const Process = () => (
         },
       ].map((item, i) => (
         <div key={i} className="relative">
-          <span className="text-8xl font-black text-white/5 absolute -top-10 -left-4">
+          <span className="text-4xl font-black text-white/5 absolute -top-10 -left-4">
             {item.step}
           </span>
           <h3 className="text-2xl font-bold mb-4 relative z-10">
@@ -644,49 +630,7 @@ const Proof = () => (
   </Section>
 );
 
-const Objection = () => (
-  <Section className="bg-[#FF6321] text-black rounded-[4rem] px-12 md:px-24">
-    <div className="grid md:grid-cols-2 gap-16 items-center">
-      <div>
-        <h2 className="text-4xl md:text-6xl font-black mb-8 leading-tight">
-          “We Ran Facebook Ads Before. <br />
-          <span className="opacity-60 italic">Didn’t Work.</span>”
-        </h2>
-        <p className="text-2xl font-bold mb-12">
-          Answer directly: You were missing a system, not a platform.
-        </p>
-        <div className="space-y-4">
-          {["Creative system", "Funnel structure", "Testing process"].map(
-            (item) => (
-              <div
-                key={item}
-                className="flex items-center gap-3 font-bold text-xl"
-              >
-                <div className="w-6 h-6 rounded-full bg-black flex items-center justify-center">
-                  <ArrowRight size={14} className="text-[#FF6321]" />
-                </div>
-                {item}
-              </div>
-            ),
-          )}
-        </div>
-      </div>
-      <div className="bg-black text-white p-12 rounded-[3rem] relative">
-        <Quote className="text-[#FF6321] mb-6" size={48} />
-        <p className="text-3xl font-black leading-tight mb-8">
-          "Social ads don’t fail. <br />
-          <span className="text-[#FF6321]">
-            Weak creatives and broken funnels do.
-          </span>
-          "
-        </p>
-        <p className="text-white/40 uppercase tracking-widest text-sm">
-          The NEXZen Reframe
-        </p>
-      </div>
-    </div>
-  </Section>
-);
+
 
 const Offer = () => (
   <Section id="audit" className="text-center">
@@ -727,9 +671,11 @@ const Offer = () => (
         ))}
       </div>
 
-      <Button className="mx-auto text-xl px-12 py-6">
-        Get My Audit <ArrowRight />
-      </Button>
+      <Link href="/contact" className="inline-block">
+        <Button className="mx-auto text-xl px-12 py-6">
+          Get My Audit <ArrowRight />
+        </Button>
+      </Link>
     </div>
   </Section>
 );
@@ -763,7 +709,7 @@ const FAQ = () => {
   return (
     <Section id="faq">
       <div className="max-w-3xl mx-auto">
-        <div className="text-center mb-16">
+        <div className="text-center mb-8">
           <Badge>Common Questions</Badge>
           <h2 className="text-4xl md:text-6xl font-black">
             Objections Handled.
@@ -809,59 +755,8 @@ const FAQ = () => {
   );
 };
 
-const Footer = () => (
-  <footer className="py-20 px-6 border-t border-white/5">
-    <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-12">
-      <div className="text-center md:text-left">
-        <h2 className="text-3xl font-black mb-4">
-          NEX<span className="text-[#FF6321]">Zen</span>
-        </h2>
-        <p className="text-white/40 max-w-xs">
-          Conversion Architecture for the Attention Economy.
-        </p>
-      </div>
 
-      <div className="flex flex-col items-center md:items-end gap-6">
-        <h3 className="text-4xl md:text-6xl font-black tracking-tighter text-center md:text-right">
-          Attention Is the <br />
-          <span className="text-[#FF6321]">New Currency.</span>
-        </h3>
-        <p className="text-white/40 text-lg max-w-md text-center md:text-right">
-          Your competitors are already buying attention. The question is — are
-          you converting it?
-        </p>
-        <Button>Build My Social Ads System</Button>
-      </div>
-    </div>
-  </footer>
-);
 
-const Navbar = () => (
-  <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-4xl">
-    <div className="glass px-8 py-4 rounded-full flex items-center justify-between">
-      <div className="text-xl font-black">
-        NEX<span className="text-[#FF6321]">Zen</span>
-      </div>
-      <div className="hidden md:flex items-center gap-8 text-sm font-bold text-white/60">
-        <a href="#" className="hover:text-white transition-colors">
-          Framework
-        </a>
-        <a href="#" className="hover:text-white transition-colors">
-          Results
-        </a>
-        <a href="#" className="hover:text-white transition-colors">
-          Process
-        </a>
-        <a href="#faq" className="hover:text-white transition-colors">
-          FAQ
-        </a>
-      </div>
-      <button className="bg-[#FF6321] text-white px-6 py-2 rounded-full text-sm font-bold hover:bg-[#e55a1e] transition-colors">
-        Get Audit
-      </button>
-    </div>
-  </nav>
-);
 
 // --- Main Page ---
 
@@ -876,10 +771,10 @@ export default function LandingPage() {
       <Process />
       <Results />
       <Proof />
-      <Objection />
+      {/* <Objection /> */}
       <FAQ />
       <Offer />
-      <Footer />
+
 
       {/* Sticky CTA for Mobile */}
       <div className="md:hidden fixed bottom-6 left-6 right-6 z-50">
