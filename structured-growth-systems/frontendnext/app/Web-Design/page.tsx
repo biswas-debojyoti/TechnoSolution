@@ -269,7 +269,7 @@ export const DigitalAssetEngine = () => {
       <motion.div
         animate={{ rotate: 360 }}
         transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-        className="relative w-48 h-48 rounded-full border border-orange-500/30 flex items-center justify-center bg-black/40 backdrop-blur-sm z-10"
+        className="relative w-48 h-47 rounded-full border border-orange-500/30 flex items-center justify-center bg-black/40 backdrop-blur-sm z-10"
       >
         <div className="absolute inset-2 rounded-full border border-orange-500/10" />
         <Zap className="w-16 h-16 text-orange-500 fill-orange-500/20" />
