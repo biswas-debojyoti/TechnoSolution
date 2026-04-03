@@ -69,7 +69,7 @@ const HeroContent = () => {
             Turn Ads Spend Into <br />
             <span className="orange-gradient-text">Predictable Revenue</span>
           </h1>
-          <p className="text-lg md:text-xl text-white/60 max-w-2xl mx-auto mb-10 leading-relaxed">
+          <p className="text-lg md:text-xl text-white/60 max-w-2xl mx-auto mb-11 leading-relaxed">
             {subheadline}
           </p>
 

@@ -156,7 +156,7 @@ function FeaturedCard({ blog }: { blog: Blog }) {
           )}
 
           {/* Title */}
-          <h2 className="text-2xl md:text-[2.4rem] font-display font-bold leading-tight mb-4 group-hover:text-brand-orange transition-colors duration-300">
+          <h2 className="text-2xl md:text-[2.4rem] font-display font-bold leading-tight mb-5 group-hover:text-brand-orange transition-colors duration-300">
             {getTitle(blog)}
           </h2>
 

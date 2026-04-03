@@ -157,7 +157,7 @@ export default function KnowledgeHub() {
                 Structured Growth is a performance marketing methodology that focuses on building platform-agnostic acquisition systems. It prioritizes account architecture, data integrity, and economic control over platform-specific "hacks."
               </p>
             </div>
-            <div className="space-y-4">
+            <div className="space-y-3">
               <h3 className="text-xl font-bold text-brand-orange">What is Account Architecture?</h3>
               <p className="text-white/60 leading-relaxed">
                 Account Architecture refers to the logical organization of campaigns, ad groups, and creatives within an advertising platform. A superior architecture isolates variables, minimizes overlap, and provides the algorithm with clean signals for optimization.

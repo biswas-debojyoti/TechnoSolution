@@ -77,7 +77,7 @@ export default function Books() {
 
             <div className="w-full lg:w-2/3 space-y-10">
               <div>
-                <h2 className="text-4xl md:text-3xl font-display font-bold mb-4">{book.title}</h2>
+                <h2 className="text-4xl md:text-3xl font-display font-bold mb-5">{book.title}</h2>
                 <p className="text-2xl text-brand-orange font-serif italic mb-6">{book.subtitle}</p>
                 <p className="text-lg text-white/70 leading-relaxed">{book.desc}</p>
               </div>

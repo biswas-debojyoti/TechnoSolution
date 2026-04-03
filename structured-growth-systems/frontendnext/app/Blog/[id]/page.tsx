@@ -431,7 +431,7 @@ function editorJsToHtml(content: string | EditorJSData | undefined): string {
         }
 
         case "embed": {
-          return `<div class="aspect-video w-full my-4 rounded-2xl overflow-hidden">
+          return `<div class="aspect-video w-full my-5 rounded-2xl overflow-hidden">
             <iframe src="${data.embed}" frameborder="0" allowfullscreen style="width:100%;height:100%;"></iframe>
           </div>`;
         }

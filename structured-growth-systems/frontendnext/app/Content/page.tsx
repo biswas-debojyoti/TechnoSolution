@@ -544,7 +544,7 @@ export default function LandingPage() {
                     ))}
                   </div>
                 </div>
-                <div className="md:col-span-2 bg-zinc-900/50 rounded-2xl border border-zinc-800 p-6">
+                <div className="md:col-span-2 bg-zinc-900/50 rounded-2xl border border-zinc-800 p-5">
                   <div className="flex items-center justify-between mb-6">
                     <span className="text-xs font-bold text-zinc-500 uppercase tracking-widest">
                       Live Conversion Stream

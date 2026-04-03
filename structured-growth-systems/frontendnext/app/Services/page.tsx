@@ -358,7 +358,7 @@ export default function Services() {
       </section>
 
       {/* Process Section */}
-      <section className="py-10 px-6 bg-brand-orange/5">
+      <section className="py-10 px-5 bg-brand-orange/5">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-24">
             <h2 className="text-4xl md:text-6xl font-display font-bold mb-8">

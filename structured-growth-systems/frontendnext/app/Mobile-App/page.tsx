@@ -216,7 +216,7 @@ const Pain = () => (
             "No retention system → wasted acquisition cost",
             "Built as a product → not as a growth system",
           ].map((text, i) => (
-            <div key={i} className="flex items-start gap-4">
+            <div key={i} className="flex items-start gap-3">
               <div className="mt-1.5 p-1 rounded-full bg-red-500/10 text-red-500">
                 <AlertCircle size={16} />
               </div>

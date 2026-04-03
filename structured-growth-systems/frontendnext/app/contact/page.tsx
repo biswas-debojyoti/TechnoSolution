@@ -277,7 +277,7 @@ export default function WorkWithMe() {
                   value={formData.message}
                   onChange={handleChange}
                   required
-                  className="flex-1 min-h-0 w-full bg-black/40 border border-white/10 rounded-xl px-3 py-2.5 text-sm text-white placeholder-white/20 focus:outline-none focus:border-brand-orange transition-colors resize-none"
+                  className="flex-1 min-h-0 w-full bg-black/40 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/20 focus:outline-none focus:border-brand-orange transition-colors resize-none"
                   placeholder="Tell us about your brand, current ad spend, and the main bottleneck preventing you from scaling right now."
                 />
               </div>

@@ -93,7 +93,7 @@ export default function Architecture() {
 
       {/* LAYER 1: MARKET SPECIFIC */}
       <section className="mb-32">
-        <div className="flex items-center gap-4 mb-12">
+        <div className="flex items-center gap-4 mb-11">
           <div className="h-px flex-grow bg-white/10" />
           <h2 className="text-xl font-bold uppercase tracking-[0.3em] text-white">Layer 01 — Acquisition Engineering</h2>
           <div className="h-px flex-grow bg-white/10" />
