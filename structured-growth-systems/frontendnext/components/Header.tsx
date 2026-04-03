@@ -16,7 +16,7 @@ const navLinks = [
     path: "/Services",
     link: [
       { name: "SEO", path: "/Seo" },
-      { name: "Ad Agency", path: "/Ads-Agency" },
+      { name: "Ads Agency", path: "/Ads-Agency" },
       { name: "Content", path: "/Content" },
       { name: "Social Media", path: "/Social-Media" },
       { name: "Web Design", path: "/Web-Design" },
