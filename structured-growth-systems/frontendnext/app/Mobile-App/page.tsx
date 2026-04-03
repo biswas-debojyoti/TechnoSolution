@@ -101,15 +101,22 @@ const Hero = () => (
         </p>
 
         <div className="flex flex-col sm:flex-row items-center gap-4 mb-16">
-          <Button className="w-full sm:w-auto text-lg px-10 py-5">
-            Get App Growth Strategy <ArrowRight size={20} />
-          </Button>
-          <Button
-            variant="secondary"
-            className="w-full sm:w-auto text-lg px-10 py-5"
-          >
-            See How It Works
-          </Button>
+          <Link href="/contact">
+
+            <Button className="w-full sm:w-auto text-lg px-10 py-5">
+              Get App Growth Strategy <ArrowRight size={20} />
+            </Button>
+          </Link>
+          <Link href="/contact">
+
+            <Button
+              variant="secondary"
+              className="w-full sm:w-auto text-lg px-10 py-5"
+            >
+              See How It Works
+            </Button>
+
+          </Link>
         </div>
 
         {/* Trust Strip */}
@@ -843,7 +850,7 @@ const CaseStudies = () => {
             <span className="text-orange-500">Winning Apps</span>
           </h2>
         </div>
-       
+
       </div>
 
       <div className="mb-12 overflow-x-auto pb-4 scrollbar-hide">
@@ -852,9 +859,8 @@ const CaseStudies = () => {
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`pb-6 text-xs font-black uppercase tracking-widest transition-all relative ${
-                activeTab === tab ? "text-orange-500" : "text-neutral-300"
-              }`}
+              className={`pb-6 text-xs font-black uppercase tracking-widest transition-all relative ${activeTab === tab ? "text-orange-500" : "text-neutral-300"
+                }`}
             >
               {tab}
               {activeTab === tab && (
@@ -915,14 +921,14 @@ const CaseStudies = () => {
               </p>
             </div>
           </div>
-          <Link  href="/contact">
-          
-          <Button
-            variant="outline"
-            className="w-fit border-white/20 text-white hover:text-neutral-950 px-10 py-5 text-lg"
-          >
-            Let&apos;s Build Yours <ArrowRight size={20} />
-          </Button>
+          <Link href="/contact">
+
+            <Button
+              variant="outline"
+              className="w-fit border-white/20 text-white hover:text-neutral-950 px-10 py-5 text-lg"
+            >
+              Let&apos;s Build Yours <ArrowRight size={20} />
+            </Button>
           </Link>
 
         </div>
@@ -987,11 +993,10 @@ const FAQ = () => {
           {faqs.map((faq, i) => (
             <div
               key={i}
-              className={`rounded-[2rem] border transition-all duration-500 ${
-                openIndex === i
+              className={`rounded-[2rem] border transition-all duration-500 ${openIndex === i
                   ? "bg-[#151B28] border-orange-500/50"
                   : "bg-[#151B28]/50 border-neutral-800 hover:border-neutral-700"
-              }`}
+                }`}
             >
               <button
                 onClick={() => setOpenIndex(openIndex === i ? null : i)}
@@ -1348,7 +1353,7 @@ export default function LandingPage() {
       </div>
 
       {/* Sticky CTA for Mobile */}
-    
+
     </main>
   );
 }

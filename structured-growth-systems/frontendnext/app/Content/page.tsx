@@ -31,6 +31,7 @@ import {
   Activity,
   Globe,
 } from "lucide-react";
+import Link from "next/link";
 
 const revenueData = [
   { name: "Month 1", before: 4000, after: 4200 },
@@ -141,10 +142,12 @@ export default function LandingPage() {
             transition={{ duration: 0.7, delay: 0.3 }}
             className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16"
           >
+            <Link href="/contact">
             <button className="w-full sm:w-auto bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-2 transition-all shadow-lg shadow-orange-500/20 group">
               Get Content Funnel Audit
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </button>
+            </Link>
             <button className="w-full sm:w-auto bg-zinc-900 hover:bg-zinc-800 text-white border border-zinc-800 px-8 py-4 rounded-xl font-bold text-lg transition-all">
               See How It Works
             </button>

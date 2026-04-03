@@ -23,7 +23,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { DigitalAssetEngine } from "../Web-Design/page";
+import { DigitalAssetEngine } from "../web-design/page";
 
 // --- Components ---
 
@@ -31,7 +31,7 @@ import { DigitalAssetEngine } from "../Web-Design/page";
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen flex items-center pt-20 overflow-hidden">
+    <section className="relative min-h-screen flex items-center pt-10 overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0 z-0">
         <div className="absolute top-1/4 -left-20 w-[500px] h-[500px] bg-accent/10 rounded-full blur-[120px]" />
@@ -65,13 +65,17 @@ const Hero = () => {
               so high-intent buyers find you before your competitors.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 mb-12">
-              <button className="bg-accent hover:bg-accent/90 text-black px-8 py-4 rounded-full text-lg font-bold flex items-center justify-center gap-2 transition-all transform hover:scale-105 active:scale-95">
-                Get SEO Growth Blueprint <ArrowRight size={20} />
-              </button>
-              <button className="bg-white/5 hover:bg-white/10 border border-white/10 px-8 py-4 rounded-full text-lg font-bold transition-all">
-                Audit My Website (Free)
-              </button>
+            <div className="flex flex-col sm:flex-row gap-4 mb-12 ">
+              <Link href="/contact">
+                <button className="bg-accent hover:bg-accent/90 text-black px-8 py-4 rounded-full text-lg text-white font-bold flex items-center justify-center gap-2 transition-all transform hover:scale-105 active:scale-95">
+                  Get SEO Growth Blueprint <ArrowRight size={20} />
+                </button>
+              </Link>
+              <Link href="/contact">
+                <button className="bg-white/5 hover:bg-white/10 border border-white/10 px-8 py-4 rounded-full text-lg font-bold transition-all">
+                  Audit My Website (Free)
+                </button>
+              </Link>
             </div>
 
             <div className="flex items-center gap-4 text-white/40 text-sm font-medium">
@@ -100,9 +104,9 @@ const Hero = () => {
           </motion.div>
         </div>
       </div>
-   
-        <DigitalAssetEngine />
-   
+
+      <DigitalAssetEngine />
+
     </section>
   );
 };
@@ -234,7 +238,7 @@ const Reframe = () => {
                   { label: "Search", color: "bg-blue-500" },
                   { label: "Intent", color: "bg-indigo-500" },
                   { label: "Page", color: "bg-purple-500" },
-                  { label: "Conversion", color: "bg-accent" },
+                  { label: "Conversion", color: "bg-blue-400" },
                   { label: "Revenue", color: "bg-green-500" },
                 ].map((step, i) => (
                   <div key={i} className="flex items-center gap-4">

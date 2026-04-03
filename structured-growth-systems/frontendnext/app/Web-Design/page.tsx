@@ -554,13 +554,19 @@ export default function WebDesignLP() {
                 conversion.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
+              <Link href="/contact">
+
                 <button className="px-8 py-4 bg-orange-500 text-black font-bold rounded-full hover:bg-orange-400 transition-all flex items-center justify-center gap-2 group">
                   View Live Design References
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </button>
+                </Link>
+                            <Link href="/contact">
+
                 <button className="px-8 py-4 bg-zinc-900 text-white font-bold rounded-full border border-zinc-800 hover:bg-zinc-800 transition-all">
                   Get My Website Audit
                 </button>
+                  </Link>
               </div>
             </motion.div>
 

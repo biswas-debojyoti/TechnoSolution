@@ -1,21 +1,25 @@
 import { motion } from "motion/react";
 import { ArrowRight, BookOpen, Lightbulb, Target } from "lucide-react";
+import Link from "next/link";
 
 export default function Insights() {
   const posts = [
     {
       icon: <BookOpen className="w-6 h-6 text-primary-accent" />,
       title: "Scaling Brands Profitably",
+      link:"servics",
       description: "Learn real strategies and frameworks used to scale brands profitably across multiple markets."
     },
     {
       icon: <Lightbulb className="w-6 h-6 text-secondary-accent" />,
       title: "Strategic Insights",
+      link : "/Blog",
       description: "Case studies and frameworks for market domination using Google & Meta Ads."
     },
     {
       icon: <Target className="w-6 h-6 text-primary-accent" />,
       title: "Growth Frameworks",
+      link:"/architecture",
       description: "Structured paths from awareness to conversion for predictable revenue."
     }
   ];
@@ -46,6 +50,7 @@ export default function Insights() {
 
         <div className="grid md:grid-cols-3 gap-8">
           {posts.map((post, index) => (
+            <Link href={ `${post.link}`} key={index}>
             <motion.div
               key={post.title}
               initial={{ opacity: 0, y: 30 }}
@@ -66,6 +71,7 @@ export default function Insights() {
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </button>
             </motion.div>
+            </Link>
           ))}
         </div>
       </div>

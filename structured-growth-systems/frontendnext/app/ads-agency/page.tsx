@@ -66,7 +66,7 @@ const HeroContent = () => {
             The Conversion Agency
           </span>
           <h1 className="text-3xl md:text-7xl lg:text-4xl font-display font-bold tracking-tight leading-[1.1] mb-8">
-            Turn Ad Spend Into <br />
+            Turn Ads Spend Into <br />
             <span className="orange-gradient-text">Predictable Revenue</span>
           </h1>
           <p className="text-lg md:text-xl text-white/60 max-w-2xl mx-auto mb-10 leading-relaxed">

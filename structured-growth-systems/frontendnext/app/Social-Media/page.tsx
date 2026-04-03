@@ -155,10 +155,12 @@ const Hero = () => (
       </p>
 
       <div className="flex flex-col md:flex-row gap-6 justify-center items-center">
+                   <Link href="/contact">
+       
         <Button className="text-lg px-10 py-5">
           Get Free Creative + Funnel Audit <ArrowRight size={22} />
         </Button>
-     
+     </Link>
       </div>
     </motion.div>
 
