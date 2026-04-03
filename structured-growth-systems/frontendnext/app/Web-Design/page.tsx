@@ -261,7 +261,7 @@ const LaptopMockup = ({ className }: { className?: string }) => {
 
 export const DigitalAssetEngine = () => {
   return (
-    <div className="relative w-full aspect-square max-w-[500px] mx-auto flex items-center justify-center">
+    <div className=" hidden relative w-full aspect-square max-w-[500px] mx-auto md:flex items-center justify-center">
       {/* Background Glow */}
       <div className="absolute inset-0 bg-orange-500/10 blur-[100px] rounded-full" />
 

@@ -100,10 +100,9 @@ const Hero = () => {
           </motion.div>
         </div>
       </div>
-      <div className="hidden md:bloc">
-      <DigitalAssetEngine/>
-
-      </div>
+   
+        <DigitalAssetEngine />
+   
     </section>
   );
 };
@@ -730,11 +729,11 @@ const Pricing = () => {
                 ))}
               </ul>
               <Link href="/contact">
-              <button
-                className={`w-full py-4 rounded-full font-bold transition-all ${i === 1 ? "bg-white text-black hover:bg-accent/90" : "bg-white/5 border border-white/10 hover:bg-white/10"}`}
-              >
-                Book Strategy Call
-              </button>
+                <button
+                  className={`w-full py-4 rounded-full font-bold transition-all ${i === 1 ? "bg-white text-black hover:bg-accent/90" : "bg-white/5 border border-white/10 hover:bg-white/10"}`}
+                >
+                  Book Strategy Call
+                </button>
               </Link>
             </div>
           ))}
