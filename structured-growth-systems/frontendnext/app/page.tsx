@@ -166,7 +166,7 @@ export default function Home() {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="flex flex-col gap-8"
           >
-            <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm w-fit">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm w-fit">
               <span className="w-2 h-2 rounded-full bg-brand-orange animate-pulse" />
               <span className="text-sm font-medium tracking-wide text-white/80 uppercase">
                 Performance Marketing Strategist & Author

@@ -10,25 +10,24 @@ import { usePathname } from "next/navigation";
 
 const navLinks = [
   { name: "Home", path: "/" },
-  { name: "Architecture", path: "/architecture" },
+  { name: "Architecture", path: "/Architecture" },
   {
     name: "Services",
-    path: "/services",
+    path: "/Services",
     link: [
-      { name: "SEO", path: "/seo" },
-      { name: "Ads Agency", path: "/ads-agency" },
-      { name: "Content", path: "/content" },
-      { name: "Social Media", path: "/social-media" },
-      { name: "Web Design", path: "/web-design" },
-      { name: "Mobile App", path: "/mobile-app" },
+      { name: "SEO", path: "/Seo" },
+      { name: "Ad Agency", path: "/Ads-Agency" },
+      { name: "Content", path: "/Content" },
+      { name: "Social Media", path: "/Social-Media" },
+      { name: "Web Design", path: "/Web-Design" },
+      { name: "Mobile App", path: "/Mobile-App" },
     ],
   },
-  { name: "Knowledge Hub", path: "/knowledgeHub" },
+  { name: "Knowledge Hub", path: "/KnowledgeHub" },
   // { name: 'Books', path: '/books' },
   { name: "Blog", path: "/Blog" },
   // { name: 'Work With Me', path: '/contact' },
 ];
-
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
