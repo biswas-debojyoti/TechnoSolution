@@ -116,7 +116,7 @@ export default function BlogFormPage() {
   if (isEdit && isLoading) {
     return (
       <div className="flex flex-col h-full">
-        <div className="flex items-center px-6 h-14 border-b border-[var(--border)] bg-[var(--bg-surface)]">
+        <div className="flex items-center px-6 h-15 border-b border-[var(--border)] bg-[var(--bg-surface)]">
           <Skeleton className="h-5 w-48" />
         </div>
         <div className="flex flex-1 overflow-hidden p-6 gap-5">
@@ -214,10 +214,7 @@ export default function BlogFormPage() {
           {/* EditorJS */}
           <div className="card p-4 min-h-[400px]">
             {editorReady ? (
-              <RichEditor
-                value={content}
-                onChange={setContent}
-              />
+              <RichEditor value={content} onChange={setContent} />
             ) : (
               <div className="flex items-center justify-center h-64">
                 <Spinner size={20} />
