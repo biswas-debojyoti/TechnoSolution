@@ -23,7 +23,7 @@ const app = express();
 app.use(
   helmet({
     crossOriginResourcePolicy: { policy: "cross-origin" }, // allow image serving
-  })
+  }),
 );
 
 // ─── CORS ─────────────────────────────────────────────────────────────────────
@@ -37,7 +37,7 @@ app.use(
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
-  })
+  }),
 );
 
 // ─── Trust Proxy (for rate-limiting behind reverse proxies) ───────────────────
@@ -49,7 +49,10 @@ const authLimiter = rateLimit({
   max: 200,
   standardHeaders: true,
   legacyHeaders: false,
-  message: { success: false, message: "Too many login attempts. Try again in 15 minutes." },
+  message: {
+    success: false,
+    message: "Too many login attempts. Try again in 15 minutes.",
+  },
 });
 
 const inquiryLimiter = rateLimit({
@@ -57,7 +60,10 @@ const inquiryLimiter = rateLimit({
   max: 100,
   standardHeaders: true,
   legacyHeaders: false,
-  message: { success: false, message: "Too many inquiries submitted. Try again later." },
+  message: {
+    success: false,
+    message: "Too many inquiries submitted. Try again later.",
+  },
 });
 
 const apiLimiter = rateLimit({

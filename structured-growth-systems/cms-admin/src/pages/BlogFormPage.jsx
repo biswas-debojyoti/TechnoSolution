@@ -31,7 +31,7 @@ export default function BlogFormPage() {
     subHeading: "",
     status: "draft",
   });
-  const [content, setContent] = useState({});
+  const [content, setContent] = useState("");
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [saving, setSaving] = useState(false);
@@ -46,8 +46,7 @@ export default function BlogFormPage() {
         subHeading: blog.subHeading || "",
         status: blog.status || "draft",
       });
-      if (blog.content && Object.keys(blog.content).length > 0)
-        setContent(blog.content);
+      if (blog.content) setContent(blog.content);
       if (blog.image?.hasImage) setImagePreview(blogApi.imageUrl(id));
     }
     // Mark editor as ready after data is populated
@@ -216,9 +215,8 @@ export default function BlogFormPage() {
           <div className="card p-4 min-h-[400px]">
             {editorReady ? (
               <RichEditor
-                data={content}
+                value={content}
                 onChange={setContent}
-                holder={`editor-${id || "new"}`}
               />
             ) : (
               <div className="flex items-center justify-center h-64">

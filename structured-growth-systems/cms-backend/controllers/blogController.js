@@ -59,6 +59,7 @@ const convertEditorJSToHTML = (content) => {
 /**
  * Build a blog document update payload from request fields
  */
+
 const buildBlogPayload = (body, file) => {
   const payload = {};
 

@@ -30,9 +30,9 @@ const blogSchema = new mongoose.Schema(
       },
     },
     content: {
-      // EditorJS JSON structure
-      type: mongoose.Schema.Types.Mixed,
-      default: {},
+      // Rich HTML string from the contenteditable editor
+      type: String,
+      default: "",
     },
     status: {
       type: String,
