@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose  = require("mongoose");
 
 const connectDB = async () => {
   try {
@@ -7,8 +7,7 @@ const connectDB = async () => {
       socketTimeoutMS: 45000,
     });
 
-    
-    // console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
+    console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
 
     mongoose.connection.on("disconnected", () => {
       console.warn("⚠️  MongoDB disconnected. Attempting to reconnect...");
