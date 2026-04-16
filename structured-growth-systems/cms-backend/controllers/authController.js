@@ -20,7 +20,11 @@ const login = async (req, res, next) => {
     }
 
     if (!admin.isActive) {
-      return sendError(res, "Your account has been deactivated. Contact support.", 403);
+      return sendError(
+        res,
+        "Your account has been deactivated. Contact support.",
+        403,
+      );
     }
 
     const isPasswordValid = await admin.comparePassword(password);
@@ -49,7 +53,7 @@ const login = async (req, res, next) => {
           role: admin.role,
         },
       },
-      "Login successful"
+      "Login successful",
     );
   } catch (error) {
     next(error);
@@ -63,7 +67,7 @@ const login = async (req, res, next) => {
  */
 const getMe = async (req, res, next) => {
   try {
-    return sendSuccess(res, { admin: req.admin }, "Admin profile fetched");
+    return sendSuccess(res, { admin: req.admin }, "Admin profile has fetched");
   } catch (error) {
     next(error);
   }
