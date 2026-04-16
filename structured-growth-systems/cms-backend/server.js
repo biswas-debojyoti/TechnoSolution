@@ -31,6 +31,9 @@ const allowedOrigins = process.env.ALLOWED_ORIGINS
   ? process.env.ALLOWED_ORIGINS.split(",").map((o) => o.trim())
   : "*";
 
+
+
+  
 app.use(
   cors({
     origin: "*",

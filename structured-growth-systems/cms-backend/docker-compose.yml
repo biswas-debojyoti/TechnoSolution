@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: cms_mongodb
+    ports:
+      - "27018:27017" # Exposes MongoDB to your local machine (needed for MongoDB Compass)
+    volumes:
+      - mongodb_data:/data/db # Persists your database data across restarts
+    restart: unless-stopped
+
+  backend:
+    build: .
+    container_name: cms_backend
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      # Overrides the MONGO_URI from your .env file to point to the docker container
+      - MONGO_URI=mongodb://mongodb:27017/cms_local_db
+    env_file:
+      - .env # Loads other env vars from your existing .env file
+    depends_on:
+      - mongodb
+    restart: unless-stopped
+
+volumes:
+  mongodb_data:
