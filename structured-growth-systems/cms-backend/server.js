@@ -12,6 +12,7 @@ const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 const authRoutes = require("./routes/authRoutes");
 const blogRoutes = require("./routes/blogRoutes");
 const inquiryRoutes = require("./routes/inquiryRoutes");
+const employeeRoutes = require("./routes/employeeRoutes");
 
 // ─── Connect to Database ──────────────────────────────────────────────────────
 connectDB();
@@ -31,12 +32,9 @@ const allowedOrigins = process.env.ALLOWED_ORIGINS
   ? process.env.ALLOWED_ORIGINS.split(",").map((o) => o.trim())
   : "*";
 
-
-
-  
 app.use(
   cors({
-    origin: "*",
+    origin: allowedOrigins,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
@@ -101,6 +99,7 @@ app.get("/health", (req, res) => {
 app.use("/api/auth", authLimiter, authRoutes);
 app.use("/api/blogs", apiLimiter, blogRoutes);
 app.use("/api/inquiries", inquiryLimiter, inquiryRoutes);
+app.use("/api/employees", apiLimiter, employeeRoutes);
 
 // ─── 404 + Global Error Handler ───────────────────────────────────────────────
 app.use(notFound);
@@ -147,4 +146,3 @@ process.on("uncaughtException", (err) => {
 });
 
 module.exports = app;
-

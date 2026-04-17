@@ -47,6 +47,12 @@ const blogSchema = new mongoose.Schema(
       unique: true,
       sparse: true,
     },
+    tags: [
+      {
+        type: String,
+        trim: true,
+      },
+    ],
     views: {
       type: Number,
       default: 0,

@@ -1,7 +1,7 @@
 import { NavLink, useLocation } from 'react-router-dom'
 import {
   LayoutDashboard, FileText, MessageSquare,
-  LogOut, ChevronRight, Zap
+  LogOut, ChevronRight, Zap, Users
 } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import clsx from 'clsx'
@@ -9,7 +9,8 @@ import clsx from 'clsx'
 const navItems = [
   { to: '/',         icon: LayoutDashboard, label: 'Dashboard',  exact: true },
   { to: '/blogs',    icon: FileText,         label: 'Blogs'                   },
-  { to: '/inquiries',icon: MessageSquare,    label: 'Inquiries'               },
+  { to: '/inquiries', icon: MessageSquare,    label: 'Inquiries'               },
+  { to: '/employees', icon: Users,            label: 'Employees'               },
 ]
 
 export default function Sidebar() {

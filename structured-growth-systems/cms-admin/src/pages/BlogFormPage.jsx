@@ -31,6 +31,8 @@ export default function BlogFormPage() {
     subHeading: "",
     status: "draft",
   });
+  const [tags, setTags] = useState([]);
+  const [tagInput, setTagInput] = useState("");
   const [content, setContent] = useState("");
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
@@ -46,8 +48,9 @@ export default function BlogFormPage() {
         subHeading: blog.subHeading || "",
         status: blog.status || "draft",
       });
+      setTags(blog.tags || []);
       if (blog.content) setContent(blog.content);
-      if (blog.image?.hasImage) setImagePreview(blogApi.imageUrl(id));
+      if (blog.image?.hasImage) setImagePreview(blogApi.imageUrl(blog._id));
     }
     // Mark editor as ready after data is populated
     if (!isEdit || blog) setEditorReady(true);
@@ -94,11 +97,12 @@ export default function BlogFormPage() {
       fd.append("heading", form.heading.trim());
       fd.append("subHeading", form.subHeading.trim());
       fd.append("status", statusOverride || form.status);
+      fd.append("tags", JSON.stringify(tags));
       fd.append("content", JSON.stringify(content));
       if (imageFile) fd.append("image", imageFile);
 
       if (isEdit) {
-        await blogApi.update(id, fd);
+        await blogApi.update(blog._id, fd);
         toast.success("Blog updated.");
         navigate("/blogs");
       } else {
@@ -208,6 +212,34 @@ export default function BlogFormPage() {
               placeholder="Subtitle or short description…"
               className="w-full bg-transparent border-0 text-base text-[var(--text-secondary)] placeholder-[var(--text-muted)] focus:outline-none pb-2 italic"
               style={{ fontFamily: "DM Sans, sans-serif" }}
+            />
+          </div>
+
+          {/* Tags */}
+          <div className="mb-6">
+            <div className="flex flex-wrap gap-2 mb-2">
+              {tags.map((tag, i) => (
+                <span key={i} className="px-2 py-1 bg-[var(--bg-hover)] text-xs text-[var(--text-secondary)] rounded-md flex items-center gap-1 border border-[var(--border)]">
+                  {tag}
+                  <button type="button" onClick={() => setTags(tags.filter((_, idx) => idx !== i))} className="hover:text-red-500">
+                    <X size={10} />
+                  </button>
+                </span>
+              ))}
+            </div>
+            <input
+              value={tagInput}
+              onChange={(e) => setTagInput(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ',') {
+                  e.preventDefault();
+                  const newTag = tagInput.trim();
+                  if (newTag && !tags.includes(newTag)) setTags([...tags, newTag]);
+                  setTagInput("");
+                }
+              }}
+              placeholder="Add tags (press Enter or comma)"
+              className="w-full bg-transparent border-0 border-b border-[var(--border)] focus:border-amber-500/40 text-sm text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none pb-2 transition-colors"
             />
           </div>
 

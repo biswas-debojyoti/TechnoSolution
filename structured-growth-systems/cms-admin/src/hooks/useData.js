@@ -3,7 +3,7 @@ import { fetcher } from '../lib/api'
 
 export function useBlogs(params = {}) {
   const query = new URLSearchParams(params).toString()
-  const key = '/blogs' + (query ? '?' + query : '')
+  const key = 'blogs' + (query ? '?' + query : '')
   const { data, error, isLoading, mutate } = useSWR(key, fetcher, {
     revalidateOnFocus: false,
     keepPreviousData: true,
@@ -12,13 +12,13 @@ export function useBlogs(params = {}) {
 }
 
 export function useBlog(id) {
-  const { data, error, isLoading, mutate } = useSWR(id ? '/blogs/' + id : null, fetcher, { revalidateOnFocus: false })
+  const { data, error, isLoading, mutate } = useSWR(id ? 'blogs/' + id : null, fetcher, { revalidateOnFocus: false })
   return { blog: data?.blog, isLoading, isError: !!error, error, mutate }
 }
 
 export function useInquiries(params = {}) {
   const query = new URLSearchParams(params).toString()
-  const key = '/inquiries' + (query ? '?' + query : '')
+  const key = 'inquiries' + (query ? '?' + query : '')
   const { data, error, isLoading, mutate } = useSWR(key, fetcher, {
     revalidateOnFocus: false,
     keepPreviousData: true,
@@ -28,14 +28,36 @@ export function useInquiries(params = {}) {
 }
 
 export function useInquiry(id) {
-  const { data, error, isLoading, mutate } = useSWR(id ? '/inquiries/' + id : null, fetcher, { revalidateOnFocus: false })
+  const { data, error, isLoading, mutate } = useSWR(id ? 'inquiries/' + id : null, fetcher, { revalidateOnFocus: false })
   return { inquiry: data?.inquiry, isLoading, isError: !!error, error, mutate }
 }
 
 export function useInquiryStats() {
-  const { data, error, isLoading, mutate } = useSWR('/inquiries/stats', fetcher, {
+  const { data, error, isLoading, mutate } = useSWR('inquiries/stats', fetcher, {
     revalidateOnFocus: false,
     refreshInterval: 60000,
   })
   return { stats: data?.stats, isLoading, isError: !!error, mutate }
+}
+
+export function useEmployees(params = {}) {
+  const query = new URLSearchParams(params).toString()
+  const key = 'employees' + (query ? '?' + query : '')
+  const { data, error, isLoading, mutate } = useSWR(key, fetcher, {
+    revalidateOnFocus: false,
+    keepPreviousData: true,
+  })
+  return { 
+    employees: data?.data || [], 
+    pagination: data?.pagination, 
+    isLoading, 
+    isError: !!error, 
+    error, 
+    mutate 
+  }
+}
+
+export function useEmployee(id) {
+  const { data, error, isLoading, mutate } = useSWR(id ? 'employees/' + id : null, fetcher, { revalidateOnFocus: false })
+  return { employee: data?.employee, isLoading, isError: !!error, error, mutate }
 }

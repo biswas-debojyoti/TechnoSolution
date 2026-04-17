@@ -11,15 +11,24 @@ const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
-    // Find admin with password field (excluded by default via `select: false`)
-    const admin = await Admin.findOne({ email }).select("+password");
+    // Check Admin first
+    let user = await Admin.findOne({ email }).select("+password");
+    let isEmployee = false;
 
-    if (!admin) {
-      // Generic message to prevent user enumeration
-      return sendError(res, "Invalid email or password", 401);
+    // If not Admin, check Employee
+    if (!user) {
+      const Employee = require("../models/Employee"); // lazy load
+      user = await Employee.findOne({ userId: email }).select("+password");
+      if (user) {
+        isEmployee = true;
+      }
     }
 
-    if (!admin.isActive) {
+    if (!user) {
+      return sendError(res, "Invalid credentials", 401);
+    }
+
+    if (user.status === "inactive" || user.isActive === false) {
       return sendError(
         res,
         "Your account has been deactivated. Contact support.",
@@ -27,19 +36,23 @@ const login = async (req, res, next) => {
       );
     }
 
-    const isPasswordValid = await admin.comparePassword(password);
+    const isPasswordValid = await user.comparePassword(password);
     if (!isPasswordValid) {
-      return sendError(res, "Invalid email or password", 401);
+      return sendError(res, "Invalid credentials", 401);
     }
 
-    // Update last login timestamp
-    admin.lastLogin = new Date();
-    await admin.save({ validateBeforeSave: false });
+    // Update last login timestamp for Admin
+    if (!isEmployee) {
+      user.lastLogin = new Date();
+      await user.save({ validateBeforeSave: false });
+    }
+
+    const role = isEmployee ? "employee" : user.role;
 
     const token = generateToken({
-      id: admin._id,
-      email: admin.email,
-      role: admin.role,
+      id: user._id,
+      email: isEmployee ? user.userId : user.email,
+      role: role,
     });
 
     return sendSuccess(
@@ -47,10 +60,11 @@ const login = async (req, res, next) => {
       {
         token,
         admin: {
-          id: admin._id,
-          name: admin.name,
-          email: admin.email,
-          role: admin.role,
+          id: user._id,
+          name: user.name,
+          email: isEmployee ? user.userId : user.email,
+          role: role,
+          permissions: isEmployee ? user.permissions : ["write"],
         },
       },
       "Login successful",

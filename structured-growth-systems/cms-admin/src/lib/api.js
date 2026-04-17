@@ -1,6 +1,7 @@
 import axios from 'axios'
 
-const BASE_URL = import.meta.env.VITE_API_URL || '/api'
+const rawBase = import.meta.env.VITE_API_URL || '/api'
+const BASE_URL = rawBase.endsWith('/') ? rawBase : `${rawBase}/`
 
 export const api = axios.create({
   baseURL: BASE_URL,
@@ -31,23 +32,33 @@ export const fetcher = async (url) => {
 }
 
 export const authApi = {
-  login: (data) => api.post('/auth/login', data),
-  me: () => api.get('/auth/me'),
+  login: (data) => api.post('auth/login', data),
+  me: () => api.get('auth/me'),
 }
 
 export const blogApi = {
-  list: (params) => api.get('/blogs', { params }),
-  get: (id) => api.get('/blogs/' + id),
-  create: (formData) => api.post('/blogs', formData, { headers: { 'Content-Type': 'multipart/form-data' } }),
-  update: (id, formData) => api.put('/blogs/' + id, formData, { headers: { 'Content-Type': 'multipart/form-data' } }),
-  delete: (id) => api.delete('/blogs/' + id),
-  imageUrl: (id) => BASE_URL + '/blogs/' + id + '/image',
+  list: (params) => api.get('blogs', { params }),
+  get: (id) => api.get('blogs/' + id),
+  create: (formData) => api.post('blogs', formData, { headers: { 'Content-Type': 'multipart/form-data' } }),
+  update: (id, formData) => api.put('blogs/' + id, formData, { headers: { 'Content-Type': 'multipart/form-data' } }),
+  delete: (id) => api.delete('blogs/' + id),
+  imageUrl: (id) => BASE_URL + 'blogs/' + id + '/image',
 }
 
 export const inquiryApi = {
-  list: (params) => api.get('/inquiries', { params }),
-  get: (id) => api.get('/inquiries/' + id),
-  stats: () => api.get('/inquiries/stats'),
-  updateStatus: (id, status) => api.patch('/inquiries/' + id + '/status', { status }),
-  delete: (id) => api.delete('/inquiries/' + id),
+  list: (params) => api.get('inquiries', { params }),
+  get: (id) => api.get('inquiries/' + id),
+  stats: () => api.get('inquiries/stats'),
+  updateStatus: (id, status) => api.patch('inquiries/' + id + '/status', { status }),
+  delete: (id) => api.delete('inquiries/' + id),
+}
+
+export const employeeApi = {
+  list: (params) => api.get('employees', { params }),
+  get: (id) => api.get('employees/' + id),
+  create: (formData) => api.post('employees', formData, { headers: { 'Content-Type': 'multipart/form-data' } }),
+  update: (id, formData) => api.put('employees/' + id, formData, { headers: { 'Content-Type': 'multipart/form-data' } }),
+  updateStatus: (id, status) => api.patch('employees/' + id + '/status', { status }),
+  imageUrl: (id) => BASE_URL + 'employees/' + id + '/image',
+  documentUrl: (id, docId) => BASE_URL + 'employees/' + id + '/documents/' + docId,
 }

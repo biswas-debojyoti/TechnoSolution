@@ -6,56 +6,6 @@ const {
 } = require("../utils/apiResponse");
 
 
-const convertEditorJSToHTML = (content) => {
-  if (!content || !content.blocks) return "";
-
-  return content.blocks
-    .map((block) => {
-      switch (block.type) {
-        case "header":
-          return `<h${block.data.level}>${block.data.text}</h${block.data.level}>`;
-
-        case "paragraph":
-          return `<p>${block.data.text}</p>`;
-
-        case "list":
-          const tag = block.data.style === "ordered" ? "ol" : "ul";
-          const items = block.data.items
-            .map((item) => `<li>${item.trim()}</li>`)
-            .join("");
-          return `<${tag}>${items}</${tag}>`;
-
-        case "image":
-          return `<img src="${block.data.file?.url ?? ""}" alt="${block.data.caption ?? ""}" />`;
-
-        case "quote":
-          return `<blockquote>${block.data.text}<cite>${block.data.caption ?? ""}</cite></blockquote>`;
-
-        case "code":
-          return `<pre><code>${block.data.code}</code></pre>`;
-
-        case "delimiter":
-          return `<hr />`;
-
-        case "table": {
-          const rows = block.data.content
-            .map((row) => {
-              const cells = row
-                .map((cell) => `<td>${cell}</td>`)
-                .join("");
-              return `<tr>${cells}</tr>`;
-            })
-            .join("");
-          return `<table>${rows}</table>`;
-        }
-
-        default:
-          return "";
-      }
-    })
-    .filter(Boolean)
-    .join("\n");
-};
 /**
  * Build a blog document update payload from request fields
  */
@@ -66,6 +16,14 @@ const buildBlogPayload = (body, file) => {
   if (body.heading !== undefined) payload.heading = body.heading;
   if (body.subHeading !== undefined) payload.subHeading = body.subHeading;
   if (body.status !== undefined) payload.status = body.status;
+
+  if (body.tags !== undefined) {
+    try {
+      payload.tags = typeof body.tags === "string" ? JSON.parse(body.tags) : body.tags;
+    } catch {
+      payload.tags = [];
+    }
+  }
 
   // EditorJS content can come as stringified JSON or as an object
   if (body.content !== undefined) {
@@ -210,9 +168,6 @@ const getBlogBySlug = async (req, res, next) => {
     blogObj.imageUrl = blog.image?.data
       ? `/blogs/${blog._id}/image`
       : null;
-
-    // Convert content
-    blogObj.content = convertEditorJSToHTML(blog.content);
 
     return sendSuccess(res, { blog: blogObj }, "Blog fetched successfully");
   } catch (error) {

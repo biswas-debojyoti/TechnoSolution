@@ -109,6 +109,28 @@ const updateInquiryStatusValidator = [
   validate,
 ];
 
+// ─── Employee Validators ────────────────────────────────────────────────────────
+
+const createEmployeeValidator = [
+  body("name").notEmpty().withMessage("Name is required").trim(),
+  body("age").isInt({ min: 18, max: 100 }).withMessage("Valid age is required"),
+  body("contactNo").notEmpty().withMessage("Contact number is required"),
+  body("whatsappNo").optional().isString(),
+  body("designation").notEmpty().withMessage("Designation is required"),
+  body("joiningDate").isISO8601().toDate().withMessage("Valid joining date is required"),
+  body("salary").isNumeric().withMessage("Valid salary is required"),
+  body("userId").notEmpty().withMessage("User ID is required").trim(),
+  body("password").isLength({ min: 6 }).withMessage("Password must be at least 6 characters"),
+  body("permissions").optional(),
+  validate,
+];
+
+const updateEmployeeStatusValidator = [
+  param("id").isMongoId().withMessage("Invalid employee ID"),
+  body("status").isIn(["active", "inactive"]).withMessage("Status must be active or inactive"),
+  validate,
+];
+
 // ─── Query Validators ─────────────────────────────────────────────────────────
 
 const paginationValidator = [
@@ -128,5 +150,7 @@ module.exports = {
   mongoIdValidator,
   createInquiryValidator,
   updateInquiryStatusValidator,
+  createEmployeeValidator,
+  updateEmployeeStatusValidator,
   paginationValidator,
 };

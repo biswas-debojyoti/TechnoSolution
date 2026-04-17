@@ -10,7 +10,7 @@ const {
   updateBlog,
   deleteBlog,
 } = require("../controllers/blogController");
-const { protect } = require("../middleware/authMiddleware");
+const { protect, requireModuleAccess } = require("../middleware/authMiddleware");
 const { handleUploadErrors } = require("../middleware/uploadMiddleware");
 const {
   createBlogValidator,
@@ -26,6 +26,7 @@ router.get("/", paginationValidator, getAllBlogs);
 router.post(
   "/",
   protect,
+  requireModuleAccess("blogs", "write"),
   handleUploadErrors("image"),
   createBlogValidator,
   createBlog,
@@ -41,12 +42,13 @@ router.get("/:slug", getBlogBySlug);   // 👈 ADD THIS
 router.put(
   "/:id",
   protect,
+  requireModuleAccess("blogs", "write"),
   handleUploadErrors("image"),
   updateBlogValidator,
   updateBlog,
 );
 
 // @route  DELETE /api/blogs/:id
-router.delete("/:id", protect, mongoIdValidator, deleteBlog);
+router.delete("/:id", protect, requireModuleAccess("blogs", "write"), mongoIdValidator, deleteBlog);
 
 module.exports = router;
