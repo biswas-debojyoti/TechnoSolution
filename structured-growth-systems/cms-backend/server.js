@@ -95,6 +95,10 @@ app.get("/health", (req, res) => {
   });
 });
 
+app.get("/", (req, res) => {
+  res.send("🚀 Backend is running successfully");
+});
+
 // ─── API Routes ───────────────────────────────────────────────────────────────
 app.use("/api/auth", authLimiter, authRoutes);
 app.use("/api/blogs", apiLimiter, blogRoutes);
