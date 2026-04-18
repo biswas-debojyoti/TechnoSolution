@@ -16,7 +16,7 @@ export default function EmployeeFormPage() {
   const { id } = useParams()
   const isEdit = !!id
   const navigate = useNavigate()
-  const { showToast } = useToast()
+  const toast = useToast()
   
   const { employee, isLoading: isFetching } = useEmployee(id)
   
@@ -89,7 +89,7 @@ export default function EmployeeFormPage() {
   const handleImageChange = (e) => {
     const file = e.target.files[0]
     if (file && file.size > 1024 * 1024) {
-      showToast('Image limits strictly to 1MB', 'error')
+      toast.error('Image limits strictly to 1MB')
       return
     }
     if (file) setImageFile(file)
@@ -100,7 +100,7 @@ export default function EmployeeFormPage() {
     const validFiles = []
     for (const file of files) {
       if (file.size > 1024 * 1024) {
-        showToast(`File ${file.name} exceeds 1MB limit and was rejected`, 'error')
+        toast.error(`File ${file.name} exceeds 1MB limit and was rejected`)
       } else {
         validFiles.push(file)
       }
@@ -136,14 +136,14 @@ export default function EmployeeFormPage() {
 
       if (isEdit) {
         await employeeApi.update(id, data)
-        showToast('Employee updated successfully', 'success')
+        toast.success('Employee updated successfully')
       } else {
         await employeeApi.create(data)
-        showToast('Employee created successfully', 'success')
+        toast.success('Employee created successfully')
       }
       navigate('/employees')
     } catch (err) {
-      showToast(err?.response?.data?.message || 'Error saving employee', 'error')
+      toast.error(err?.response?.data?.message || 'Error saving employee')
     } finally {
       setLoading(false)
     }

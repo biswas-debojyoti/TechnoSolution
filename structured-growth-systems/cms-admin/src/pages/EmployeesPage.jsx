@@ -2,118 +2,162 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   Plus,
-  Check,
-  X,
-  Shield,
   Pencil,
+  Trash2,
   Image as ImageIcon,
-  ToggleLeft,
-  ToggleRight,
 } from "lucide-react";
 import { useEmployees } from "../hooks/useData";
 import { employeeApi } from "../lib/api";
 import { useToast } from "../context/ToastContext";
 import { useAuth } from "../context/AuthContext";
+import {
+  PageShell,
+  TableSkeleton,
+  Empty,
+  ConfirmModal,
+  Pagination,
+  SearchInput,
+  SelectFilter,
+} from "../components/ui/index";
 
 export default function EmployeesPage() {
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
+  const [search, setSearch] = useState("");
+  const [status, setStatus] = useState("");
+  const [deleteTarget, setDeleteTarget] = useState(null);
+  const [deleting, setDeleting] = useState(false);
+
   const { employees, pagination, isLoading, error, mutate } = useEmployees({
     page,
     limit: 10,
+    ...(search && { search }),
+    ...(status && { status }),
   });
-  const { showToast } = useToast();
+  
+  const toast = useToast();
   const { admin } = useAuth();
 
-  // Ensure they have write permission. All internal Admins have write access. Employees only have it if specified.
   const hasWriteAccess =
     ["admin", "superadmin"].includes(admin?.role) ||
     admin?.permissions?.includes("write");
 
   const toggleStatus = async (id, currentStatus) => {
     if (!hasWriteAccess) {
-      showToast("You do not have permission to change status.", "error");
+      toast.error("You do not have permission to change status.");
       return;
     }
     try {
       const newStatus = currentStatus === "active" ? "inactive" : "active";
       await employeeApi.updateStatus(id, newStatus);
-      showToast(`Employee is now ${newStatus}`, "success");
+      toast.success(`Employee is now ${newStatus}`);
       mutate();
     } catch (err) {
-      showToast(
-        err?.response?.data?.message || "Failed to update status",
-        "error",
-      );
+      toast.error(err?.response?.data?.message || "Failed to update status");
     }
   };
 
+  const handleDelete = async () => {
+    if (!deleteTarget) return;
+    setDeleting(true);
+    try {
+      await employeeApi.delete(deleteTarget._id);
+      toast.success("Employee deleted successfully");
+      mutate();
+      setDeleteTarget(null);
+    } catch (err) {
+      toast.error(err?.response?.data?.message || "Failed to delete employee");
+    } finally {
+      setDeleting(false);
+    }
+  };
+
+  const handleSearch = (val) => {
+    setSearch(val);
+    setPage(1);
+  };
+
+  const handleStatus = (val) => {
+    setStatus(val);
+    setPage(1);
+  };
+
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div>
-          <h1 className="text-2xl font-display font-bold text-[var(--text-primary)]">
-            Employees
-          </h1>
-          <p className="text-sm text-[var(--text-secondary)] mt-1">
-            Manage your employees and their system access
-          </p>
-        </div>
-
-        {hasWriteAccess && (
-          <Link
-            to="/employees/new"
-            className="inline-flex items-center gap-2 px-4 py-2 bg-amber-500 hover:bg-amber-600 text-black font-medium rounded-md transition-colors"
-          >
-            <Plus size={18} />
-            <span>Add Employee</span>
-          </Link>
-        )}
-      </div>
-
-      <div className="card overflow-hidden">
+    <PageShell
+      title="Employees"
+      subtitle="Manage your employees and their system access"
+      actions={
+        <>
+          <SearchInput
+            value={search}
+            onChange={handleSearch}
+            placeholder="Search employees…"
+          />
+          <SelectFilter
+            value={status}
+            onChange={handleStatus}
+            placeholder="All Status"
+            options={[
+              { value: "active", label: "Active" },
+              { value: "inactive", label: "Inactive" },
+            ]}
+          />
+          {hasWriteAccess && (
+            <Link to="/employees/new" className="btn-primary text-xs py-1.5 px-3">
+              <Plus size={14} /> Add Employee
+            </Link>
+          )}
+        </>
+      }
+    >
+      <div className="card m-4 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm whitespace-nowrap">
-            <thead className="bg-[var(--bg-elevated)] border-b border-[var(--border)] text-[var(--text-secondary)] uppercase text-xs tracking-wider">
+            <thead className="bg-[var(--bg-elevated)] border-b border-[var(--border)] text-[var(--text-secondary)] uppercase text-[10px] tracking-wider font-mono">
               <tr>
-                <th className="px-6 py-4 font-medium">Employee</th>
-                <th className="px-6 py-4 font-medium">Contact</th>
-                <th className="px-6 py-4 font-medium">Designation</th>
-                <th className="px-6 py-4 font-medium">System Access</th>
-                <th className="px-6 py-4 font-medium text-center">Status</th>
-                <th className="px-6 py-4 font-medium text-right">Actions</th>
+                <th className="px-6 py-3 font-medium">Employee</th>
+                <th className="px-6 py-3 font-medium">Contact</th>
+                <th className="px-6 py-3 font-medium">Designation</th>
+                <th className="px-6 py-3 font-medium">System Access</th>
+                <th className="px-6 py-3 font-medium text-center">Status</th>
+                <th className="px-6 py-3 font-medium text-right">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-[var(--border)]">
               {isLoading ? (
-                <tr>
-                  <td colSpan="6" className="px-6 py-12 text-center">
-                    <div className="flex flex-col items-center gap-2">
-                      <div className="w-8 h-8 border-4 border-amber-500/20 border-t-amber-500 rounded-full animate-spin" />
-                      <span className="text-[var(--text-muted)]">
-                        Fetching records...
-                      </span>
-                    </div>
-                  </td>
-                </tr>
+                <TableSkeleton rows={8} cols={6} />
               ) : employees.length === 0 ? (
                 <tr>
-                  <td
-                    colSpan="6"
-                    className="px-6 py-12 text-center text-[var(--text-muted)]"
-                  >
-                    No employees found.
+                  <td colSpan="6">
+                    <Empty
+                      icon={ImageIcon}
+                      message={
+                        search || status
+                          ? "No employees match your filters."
+                          : "No employees found."
+                      }
+                      action={
+                        hasWriteAccess && (
+                          <Link
+                            to="/employees/new"
+                            className="btn-primary text-xs"
+                          >
+                            Add first employee
+                          </Link>
+                        )
+                      }
+                    />
                   </td>
                 </tr>
               ) : (
                 employees.map((emp) => (
                   <tr
                     key={emp._id}
-                    className="hover:bg-[var(--bg-elevated)]/30 transition-colors"
+                    className="hover:bg-[var(--bg-hover)] transition-colors"
                   >
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-[var(--bg-surface)] border border-[var(--border)] flex items-center justify-center overflow-hidden shrink-0">
+                        <div className="w-9 h-9 rounded-full bg-[var(--bg-surface)] border border-[var(--border)] flex items-center justify-center overflow-hidden shrink-0">
                           {emp.image ? (
                             <img
                               src={employeeApi.imageUrl(emp._id)}
@@ -122,7 +166,7 @@ export default function EmployeesPage() {
                             />
                           ) : (
                             <ImageIcon
-                              size={18}
+                              size={16}
                               className="text-[var(--text-muted)]"
                             />
                           )}
@@ -139,32 +183,37 @@ export default function EmployeesPage() {
                       </div>
                     </td>
                     <td className="px-6 py-4">
-                      <p className="text-[var(--text-primary)]">
+                      <p className="text-[var(--text-primary)] text-xs">
                         {emp.contactNo}
                       </p>
-                      <p className="text-xs text-[var(--text-muted)]">
-                        {emp.whatsappNo || "No WhatsApp"}
+                      <p className="text-[10px] text-[var(--text-muted)]">
+                        {emp.whatsappNo || "—"}
                       </p>
                     </td>
                     <td className="px-6 py-4">
-                      <span className="px-2 py-0.5 rounded bg-[var(--bg-elevated)] border border-[var(--border)] text-xs text-[var(--text-secondary)]">
+                      <span className="px-2 py-0.5 rounded-sm bg-[var(--bg-elevated)] border border-[var(--border)] text-[10px] text-[var(--text-secondary)]">
                         {emp.designation}
                       </span>
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex flex-col gap-1">
-                        <p className="text-xs font-mono text-[var(--text-secondary)]">
+                        <p className="text-[10px] font-mono text-[var(--text-secondary)]">
                           {emp.userId}
                         </p>
-                        <div className="flex flex-wrap gap-1 mt-1">
-                          {emp.permissions?.map((p) => (
+                        <div className="flex flex-wrap gap-1">
+                          {emp.permissions?.slice(0, 2).map((p) => (
                             <span
                               key={p}
-                              className="px-1.5 py-0.5 rounded bg-blue-500/5 text-blue-400 border border-blue-500/20 text-[9px] font-mono"
+                              className="px-1 py-0.5 rounded-sm bg-blue-500/5 text-blue-400 border border-blue-500/10 text-[9px] font-mono"
                             >
                               {p}
                             </span>
                           ))}
+                          {emp.permissions?.length > 2 && (
+                            <span className="text-[9px] text-[var(--text-muted)]">
+                              +{emp.permissions.length - 2}
+                            </span>
+                          )}
                         </div>
                       </div>
                     </td>
@@ -172,50 +221,46 @@ export default function EmployeesPage() {
                       <button
                         onClick={() => toggleStatus(emp._id, emp.status)}
                         disabled={!hasWriteAccess}
-                        className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border transition-all ${
+                        className={`toggle-switch ${
                           emp.status === "active"
-                            ? "bg-green-500/10 text-green-500 border-green-500/20 hover:bg-green-500/20"
-                            : "bg-red-500/10 text-red-500 border-red-500/20 hover:bg-red-500/20"
-                        } disabled:opacity-50 disabled:cursor-not-allowed`}
+                            ? "bg-amber-500"
+                            : "bg-[var(--bg-elevated)]"
+                        }`}
+                        title={
+                          emp.status === "active" ? "Deactivate" : "Activate"
+                        }
                       >
-                        {emp.status === "active" ? (
-                          <Check size={12} />
-                        ) : (
-                          <X size={12} />
-                        )}
-                        <span className="capitalize">{emp.status}</span>
+                        <span
+                          className={`toggle-switch-slider ${
+                            emp.status === "active"
+                              ? "translate-x-4"
+                              : "translate-x-0"
+                          }`}
+                        />
                       </button>
                     </td>
                     <td className="px-6 py-4 text-right">
-                      <div className="flex items-center justify-end gap-2">
+                      <div className="flex items-center justify-end gap-1">
                         {hasWriteAccess && (
-                          <button
-                            onClick={() =>
-                              navigate(`/employees/${emp._id}/edit`)
-                            }
-                            className="p-1.5 rounded-md text-[var(--text-muted)] hover:text-amber-500 hover:bg-amber-500/10 transition-colors"
-                            title="Edit Details"
-                          >
-                            <Pencil size={16} />
-                          </button>
+                          <>
+                            <button
+                              onClick={() =>
+                                navigate(`/employees/${emp._id}/edit`)
+                              }
+                              className="p-1.5 rounded-sm text-[var(--text-muted)] hover:text-amber-400 hover:bg-amber-500/10 transition-colors"
+                              title="Edit"
+                            >
+                              <Pencil size={13} />
+                            </button>
+                            <button
+                              onClick={() => setDeleteTarget(emp)}
+                              className="p-1.5 rounded-sm text-[var(--text-muted)] hover:text-red-400 hover:bg-red-500/10 transition-colors"
+                              title="Delete"
+                            >
+                              <Trash2 size={13} />
+                            </button>
+                          </>
                         )}
-                        <button
-                          onClick={() => toggleStatus(emp._id, emp.status)}
-                          className={`p-1.5 rounded-md transition-colors ${
-                            emp.status === "active"
-                              ? "text-green-500"
-                              : "text-[var(--text-muted)]"
-                          } hover:bg-[var(--bg-hover)]`}
-                          title={
-                            emp.status === "active" ? "Deactivate" : "Activate"
-                          }
-                        >
-                          {emp.status === "active" ? (
-                            <ToggleRight size={20} />
-                          ) : (
-                            <ToggleLeft size={20} />
-                          )}
-                        </button>
                       </div>
                     </td>
                   </tr>
@@ -225,28 +270,18 @@ export default function EmployeesPage() {
           </table>
         </div>
 
-        {pagination && pagination.pages > 1 && (
-          <div className="px-6 py-4 border-t border-[var(--border)] flex justify-between items-center bg-[var(--bg-elevated)]">
-            <button
-              disabled={page === 1}
-              onClick={() => setPage(page - 1)}
-              className="px-3 py-1.5 text-sm rounded-md border border-[var(--border)] disabled:opacity-50 hover:bg-[var(--bg-hover)]"
-            >
-              Previous
-            </button>
-            <span className="text-sm text-[var(--text-secondary)]">
-              Page {page} of {pagination.pages}
-            </span>
-            <button
-              disabled={page === pagination.pages}
-              onClick={() => setPage(page + 1)}
-              className="px-3 py-1.5 text-sm rounded-md border border-[var(--border)] disabled:opacity-50 hover:bg-[var(--bg-hover)]"
-            >
-              Next
-            </button>
-          </div>
-        )}
+        <Pagination pagination={pagination} onPageChange={setPage} />
       </div>
-    </div>
+
+      <ConfirmModal
+        open={!!deleteTarget}
+        title="Delete Employee"
+        message={`"${deleteTarget?.name}" will be permanently removed. Their system access will be revoked immediately.`}
+        confirmLabel="Delete"
+        onConfirm={handleDelete}
+        onCancel={() => setDeleteTarget(null)}
+        loading={deleting}
+      />
+    </PageShell>
   );
 }

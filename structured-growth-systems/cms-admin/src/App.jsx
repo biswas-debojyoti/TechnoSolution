@@ -2,6 +2,7 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 import { SWRConfig } from 'swr'
 import { AuthProvider } from './context/AuthContext'
 import { ToastProvider } from './context/ToastContext'
+import { ThemeProvider } from './context/ThemeContext'
 import { fetcher } from './lib/api'
 
 import ProtectedRoute from './components/auth/ProtectedRoute'
@@ -31,29 +32,31 @@ export default function App() {
   return (
     <SWRConfig value={swrConfig}>
       <AuthProvider>
-        <ToastProvider>
-          <Routes>
-            {/* Public */}
-            <Route path="/login" element={<LoginPage />} />
+        <ThemeProvider>
+          <ToastProvider>
+            <Routes>
+              {/* Public */}
+              <Route path="/login" element={<LoginPage />} />
 
-            {/* Protected */}
-            <Route element={<ProtectedRoute />}>
-              <Route element={<AppLayout />}>
-                <Route path="/"                  element={<DashboardPage />} />
-                <Route path="/blogs"             element={<BlogsPage />} />
-                <Route path="/blogs/new"         element={<BlogFormPage />} />
-                <Route path="/blogs/:id/edit"    element={<BlogFormPage />} />
-                <Route path="/inquiries"         element={<InquiriesPage />} />
-                <Route path="/employees"         element={<EmployeesPage />} />
-                <Route path="/employees/new"     element={<EmployeeFormPage />} />
-                <Route path="/employees/:id/edit" element={<EmployeeFormPage />} />
+              {/* Protected */}
+              <Route element={<ProtectedRoute />}>
+                <Route element={<AppLayout />}>
+                  <Route path="/"                  element={<DashboardPage />} />
+                  <Route path="/blogs"             element={<BlogsPage />} />
+                  <Route path="/blogs/new"         element={<BlogFormPage />} />
+                  <Route path="/blogs/:id/edit"    element={<BlogFormPage />} />
+                  <Route path="/inquiries"         element={<InquiriesPage />} />
+                  <Route path="/employees"         element={<EmployeesPage />} />
+                  <Route path="/employees/new"     element={<EmployeeFormPage />} />
+                  <Route path="/employees/:id/edit" element={<EmployeeFormPage />} />
+                </Route>
               </Route>
-            </Route>
 
-            {/* Fallback */}
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </ToastProvider>
+              {/* Fallback */}
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </ToastProvider>
+        </ThemeProvider>
       </AuthProvider>
     </SWRConfig>
   )

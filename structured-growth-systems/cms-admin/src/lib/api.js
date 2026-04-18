@@ -59,6 +59,7 @@ export const employeeApi = {
   create: (formData) => api.post('employees', formData, { headers: { 'Content-Type': 'multipart/form-data' } }),
   update: (id, formData) => api.put('employees/' + id, formData, { headers: { 'Content-Type': 'multipart/form-data' } }),
   updateStatus: (id, status) => api.patch('employees/' + id + '/status', { status }),
+  delete: (id) => api.delete('employees/' + id),
   imageUrl: (id) => BASE_URL + 'employees/' + id + '/image',
   documentUrl: (id, docId) => BASE_URL + 'employees/' + id + '/documents/' + docId,
 }

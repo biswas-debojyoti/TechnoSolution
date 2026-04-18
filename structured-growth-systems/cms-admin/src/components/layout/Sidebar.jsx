@@ -1,9 +1,10 @@
 import { NavLink, useLocation } from 'react-router-dom'
 import {
   LayoutDashboard, FileText, MessageSquare,
-  LogOut, ChevronRight, Zap, Users
+  LogOut, ChevronRight, Zap, Users, Sun, Moon
 } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
+import { useTheme } from '../../context/ThemeContext'
 import clsx from 'clsx'
 
 const navItems = [
@@ -16,18 +17,28 @@ const navItems = [
 export default function Sidebar() {
   const { admin, logout } = useAuth()
   const location = useLocation()
+  const { theme, toggleTheme } = useTheme()
 
   return (
     <aside className="w-56 shrink-0 flex flex-col h-full bg-[var(--bg-surface)] border-r border-[var(--border)]">
       {/* Logo */}
-      <div className="flex items-center gap-2.5 px-5 h-14 border-b border-[var(--border)]">
-        <div className="w-6 h-6 bg-amber-500 rounded-sm flex items-center justify-center">
-          <Zap size={13} className="text-black" fill="black" />
+      <div className="flex items-center justify-between px-5 h-14 border-b border-[var(--border)]">
+        <div className="flex items-center gap-2.5">
+          <div className="w-6 h-6 bg-amber-500 rounded-sm flex items-center justify-center shrink-0">
+            <Zap size={13} className="text-black" fill="black" />
+          </div>
+          <span className="font-display font-700 text-sm tracking-wide text-[var(--text-primary)] whitespace-nowrap"
+                style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700 }}>
+            NexZen Admin
+          </span>
         </div>
-        <span className="font-display font-700 text-sm tracking-wide text-[var(--text-primary)]"
-              style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700 }}>
-          CMS Admin
-        </span>
+        <button
+          onClick={toggleTheme}
+          className="p-1.5 rounded-sm text-[var(--text-muted)] hover:text-[var(--text-secondary)] hover:bg-[var(--bg-hover)] transition-colors"
+          title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+        >
+          {theme === 'light' ? <Moon size={13} /> : <Sun size={13} />}
+        </button>
       </div>
 
       {/* Nav */}

@@ -82,12 +82,23 @@ const getAllEmployees = async (req, res, next) => {
   try {
     const page = parseInt(req.query.page, 10) || 1;
     const limit = parseInt(req.query.limit, 10) || 20;
+    const { search, status } = req.query;
     const startIndex = (page - 1) * limit;
 
-    const total = await Employee.countDocuments();
+    const filter = {};
+    if (status) filter.status = status;
+    if (search) {
+      filter.$or = [
+        { name: { $regex: search, $options: "i" } },
+        { designation: { $regex: search, $options: "i" } },
+        { userId: { $regex: search, $options: "i" } },
+      ];
+    }
+
+    const total = await Employee.countDocuments(filter);
     
     // Select everything EXCEPT big binary buffers to keep list fast
-    const employees = await Employee.find()
+    const employees = await Employee.find(filter)
       .select("-image.data -documents.data -password")
       .sort({ createdAt: -1 })
       .skip(startIndex)
@@ -100,6 +111,21 @@ const getAllEmployees = async (req, res, next) => {
       total,
       pages: Math.ceil(total / limit),
     }, "Employees fetched successfully");
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * @desc    Delete an employee
+ * @route   DELETE /api/employees/:id
+ * @access  Private (Write permission)
+ */
+const deleteEmployee = async (req, res, next) => {
+  try {
+    const employee = await Employee.findByIdAndDelete(req.params.id);
+    if (!employee) return sendError(res, "Employee not found", 404);
+    return sendSuccess(res, null, "Employee deleted successfully");
   } catch (error) {
     next(error);
   }
@@ -261,6 +287,7 @@ module.exports = {
   getEmployeeById,
   updateEmployee,
   toggleEmployeeStatus,
+  deleteEmployee,
   getEmployeeImage,
   getEmployeeDocument,
 };

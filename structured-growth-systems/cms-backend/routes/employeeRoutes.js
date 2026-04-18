@@ -7,6 +7,7 @@ const {
   getEmployeeById,
   updateEmployee,
   toggleEmployeeStatus,
+  deleteEmployee,
   getEmployeeImage,
   getEmployeeDocument,
 } = require("../controllers/employeeController");
@@ -62,6 +63,9 @@ router.patch(
   updateEmployeeStatusValidator,
   toggleEmployeeStatus
 );
+
+// @route  DELETE /api/employees/:id
+router.delete("/:id", protect, requireModuleAccess("employees", "write"), deleteEmployee);
 
 // @route  GET /api/employees/:id/image
 // Public to allow <img src> to work in Admin Panel
