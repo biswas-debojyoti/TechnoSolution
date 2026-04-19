@@ -67,7 +67,7 @@ export default function Sidebar() {
 
       {/* Admin info + logout */}
       <div className="px-2 pb-4 pt-2 border-t border-[var(--border)]">
-        <div className="px-3 py-2.5 rounded-sm bg-[var(--bg-elevated)] mb-1.5">
+        <div className="px-3 py-2.5 rounded-sm bg-[var(--bg-elevated)] mb-2">
           <p className="text-xs text-[var(--text-muted)] font-mono uppercase tracking-wider mb-0.5">Logged in as</p>
           <p className="text-sm text-[var(--text-primary)] truncate" style={{ fontFamily: 'Syne, sans-serif', fontWeight: 600 }}>
             {admin?.name || 'Admin'}
