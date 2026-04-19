@@ -84,6 +84,5 @@ blogSchema.virtual("hasImage").get(function () {
 
 // Index for faster queries
 blogSchema.index({ status: 1, createdAt: -1 });
-blogSchema.index({ slug: 1 });
 
 module.exports = mongoose.model("Blog", blogSchema);
