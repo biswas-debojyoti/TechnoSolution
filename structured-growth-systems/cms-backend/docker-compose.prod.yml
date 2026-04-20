@@ -6,10 +6,10 @@ services:
     container_name: cms_mongodb_prod
     # NOTE: Intentionally not exposing ports to the host for production security.
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME:-admin}
-      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD:-adminpassword}
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME:-admin@gmail.com}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD:-123456}
     volumes:
-      - mongodb_data_prod:/data/db
+      - mongodb_data_prod:/data/db  
     restart: always
 
   backend:
@@ -22,7 +22,7 @@ services:
     environment:
       - PORT=5000
       - NODE_ENV=production
-      - MONGO_URI=mongodb://admin%40gmail.com:123456@mongodb:27017/cms_prod_db?authSource=admin
+      - MONGO_URI=mongodb://admin%40gmail.com:123456@mongodb:27018/cms_prod_db?authSource=admin
     env_file:
       - .env
     depends_on:

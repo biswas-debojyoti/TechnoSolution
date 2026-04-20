@@ -7,8 +7,8 @@ services:
     ports:
       - "27018:27017" # Exposes MongoDB to your local machine (needed for MongoDB Compass)
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME:-admin}
-      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD:-adminpassword}
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME:-admin@gmail.com}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD:-123456}
     volumes:
       - mongodb_data:/data/db # Persists your database data across restarts
     restart: unless-stopped
@@ -21,7 +21,7 @@ services:
     environment:
       - PORT=5000
       # Overrides the MONGO_URI from your .env file to point to the docker container
-      - MONGO_URI=mongodb://admin%40gmail.com:123456@mongodb:27017/cms_local_db?authSource=admin
+      - MONGO_URI=mongodb://admin%40gmail.com:123456@mongodb:27018/cms_local_db?authSource=admin
     env_file:
       - .env # Loads other env vars from your existing .env file
     depends_on:
