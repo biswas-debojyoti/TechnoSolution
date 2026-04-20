@@ -63,3 +63,27 @@ export const employeeApi = {
   imageUrl: (id) => BASE_URL + 'employees/' + id + '/image',
   documentUrl: (id, docId) => BASE_URL + 'employees/' + id + '/documents/' + docId,
 }
+
+export const leadApi = {
+  list: (params) => api.get('leads', { params }),
+  get: (id) => api.get('leads/' + id),
+  create: (data) => api.post('leads', data),
+  update: (id, data) => api.put('leads/' + id, data),
+  updateStatus: (id, status) => api.patch('leads/' + id + '/status', { status }),
+  delete: (id) => api.delete('leads/' + id),
+  exportUrl: (params) => {
+    const query = new URLSearchParams(params).toString()
+    return BASE_URL + 'leads/export' + (query ? '?' + query : '')
+  }
+}
+
+export const clientApi = {
+  list: (params) => api.get('clients', { params }),
+  get: (id) => api.get('clients/' + id),
+  update: (id, data) => api.put('clients/' + id, data),
+  delete: (id) => api.delete('clients/' + id),
+  addPayment: (id, data) => api.post(`clients/${id}/payments`, data),
+  deletePayment: (clientId, paymentId) => api.delete(`clients/${clientId}/payments/${paymentId}`),
+}
+
+

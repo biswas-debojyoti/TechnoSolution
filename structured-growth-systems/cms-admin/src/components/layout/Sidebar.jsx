@@ -1,7 +1,7 @@
 import { NavLink, useLocation } from 'react-router-dom'
 import {
   LayoutDashboard, FileText, MessageSquare,
-  LogOut, ChevronRight, Zap, Users, Sun, Moon
+  LogOut, ChevronRight, Zap, Users, Sun, Moon, Briefcase
 } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import { useTheme } from '../../context/ThemeContext'
@@ -11,7 +11,10 @@ const navItems = [
   { to: '/',         icon: LayoutDashboard, label: 'Dashboard',  exact: true },
   { to: '/blogs',    icon: FileText,         label: 'Blogs'                   },
   { to: '/inquiries', icon: MessageSquare,    label: 'Inquiries'               },
+  { to: '/leads',     icon: Users,            label: 'Leads'                   },
+  { to: '/clients',   icon: Briefcase,        label: 'Clients'                 },
   { to: '/employees', icon: Users,            label: 'Employees'               },
+
 ]
 
 export default function Sidebar() {

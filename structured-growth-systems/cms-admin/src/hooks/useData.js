@@ -61,3 +61,48 @@ export function useEmployee(id) {
   const { data, error, isLoading, mutate } = useSWR(id ? 'employees/' + id : null, fetcher, { revalidateOnFocus: false })
   return { employee: data?.employee, isLoading, isError: !!error, error, mutate }
 }
+
+export function useLeads(params = {}) {
+  const query = new URLSearchParams(params).toString()
+  const key = 'leads' + (query ? '?' + query : '')
+  const { data, error, isLoading, mutate } = useSWR(key, fetcher, {
+    revalidateOnFocus: false,
+    keepPreviousData: true,
+  })
+  return { 
+    leads: data?.data || [], 
+    pagination: data?.pagination, 
+    isLoading, 
+    isError: !!error, 
+    error, 
+    mutate 
+  }
+}
+
+export function useLead(id) {
+  const { data, error, isLoading, mutate } = useSWR(id ? 'leads/' + id : null, fetcher, { revalidateOnFocus: false })
+  return { lead: data?.lead, isLoading, isError: !!error, error, mutate }
+}
+
+export function useClients(params = {}) {
+  const query = new URLSearchParams(params).toString()
+  const key = 'clients' + (query ? '?' + query : '')
+  const { data, error, isLoading, mutate } = useSWR(key, fetcher, {
+    revalidateOnFocus: false,
+    keepPreviousData: true,
+  })
+  return { 
+    clients: data?.data || [], 
+    pagination: data?.pagination, 
+    isLoading, 
+    isError: !!error, 
+    error, 
+    mutate 
+  }
+}
+
+export function useClient(id) {
+  const { data, error, isLoading, mutate } = useSWR(id ? 'clients/' + id : null, fetcher, { revalidateOnFocus: false })
+  return { client: data?.client, isLoading, isError: !!error, error, mutate }
+}
+

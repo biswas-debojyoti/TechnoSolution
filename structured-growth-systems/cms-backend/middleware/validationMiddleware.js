@@ -131,6 +131,24 @@ const updateEmployeeStatusValidator = [
   validate,
 ];
 
+// ─── Lead Validators ────────────────────────────────────────────────────────────
+
+const createLeadValidator = [
+  body("name").notEmpty().withMessage("Name is required").trim(),
+  body("phone").notEmpty().withMessage("Phone is required").matches(/^[+\d\s\-().]{7,20}$/).withMessage("Please provide a valid phone number"),
+  body("email").optional().isEmail().withMessage("Please provide a valid email address").normalizeEmail(),
+  body("source").optional().isIn(["Website", "Referral", "Social Media", "Cold Call", "Other"]),
+  body("status").optional().isIn(["New", "Contacted", "Qualified", "Lost", "Converted"]),
+  validate,
+];
+
+const updateLeadStatusValidator = [
+  param("id").isMongoId().withMessage("Invalid lead ID"),
+  body("status").isIn(["New", "Contacted", "Qualified", "Lost", "Converted"]).withMessage("Invalid status"),
+  validate,
+];
+
+
 // ─── Query Validators ─────────────────────────────────────────────────────────
 
 const paginationValidator = [
@@ -152,5 +170,7 @@ module.exports = {
   updateInquiryStatusValidator,
   createEmployeeValidator,
   updateEmployeeStatusValidator,
+  createLeadValidator,
+  updateLeadStatusValidator,
   paginationValidator,
 };

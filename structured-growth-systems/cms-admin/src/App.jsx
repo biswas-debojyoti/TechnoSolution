@@ -15,6 +15,11 @@ import BlogFormPage    from './pages/BlogFormPage'
 import InquiriesPage   from './pages/InquiriesPage'
 import EmployeesPage   from './pages/EmployeesPage'
 import EmployeeFormPage from './pages/EmployeeFormPage'
+import LeadsPage from './pages/LeadsPage'
+import ClientsPage from './pages/ClientsPage'
+import ClientDetailPage from './pages/ClientDetailPage'
+import EntityFormPage from './pages/EntityFormPage'
+
 
 const swrConfig = {
   fetcher,
@@ -49,6 +54,13 @@ export default function App() {
                   <Route path="/employees"         element={<EmployeesPage />} />
                   <Route path="/employees/new"     element={<EmployeeFormPage />} />
                   <Route path="/employees/:id/edit" element={<EmployeeFormPage />} />
+                  <Route path="/leads"             element={<LeadsPage />} />
+                  <Route path="/leads/new"         element={<EntityFormPage />} />
+                  <Route path="/leads/:id/edit"    element={<EntityFormPage />} />
+                  <Route path="/clients"           element={<ClientsPage />} />
+                  <Route path="/clients/:id"      element={<ClientDetailPage />} />
+                  <Route path="/clients/:id/edit"  element={<EntityFormPage />} />
+
                 </Route>
               </Route>
 

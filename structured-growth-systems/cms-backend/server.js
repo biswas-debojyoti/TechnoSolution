@@ -13,6 +13,9 @@ const authRoutes = require("./routes/authRoutes");
 const blogRoutes = require("./routes/blogRoutes");
 const inquiryRoutes = require("./routes/inquiryRoutes");
 const employeeRoutes = require("./routes/employeeRoutes");
+const leadRoutes = require("./routes/leadRoutes");
+const clientRoutes = require("./routes/clientRoutes");
+
 
 // ─── Connect to Database ──────────────────────────────────────────────────────
 connectDB();
@@ -104,6 +107,9 @@ app.use("/api/auth", authLimiter, authRoutes);
 app.use("/api/blogs", apiLimiter, blogRoutes);
 app.use("/api/inquiries", inquiryLimiter, inquiryRoutes);
 app.use("/api/employees", apiLimiter, employeeRoutes);
+app.use("/api/leads", apiLimiter, leadRoutes);
+app.use("/api/clients", apiLimiter, clientRoutes);
+
 
 // ─── 404 + Global Error Handler ───────────────────────────────────────────────
 app.use(notFound);
