@@ -7,7 +7,7 @@ const connectDB = async () => {
       socketTimeoutMS: 45000,
     });
 
-
+console.log("Connected to MongoDB successfully");
     mongoose.connection.on("disconnected", () => {
       console.warn("⚠️  MongoDB disconnected. Attempting to reconnect...");
     });

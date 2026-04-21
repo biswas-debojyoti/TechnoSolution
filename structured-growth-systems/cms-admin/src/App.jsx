@@ -19,6 +19,7 @@ import LeadsPage from './pages/LeadsPage'
 import ClientsPage from './pages/ClientsPage'
 import ClientDetailPage from './pages/ClientDetailPage'
 import EntityFormPage from './pages/EntityFormPage'
+import SettingsPage from './pages/SettingsPage'
 
 
 const swrConfig = {
@@ -60,6 +61,7 @@ export default function App() {
                   <Route path="/clients"           element={<ClientsPage />} />
                   <Route path="/clients/:id"      element={<ClientDetailPage />} />
                   <Route path="/clients/:id/edit"  element={<EntityFormPage />} />
+                  <Route path="/settings"          element={<SettingsPage />} />
 
                 </Route>
               </Route>

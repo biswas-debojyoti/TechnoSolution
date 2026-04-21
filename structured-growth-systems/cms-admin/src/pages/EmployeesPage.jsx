@@ -1,11 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  Plus,
-  Pencil,
-  Trash2,
-  Image as ImageIcon,
-} from "lucide-react";
+import { Plus, Pencil, Trash2, Image as ImageIcon } from "lucide-react";
 import { useEmployees } from "../hooks/useData";
 import { employeeApi } from "../lib/api";
 import { useToast } from "../context/ToastContext";
@@ -34,7 +29,7 @@ export default function EmployeesPage() {
     ...(search && { search }),
     ...(status && { status }),
   });
-  
+
   const toast = useToast();
   const { admin } = useAuth();
 
@@ -103,7 +98,10 @@ export default function EmployeesPage() {
             ]}
           />
           {hasWriteAccess && (
-            <Link to="/employees/new" className="btn-primary text-xs py-1.5 px-3">
+            <Link
+              to="/employees/new"
+              className="btn-primary text-xs py-1.5 px-3"
+            >
               <Plus size={14} /> Add Employee
             </Link>
           )}

@@ -1,7 +1,7 @@
 import { NavLink, useLocation } from 'react-router-dom'
 import {
   LayoutDashboard, FileText, MessageSquare,
-  LogOut, ChevronRight, Zap, Users, Sun, Moon, Briefcase
+  LogOut, ChevronRight, Zap, Users, Sun, Moon, Briefcase, Settings
 } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import { useTheme } from '../../context/ThemeContext'
@@ -77,6 +77,18 @@ export default function Sidebar() {
           </p>
           <p className="text-xs text-[var(--text-muted)] truncate">{admin?.email}</p>
         </div>
+        <NavLink
+          to="/settings"
+          className={clsx(
+            'flex items-center gap-2.5 px-3 py-2 rounded-sm text-sm mb-1 transition-colors duration-150',
+            location.pathname === '/settings'
+              ? 'bg-amber-500/10 text-amber-400 border-l-2 border-amber-500'
+              : 'text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-hover)] border-l-2 border-transparent'
+          )}
+        >
+          <Settings size={14} className="shrink-0" />
+          <span>Settings</span>
+        </NavLink>
         <button
           onClick={logout}
           className="w-full flex items-center gap-2.5 px-3 py-2 rounded-sm text-sm

@@ -86,4 +86,9 @@ export const clientApi = {
   deletePayment: (clientId, paymentId) => api.delete(`clients/${clientId}/payments/${paymentId}`),
 }
 
+export const settingsApi = {
+  get: () => api.get('settings'),
+  update: (data) => api.patch('settings', data),
+}
+
 

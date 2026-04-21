@@ -3,11 +3,23 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { 
   ArrowLeft, Save, Info, Check, User, Globe, Mail, Phone, 
   DollarSign, Briefcase, Plus, Trash2, Calendar, CreditCard, 
-  Layers, Receipt, TrendingUp 
+  Layers, Receipt, TrendingUp, FileText
 } from 'lucide-react'
-import { clientApi } from '../lib/api'
+import { clientApi, settingsApi } from '../lib/api'
 import { useClient } from '../hooks/useData'
 import { useToast } from '../context/ToastContext'
+import { generateInvoicePDF } from '../lib/invoiceGenerator'
+
+const DetailItem = ({ label, value, icon: Icon }) => (
+  <div className="flex flex-col gap-1">
+    <span className="text-[10px] uppercase font-bold text-[var(--text-muted)] flex items-center gap-1">
+      {Icon && <Icon size={10} />} {label}
+    </span>
+    <span className="text-sm font-medium text-[var(--text-primary)] leading-tight">
+      {value || '---'}
+    </span>
+  </div>
+)
 
 const SOURCE_OPTIONS = [
   { value: "Website", label: "Website" },
@@ -43,18 +55,7 @@ export default function ClientDetailPage() {
   const [loading, setLoading] = useState(false)
   const [showPaymentModal, setShowPaymentModal] = useState(false)
   
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    source: 'Website',
-    status: 'Active',
-    budget: '',
-    notes: '',
-    services: [],
-    totalValue: 0
-  })
-
+  // Removed edit-related state and handlers as per request for compact read-only view
   const [paymentData, setPaymentData] = useState({
     amount: '',
     date: new Date().toISOString().split('T')[0],
@@ -62,53 +63,7 @@ export default function ClientDetailPage() {
     reference: '',
     notes: ''
   })
-
-  useEffect(() => {
-    if (client) {
-      setFormData({
-        name: client.name || '',
-        email: client.email || '',
-        phone: client.phone || '',
-        source: client.source || 'Website',
-        status: client.status || 'Active',
-        budget: client.budget || '',
-        notes: client.notes || '',
-        services: client.services || [],
-        totalValue: client.totalValue || 0
-      })
-    }
-  }, [client])
-
-  const handleChange = (e) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
-  }
-
-  const toggleService = (service) => {
-    setFormData(prev => {
-      const services = prev.services || []
-      if (services.includes(service)) {
-        return { ...prev, services: services.filter(s => s !== service) }
-      } else {
-        return { ...prev, services: [...services, service] }
-      }
-    })
-  }
-
-  const handleUpdateClient = async (e) => {
-    if (e) e.preventDefault()
-    setLoading(true)
-    try {
-      await clientApi.update(id, formData)
-      toast.success('Client updated successfully')
-      mutate()
-    } catch (err) {
-      toast.error(err?.response?.data?.message || 'Error updating client')
-    } finally {
-      setLoading(false)
-    }
-  }
-
+  
   const handleAddPayment = async (e) => {
     if (e) e.preventDefault()
     setLoading(true)
@@ -128,6 +83,19 @@ export default function ClientDetailPage() {
       toast.error(err?.response?.data?.message || 'Error recording payment')
     } finally {
       setLoading(false)
+    }
+  }
+
+  const handleDownloadInvoice = async (payment) => {
+    try {
+      const res = await settingsApi.get()
+      const settings = res.data.success ? res.data.data : null
+      console.log('Generating invoice with:', { client, payment, settings });
+      generateInvoicePDF(client, payment, settings)
+      toast.success('Invoice generated')
+    } catch (err) {
+      console.error('Invoice Generation Error:', err);
+      toast.error('Failed to generate invoice')
     }
   }
 
@@ -192,16 +160,6 @@ export default function ClientDetailPage() {
         </div>
         
         <div className="flex items-center gap-2">
-           {activeTab === 'overview' && (
-              <button 
-                onClick={handleUpdateClient} 
-                disabled={loading} 
-                className="btn-primary text-sm px-5 py-2 h-10 shadow-lg shadow-amber-500/20"
-              >
-                {loading ? <span className="w-4 h-4 border-2 border-black/20 border-t-black rounded-full animate-spin" /> : <Save size={16} />}
-                <span>Save Changes</span>
-              </button>
-           )}
            {activeTab === 'payments' && (
               <button 
                 onClick={() => setShowPaymentModal(true)}
@@ -240,64 +198,37 @@ export default function ClientDetailPage() {
       <div className="flex-1 overflow-hidden flex flex-col min-h-0">
         {activeTab === 'overview' ? (
           <div className="flex-1 overflow-y-auto pr-2 pb-10 pt-4">
-             <form onSubmit={handleUpdateClient} className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div className="lg:col-span-2 space-y-6">
-                   <div className="card p-8 space-y-8">
+                   <div className="card p-6 space-y-8">
+                      {/* Compact Identity Grid */}
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                         {/* Personal Section */}
                          <div className="space-y-6">
                             <div className="flex items-center gap-2 border-b border-[var(--border)] pb-2">
                                <User size={14} className="text-amber-500" />
                                <h3 className="text-xs uppercase font-bold tracking-wider">Client Identity</h3>
                             </div>
-                            <div className="space-y-1.5">
-                              <label className="text-[10px] uppercase font-bold text-[var(--text-muted)]">Full Name</label>
-                              <input type="text" name="name" required value={formData.name} onChange={handleChange} className="input-field text-sm py-2" />
-                            </div>
-                            <div className="space-y-1.5">
-                               <label className="text-[10px] uppercase font-bold text-[var(--text-muted)]">Email Address</label>
-                               <div className="relative">
-                                  <Mail size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-muted)]" />
-                                  <input type="email" name="email" value={formData.email} onChange={handleChange} className="input-field text-sm py-2 pl-9" />
-                               </div>
-                            </div>
-                            <div className="space-y-1.5">
-                               <label className="text-[10px] uppercase font-bold text-[var(--text-muted)]">Phone Number</label>
-                               <div className="relative">
-                                  <Phone size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-muted)]" />
-                                  <input type="text" name="phone" required value={formData.phone} onChange={handleChange} className="input-field text-sm py-2 pl-9" />
-                               </div>
+                            <div className="grid grid-cols-1 gap-4">
+                               <DetailItem label="Full Name" value={client?.name} />
+                               <DetailItem label="Email Address" value={client?.email} icon={Mail} />
+                               <DetailItem label="Phone Number" value={client?.phone} icon={Phone} />
                             </div>
                          </div>
 
-                         {/* Project Section */}
                          <div className="space-y-6">
                             <div className="flex items-center gap-2 border-b border-[var(--border)] pb-2">
                                <Globe size={14} className="text-amber-500" />
                                <h3 className="text-xs uppercase font-bold tracking-wider">Project Logistics</h3>
                             </div>
-                            <div className="space-y-1.5">
-                              <label className="text-[10px] uppercase font-bold text-[var(--text-muted)]">Current Status</label>
-                              <select name="status" value={formData.status} onChange={handleChange} className="input-field text-sm py-2 h-9 cursor-pointer">
-                                 {CLIENT_STATUS_OPTIONS.map(opt => <option key={opt.value} value={opt.value}>{opt.label}</option>)}
-                              </select>
-                            </div>
                             <div className="grid grid-cols-2 gap-4">
-                               <div className="space-y-1.5">
-                                 <label className="text-[10px] uppercase font-bold text-[var(--text-muted)]">Budget Range</label>
-                                 <input type="text" name="budget" value={formData.budget} onChange={handleChange} className="input-field text-sm py-2" readOnly />
+                               <div className="col-span-2">
+                                 <DetailItem label="Current Status" value={client?.status} />
                                </div>
-                               <div className="space-y-1.5">
-                                 <label className="text-[10px] uppercase font-bold text-[var(--text-muted)]">Final Contract</label>
-                                 <div className="relative">
-                                    <DollarSign size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-muted)]" />
-                                    <input type="number" name="totalValue" value={formData.totalValue} onChange={handleChange} className="input-field text-sm py-2 pl-9" />
-                                 </div>
+                               <DetailItem label="Budget Range" value={client?.budget} />
+                               <DetailItem label="Contract Value" value={formatCurrency(client?.totalValue)} icon={DollarSign} />
+                               <div className="col-span-2">
+                                 <DetailItem label="Discovery Source" value={client?.source} />
                                </div>
-                            </div>
-                            <div className="space-y-1.5">
-                               <label className="text-[10px] uppercase font-bold text-[var(--text-muted)]">Discovery Source</label>
-                               <input type="text" value={formData.source} className="input-field text-sm py-2 bg-[var(--bg-elevated)]" readOnly />
                             </div>
                          </div>
                       </div>
@@ -306,36 +237,27 @@ export default function ClientDetailPage() {
                       <div className="space-y-4">
                          <div className="flex items-center gap-2 border-b border-[var(--border)] pb-2">
                             <Layers size={14} className="text-amber-500" />
-                            <h3 className="text-xs uppercase font-bold tracking-wider">Active Services</h3>
+                            <h3 className="text-xs uppercase font-bold tracking-wider">Project Services</h3>
                          </div>
                          <div className="flex flex-wrap gap-2">
-                            {SERVICE_OPTIONS.map(service => {
-                               const isSelected = formData.services?.includes(service)
-                               return (
-                                 <button
-                                   key={service}
-                                   type="button"
-                                   onClick={() => toggleService(service)}
-                                   className={`flex items-center gap-2 px-3 py-1.5 rounded-sm border text-[10px] font-bold uppercase transition-all tracking-wider ${
-                                     isSelected ? 'bg-amber-500 text-black border-amber-500' : 'bg-[var(--bg-elevated)] border-[var(--border)] text-[var(--text-muted)] hover:border-[var(--text-secondary)]'
-                                   }`}
-                                 >
-                                   {isSelected && <Check size={12} />}
-                                   <span>{service}</span>
-                                 </button>
-                               )
-                            })}
+                            {client?.services && client.services.length > 0 ? (
+                               client.services.map(service => (
+                                 <span key={service} className="px-3 py-1 bg-amber-500/10 text-amber-500 border border-amber-500/20 rounded-sm text-[10px] font-bold uppercase tracking-wider">
+                                   {service}
+                                 </span>
+                               ))
+                            ) : (
+                               <span className="text-xs text-[var(--text-muted)] italic">No services listed</span>
+                            )}
                          </div>
                       </div>
 
                       {/* Notes */}
                       <div className="space-y-2">
-                         <label className="text-[10px] uppercase font-bold text-[var(--text-muted)]">Strategic Project Notes</label>
-                         <textarea 
-                           name="notes" value={formData.notes} onChange={handleChange}
-                           rows="5" className="input-field text-sm py-3 w-full resize-none font-mono text-[var(--text-secondary)]" 
-                           placeholder="Enter meeting notes, requirements..."
-                         />
+                         <label className="text-[10px] uppercase font-bold text-[var(--text-muted)] border-b border-[var(--border)] block pb-2 mb-2 w-full">Strategic Project Notes</label>
+                         <div className="p-4 bg-[var(--bg-elevated)]/50 border border-[var(--border)] rounded font-mono text-xs text-[var(--text-secondary)] whitespace-pre-wrap min-h-[100px]">
+                            {client?.notes || 'No project notes available.'}
+                         </div>
                       </div>
                    </div>
                 </div>
@@ -371,19 +293,15 @@ export default function ClientDetailPage() {
                          <TrendingUp size={16} className="text-amber-500" />
                          <span className="text-xs uppercase font-bold">Activity Pulse</span>
                       </div>
-                      <div className="space-y-3">
-                         <div className="flex justify-between text-xs">
-                            <span className="text-[var(--text-muted)]">Customer Since</span>
-                            <span className="text-[var(--text-primary)] font-medium font-mono">{new Date(client?.createdAt).toLocaleDateString()}</span>
-                         </div>
-                         <div className="flex justify-between text-xs">
-                            <span className="text-[var(--text-muted)]">Source Origin</span>
-                            <span className="text-[var(--text-primary)] font-medium">{client?.source}</span>
+                      <div className="space-y-4">
+                         <DetailItem label="Customer Since" value={new Date(client?.createdAt).toLocaleDateString()} />
+                         <div className="border-t border-[var(--border)] pt-4">
+                            <DetailItem label="Source Origin" value={client?.source} />
                          </div>
                       </div>
                    </div>
                 </div>
-             </form>
+             </div>
           </div>
         ) : (
           /* Payments History List */
@@ -392,12 +310,12 @@ export default function ClientDetailPage() {
                 
                 {/* Stats Panel */}
                 <div className="lg:col-span-1 space-y-4 sticky top-0">
-                   <div className="card p-5 bg-black/20 border-l-4 border-amber-500 overflow-hidden relative">
+                   <div className="card p-5 bg-black/5 border-l-4 border-amber-500 overflow-hidden relative">
                       <TrendingUp size={80} className="absolute -bottom-4 -right-4 text-white/5" />
-                      <p className="text-[10px] uppercase font-bold text-amber-500 mb-1">Recovery Ratio</p>
+                      <p className="text-[10px] uppercase font-bold text-amber-800 mb-1">Recovery Ratio</p>
                       <h4 className="text-4xl font-bold font-mono text-[var(--text-primary)] mb-2">{paidPercentage}%</h4>
-                      <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
-                         <div className="h-full bg-amber-500" style={{ width: `${paidPercentage}%` }} />
+                      <div className="h-1.5 shadow-lg w-full bg-white/5 rounded-full overflow-hidden">
+                         <div className="h-full  bg-amber-800" style={{ width: `${paidPercentage}%` }} />
                       </div>
                    </div>
                    <div className="card p-5">
@@ -462,12 +380,22 @@ export default function ClientDetailPage() {
                                    </span>
                                 </td>
                                 <td className="px-6 py-4 text-right">
-                                   <button 
-                                      onClick={() => handleDeletePayment(payment._id)}
-                                      className="p-1.5 rounded-sm text-[var(--text-muted)] hover:text-red-500 hover:bg-red-500/10 opacity-0 group-hover:opacity-100 transition-all"
-                                   >
-                                      <Trash2 size={13} />
-                                   </button>
+                                   <div className="flex items-center justify-end gap-2 text-right">
+                                      <button 
+                                         onClick={() => handleDownloadInvoice(payment)}
+                                         className="p-1.5 rounded-sm text-amber-500 hover:bg-amber-500/10 opacity-0 group-hover:opacity-100 transition-all"
+                                         title="Download Invoice"
+                                      >
+                                         <FileText size={14} />
+                                      </button>
+                                      <button 
+                                         onClick={() => handleDeletePayment(payment._id)}
+                                         className="p-1.5 rounded-sm text-[var(--text-muted)] hover:text-red-500 hover:bg-red-500/10 opacity-0 group-hover:opacity-100 transition-all font-bold"
+                                         title="Delete"
+                                      >
+                                         <Trash2 size={13} />
+                                      </button>
+                                   </div>
                                 </td>
                              </tr>
                            ))
