@@ -1,11 +1,12 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { FileText, MessageSquare, TrendingUp, Eye, Plus, ArrowRight, Clock } from 'lucide-react'
-import { useBlogs, useInquiries, useInquiryStats } from '../hooks/useData'
+import { FileText, MessageSquare, TrendingUp, Eye, Plus, ArrowRight, Clock, Users, UserCheck, Briefcase, Calendar } from 'lucide-react'
+import { useBlogs, useInquiries, useDashboardStats } from '../hooks/useData'
 import { useAuth } from '../context/AuthContext'
 import { Skeleton, StatusBadge } from '../components/ui/index'
 import { blogApi } from '../lib/api'
 
-function StatCard({ icon: Icon, label, value, sub, accent, loading }) {
+function StatCard({ icon: Icon, label, value, sub, accent, loading, isCurrency }) {
   return (
     <div className="card p-5 relative overflow-hidden">
       <div className="flex items-start justify-between mb-4">
@@ -16,7 +17,9 @@ function StatCard({ icon: Icon, label, value, sub, accent, loading }) {
       </div>
       {loading
         ? <Skeleton className="h-8 w-16 mb-1" />
-        : <p className="text-3xl font-bold text-[var(--text-primary)]" style={{ fontFamily: 'Syne, sans-serif' }}>{value ?? '—'}</p>
+        : <p className="text-2xl font-bold text-[var(--text-primary)]" style={{ fontFamily: 'Syne, sans-serif' }}>
+            {isCurrency && value !== null ? '₹' : ''}{value?.toLocaleString() ?? '0'}
+          </p>
       }
       {sub && <p className="text-xs text-[var(--text-muted)] mt-1">{sub}</p>}
     </div>
@@ -58,11 +61,31 @@ function RecentInquiryRow({ inq }) {
 
 export default function DashboardPage() {
   const { admin } = useAuth()
-  const { blogs, pagination: blogPag, isLoading: blogLoading } = useBlogs({ limit: 5 })
-  const { inquiries, pagination: inqPag, isLoading: inqLoading } = useInquiries({ limit: 5 })
-  const { stats, isLoading: statsLoading } = useInquiryStats()
+  const [dateRange, setDateRange] = useState('all') // 'today', '7d', '30d', 'all'
+  
+  const getParams = () => {
+    const params = {}
+    const now = new Date()
+    if (dateRange === 'today') {
+      params.startDate = new Date(now.setHours(0, 0, 0, 0)).toISOString()
+    } else if (dateRange === '7d') {
+      params.startDate = new Date(now.setDate(now.getDate() - 7)).toISOString()
+    } else if (dateRange === '30d') {
+      params.startDate = new Date(now.setDate(now.getDate() - 30)).toISOString()
+    }
+    return params
+  }
 
-  const publishedCount = blogs.filter(b => b.status === 'published').length
+  const { stats, isLoading: statsLoading } = useDashboardStats(getParams())
+  const { blogs, isLoading: blogLoading } = useBlogs({ limit: 5 })
+  const { inquiries, isLoading: inqLoading } = useInquiries({ limit: 5 })
+
+  const rangeLabels = {
+    today: 'Today',
+    '7d': 'Last 7 Days',
+    '30d': 'Last 30 Days',
+    all: 'All Time'
+  }
 
   return (
     <div className="flex flex-col h-full">
@@ -76,35 +99,66 @@ export default function DashboardPage() {
             Welcome back, {admin?.name}
           </p>
         </div>
-        <Link to="/blogs/new" className="btn-primary text-xs py-1.5 px-3">
-          <Plus size={13} /> New Blog
-        </Link>
+        
+        <div className="flex items-center gap-3">
+          <div className="flex items-center bg-[var(--bg-elevated)] border border-[var(--border)] rounded-md p-1">
+            {Object.entries(rangeLabels).map(([key, label]) => (
+              <button
+                key={key}
+                onClick={() => setDateRange(key)}
+                className={`px-3 py-1 text-[10px] font-medium rounded transition-colors ${
+                  dateRange === key 
+                    ? 'bg-amber-500 text-black' 
+                    : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'
+                }`}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+          <Link to="/blogs/new" className="btn-primary text-xs py-1.5 px-3">
+            <Plus size={13} /> New Blog
+          </Link>
+        </div>
       </div>
 
       <div className="flex-1 overflow-y-auto p-6 space-y-6">
         {/* Stat cards */}
-        <div className="grid grid-cols-4 gap-4">
-          <StatCard icon={FileText}     label="Total Blogs"   value={blogPag?.total} sub="all time"        loading={blogLoading} />
-          <StatCard icon={Eye}          label="Published"     value={blogPag ? blogs.filter(b=>b.status==='published').length : null} sub="visible to public" loading={blogLoading} />
-          <StatCard icon={MessageSquare} label="Inquiries"    value={inqPag?.total}  sub="all time"        loading={inqLoading} />
-          <StatCard icon={TrendingUp}   label="New"           value={stats?.new}     sub="awaiting action" loading={statsLoading} accent="bg-amber-500" />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <StatCard 
+            icon={Users} 
+            label="Total Leads" 
+            value={stats?.leads} 
+            sub={rangeLabels[dateRange]} 
+            loading={statsLoading} 
+          />
+          <StatCard 
+            icon={UserCheck} 
+            label="Total Clients" 
+            value={stats?.clients} 
+            sub={rangeLabels[dateRange]} 
+            loading={statsLoading} 
+          />
+          <StatCard 
+            icon={MessageSquare} 
+            label="Total Enquiry" 
+            value={stats?.inquiries} 
+            sub={rangeLabels[dateRange]} 
+            loading={statsLoading} 
+          />
+          <StatCard 
+            icon={TrendingUp} 
+            label="Total Revenue" 
+            value={stats?.revenue} 
+            sub={rangeLabels[dateRange]} 
+            loading={statsLoading} 
+            isCurrency={true} 
+            accent="bg-emerald-500"
+          />
         </div>
 
-        {/* Inquiry status row */}
-        {!statsLoading && stats && (
-          <div className="grid grid-cols-3 gap-3">
-            {[['new','amber'],['contacted','blue'],['closed','surface']].map(([s, c]) => (
-              <div key={s} className="card p-4 flex items-center gap-3">
-                <div className={'w-2 h-2 rounded-full ' + (c==='amber' ? 'bg-amber-400' : c==='blue' ? 'bg-blue-400' : 'bg-[var(--text-muted)]')} />
-                <span className="section-label capitalize">{s}</span>
-                <span className="ml-auto font-mono text-sm text-[var(--text-primary)]">{stats[s] ?? 0}</span>
-              </div>
-            ))}
-          </div>
-        )}
-
         {/* Recent content panels */}
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {/* Recent blogs */}
           <div className="card overflow-hidden">
             <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--border)]">
@@ -143,6 +197,8 @@ export default function DashboardPage() {
           <span className="section-label">Quick actions</span>
           <Link to="/blogs/new" className="btn-ghost text-xs py-1.5 px-3"><Plus size={12} /> New blog post</Link>
           <Link to="/inquiries?status=new" className="btn-ghost text-xs py-1.5 px-3"><MessageSquare size={12} /> View new inquiries</Link>
+          <Link to="/leads" className="btn-ghost text-xs py-1.5 px-3"><Users size={12} /> Manage leads</Link>
+          <Link to="/clients" className="btn-ghost text-xs py-1.5 px-3"><Briefcase size={12} /> Manage clients</Link>
         </div>
       </div>
     </div>

@@ -16,6 +16,7 @@ const employeeRoutes = require("./routes/employeeRoutes");
 const leadRoutes = require("./routes/leadRoutes");
 const clientRoutes = require("./routes/clientRoutes");
 const settingsRoutes = require("./routes/settingsRoutes");
+const statsRoutes = require("./routes/statsRoutes");
 
 
 // ─── Connect to Database ──────────────────────────────────────────────────────
@@ -111,6 +112,7 @@ app.use("/api/employees", apiLimiter, employeeRoutes);
 app.use("/api/leads", apiLimiter, leadRoutes);
 app.use("/api/clients", apiLimiter, clientRoutes);
 app.use("/api/settings", apiLimiter, settingsRoutes);
+app.use("/api/stats", apiLimiter, statsRoutes);
 
 
 // ─── 404 + Global Error Handler ───────────────────────────────────────────────

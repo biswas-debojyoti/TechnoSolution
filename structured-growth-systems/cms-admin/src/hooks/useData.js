@@ -40,6 +40,16 @@ export function useInquiryStats() {
   return { stats: data?.stats, isLoading, isError: !!error, mutate }
 }
 
+export function useDashboardStats(params = {}) {
+  const query = new URLSearchParams(params).toString()
+  const key = 'stats' + (query ? '?' + query : '')
+  const { data, error, isLoading, mutate } = useSWR(key, fetcher, {
+    revalidateOnFocus: false,
+    refreshInterval: 60000,
+  })
+  return { stats: data?.stats, isLoading, isError: !!error, mutate }
+}
+
 export function useEmployees(params = {}) {
   const query = new URLSearchParams(params).toString()
   const key = 'employees' + (query ? '?' + query : '')
