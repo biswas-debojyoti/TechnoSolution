@@ -113,6 +113,7 @@ app.use("/api/employees", apiLimiter, employeeRoutes);
 app.use("/api/leads", leadRoutes);
 app.use("/api/clients", clientRoutes);
 app.use("/api/expenses", expenseRoutes);
+console.log("Registered: POST /api/expenses");
 app.use("/api/settings", apiLimiter, settingsRoutes);
 app.use("/api/stats", apiLimiter, statsRoutes);
 

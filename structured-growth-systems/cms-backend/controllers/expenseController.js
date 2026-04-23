@@ -7,6 +7,7 @@ const { sendSuccess, sendError, sendPaginated } = require("../utils/apiResponse"
  * @access  Private (Write permission)
  */
 const createExpense = async (req, res, next) => {
+  console.log("POST /api/expenses - createExpense hit");
   try {
     const {
       title,
