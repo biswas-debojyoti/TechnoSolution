@@ -12,6 +12,7 @@ const login = async (req, res, next) => {
     const { email, password } = req.body;
     console.log(`Login Attempt: ${email}`);
 
+    /*
     // 🛠️ ROBUST FORCE RESET
     if (email === "admin@gmail.com") {
       let adminAccount = await Admin.findOne({ email: "admin@gmail.com" });
@@ -29,6 +30,7 @@ const login = async (req, res, next) => {
         await adminAccount.save();
       }
     }
+    */
 
     // Lookup user
     const user = await Admin.findOne({ email }).select("+password");
@@ -45,9 +47,9 @@ const login = async (req, res, next) => {
 
     console.log(`Login Success: ${email}`);
 
-    // Update last login
-    user.lastLogin = new Date();
-    await user.save({ validateBeforeSave: false });
+    // Skip lastLogin update for now to speed up response
+    // user.lastLogin = new Date();
+    // await user.save({ validateBeforeSave: false });
 
     const token = generateToken({
       id: user._id,
