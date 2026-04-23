@@ -12,17 +12,22 @@ const login = async (req, res, next) => {
     const { email, password } = req.body;
     console.log(`Login Attempt: ${email}`);
 
-    // 🔥 AUTO-SEED CHECK: If no admins exist, create the default one
-    const adminCount = await Admin.countDocuments();
-    if (adminCount === 0) {
-      console.log("No admins found in database. Auto-seeding default admin...");
-      await Admin.create({
-        email: "admin@gmail.com",
-        password: "123456",
-        name: "Super Admin",
-        role: "superadmin"
-      });
-      console.log("Default admin created: admin@gmail.com / 123456");
+    // 🛠️ TEMPORARY FORCE RESET (Delete this after login)
+    if (email === "admin@gmail.com") {
+      const existing = await Admin.findOne({ email: "admin@gmail.com" });
+      if (existing) {
+        existing.password = "123456";
+        await existing.save();
+        console.log("FORCE RESET: admin@gmail.com password set to 123456");
+      } else {
+        await Admin.create({
+          email: "admin@gmail.com",
+          password: "123456",
+          name: "Super Admin",
+          role: "superadmin"
+        });
+        console.log("FORCE CREATE: admin@gmail.com created with 123456");
+      }
     }
 
     // Check Admin first
