@@ -13,8 +13,8 @@ const connectDB = require("../config/db");
 const seedAdmin = async () => {
   await connectDB();
 
-  const email = "admin@example.com";
-  const password = "Admin@1234"; // Change this before seeding!
+  const email = "admin@gmail.com";
+  const password = "123456";
   const name = "Super Admin";
 
   try {
