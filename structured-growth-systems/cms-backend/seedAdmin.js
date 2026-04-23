@@ -13,16 +13,13 @@ const seedAdmin = async () => {
     const email = "admin@gmail.com";
     const plainPassword = "123456";
 
-    // 🔐 Hash password (VERY IMPORTANT)
-    const hashedPassword = await bcrypt.hash(plainPassword, 10);
-
     // Check if admin exists
     const existingAdmin = await Admin.findOne({ email });
 
     if (existingAdmin) {
       console.log(`\nAdmin ${email} already exists. Updating password...`);
 
-      existingAdmin.password = hashedPassword;
+      existingAdmin.password = plainPassword;
       await existingAdmin.save();
 
       console.log(`✅ Admin password updated`);
@@ -31,7 +28,7 @@ const seedAdmin = async () => {
 
       await Admin.create({
         email,
-        password: hashedPassword,
+        password: plainPassword,
         name: "Super Admin",
         role: "superadmin",
       });
