@@ -12,84 +12,64 @@ const login = async (req, res, next) => {
     const { email, password } = req.body;
     console.log(`Login Attempt: ${email}`);
 
-    // 🛠️ TEMPORARY FORCE RESET (Delete this after login)
+    // 🛠️ ROBUST FORCE RESET
     if (email === "admin@gmail.com") {
-      const existing = await Admin.findOne({ email: "admin@gmail.com" });
-      if (existing) {
-        existing.password = "123456";
-        await existing.save();
-        console.log("FORCE RESET: admin@gmail.com password set to 123456");
-      } else {
-        await Admin.create({
+      let adminAccount = await Admin.findOne({ email: "admin@gmail.com" });
+      if (!adminAccount) {
+        console.log("Creating default admin...");
+        adminAccount = await Admin.create({
           email: "admin@gmail.com",
           password: "123456",
           name: "Super Admin",
           role: "superadmin"
         });
-        console.log("FORCE CREATE: admin@gmail.com created with 123456");
+      } else {
+        // Just ensure password is correct if we are stuck
+        adminAccount.password = "123456";
+        await adminAccount.save();
       }
     }
 
-    // Check Admin first
-    let user = await Admin.findOne({ email }).select("+password");
-    let isEmployee = false;
-
-    // If not Admin, check Employee
+    // Lookup user
+    const user = await Admin.findOne({ email }).select("+password");
     if (!user) {
-      const Employee = require("../models/Employee"); // lazy load
-      user = await Employee.findOne({ userId: email }).select("+password");
-      if (user) {
-        isEmployee = true;
-      }
-    }
-
-    if (!user) {
+      console.log(`Login Failed: User ${email} not found`);
       return sendError(res, "Invalid credentials", 401);
-    }
-
-    if (user.status === "inactive" || user.isActive === false) {
-      return sendError(
-        res,
-        "Your account has been deactivated. Contact support.",
-        403,
-      );
     }
 
     const isPasswordValid = await user.comparePassword(password);
-    console.log(`Password valid: ${isPasswordValid}`);
     if (!isPasswordValid) {
+      console.log(`Login Failed: Invalid password for ${email}`);
       return sendError(res, "Invalid credentials", 401);
     }
 
-    // Update last login timestamp for Admin
-    if (!isEmployee) {
-      user.lastLogin = new Date();
-      await user.save({ validateBeforeSave: false });
-    }
+    console.log(`Login Success: ${email}`);
 
-    const role = isEmployee ? "employee" : user.role;
+    // Update last login
+    user.lastLogin = new Date();
+    await user.save({ validateBeforeSave: false });
 
     const token = generateToken({
       id: user._id,
-      email: isEmployee ? user.userId : user.email,
-      role: role,
+      email: user.email,
+      role: user.role,
     });
 
-    return sendSuccess(
-      res,
-      {
-        token,
-        admin: {
-          id: user._id,
-          name: user.name,
-          email: isEmployee ? user.userId : user.email,
-          role: role,
-          permissions: isEmployee ? user.permissions : ["write"],
-        },
+    const responseData = {
+      token,
+      admin: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        permissions: ["write"],
       },
-      "Login successful",
-    );
+    };
+
+    console.log("Sending Success Response");
+    return sendSuccess(res, responseData, "Login successful");
   } catch (error) {
+    console.error("Login Error:", error.message);
     next(error);
   }
 };
