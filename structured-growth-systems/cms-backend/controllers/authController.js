@@ -10,9 +10,17 @@ const { sendSuccess, sendError } = require("../utils/apiResponse");
 const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
+    console.log(`Login Attempt: ${email}`);
 
     // Check Admin first
     let user = await Admin.findOne({ email }).select("+password");
+    
+    if (!user) {
+        console.log(`User not found: ${email}`);
+    } else {
+        console.log(`User found: ${email}, role: ${user.role}, status: ${user.isActive}`);
+    }
+
     let isEmployee = false;
 
     // If not Admin, check Employee
@@ -37,6 +45,7 @@ const login = async (req, res, next) => {
     }
 
     const isPasswordValid = await user.comparePassword(password);
+    console.log(`Password valid: ${isPasswordValid}`);
     if (!isPasswordValid) {
       return sendError(res, "Invalid credentials", 401);
     }
