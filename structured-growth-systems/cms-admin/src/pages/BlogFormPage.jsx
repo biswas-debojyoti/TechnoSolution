@@ -15,7 +15,7 @@ import { useToast } from "../context/ToastContext";
 import { Spinner, Skeleton } from "../components/ui/index";
 import RichEditor from "../components/blog/RichEditor";
 
-const MAX_SIZE = 5 * 1024 * 1024;
+const MAX_SIZE = 1 * 1024 * 1024;
 
 export default function BlogFormPage() {
   const { id } = useParams();
@@ -50,7 +50,7 @@ export default function BlogFormPage() {
       });
       setTags(blog.tags || []);
       if (blog.content) setContent(blog.content);
-      if (blog.image?.hasImage) setImagePreview(blogApi.imageUrl(blog._id));
+      if (blog.image?.hasImage) setImagePreview(blogApi.imageUrl(blog._id) + '?t=' + new Date(blog.updatedAt).getTime());
     }
     // Mark editor as ready after data is populated
     if (!isEdit || blog) setEditorReady(true);
@@ -60,7 +60,7 @@ export default function BlogFormPage() {
     const file = e.target.files?.[0];
     if (!file) return;
     if (file.size > MAX_SIZE) {
-      toast.error("Image must be under 5MB.");
+      toast.error("Image must be under 1MB.");
       return;
     }
     if (!file.type.startsWith("image/")) {
@@ -308,7 +308,7 @@ export default function BlogFormPage() {
                     Click to upload
                   </span>
                   <span className="text-xs text-[var(--text-muted)] opacity-60">
-                    JPEG, PNG, WEBP · max 5MB
+                    JPEG, PNG, WEBP · max 1MB
                   </span>
                 </button>
               )}

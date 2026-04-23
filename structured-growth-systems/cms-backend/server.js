@@ -16,6 +16,7 @@ const employeeRoutes = require("./routes/employeeRoutes");
 const leadRoutes = require("./routes/leadRoutes");
 const clientRoutes = require("./routes/clientRoutes");
 const settingsRoutes = require("./routes/settingsRoutes");
+const expenseRoutes = require("./routes/expenseRoutes");
 const statsRoutes = require("./routes/statsRoutes");
 
 
@@ -74,7 +75,7 @@ const inquiryLimiter = rateLimit({
 
 const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 300,
+  max: 1000,
   standardHeaders: true,
   legacyHeaders: false,
   message: { success: false, message: "Too many requests. Please slow down." },
@@ -109,8 +110,9 @@ app.use("/api/auth", authLimiter, authRoutes);
 app.use("/api/blogs", apiLimiter, blogRoutes);
 app.use("/api/inquiries", inquiryLimiter, inquiryRoutes);
 app.use("/api/employees", apiLimiter, employeeRoutes);
-app.use("/api/leads", apiLimiter, leadRoutes);
-app.use("/api/clients", apiLimiter, clientRoutes);
+app.use("/api/leads", leadRoutes);
+app.use("/api/clients", clientRoutes);
+app.use("/api/expenses", expenseRoutes);
 app.use("/api/settings", apiLimiter, settingsRoutes);
 app.use("/api/stats", apiLimiter, statsRoutes);
 

@@ -154,7 +154,7 @@ export default function EmployeesPage() {
                     className="hover:bg-[var(--bg-hover)] transition-colors"
                   >
                     <td className="px-6 py-4">
-                      <div className="flex items-center gap-3">
+                      <Link to={`/employees/${emp._id}`} className="flex items-center gap-3">
                         <div className="w-9 h-9 rounded-full bg-[var(--bg-surface)] border border-[var(--border)] flex items-center justify-center overflow-hidden shrink-0">
                           {emp.image ? (
                             <img
@@ -170,15 +170,17 @@ export default function EmployeesPage() {
                           )}
                         </div>
                         <div>
-                          <p className="font-medium text-[var(--text-primary)]">
+                          <div 
+                            className="font-medium text-[var(--text-primary)] hover:text-amber-500 transition-colors"
+                          >
                             {emp.name}
-                          </p>
-                          <p className="text-[10px] text-[var(--text-muted)] uppercase tracking-tight">
+                          </div>
+                          <p className="hover:text-amber-500 transition-colors text-[10px] text-[var(--text-muted)] uppercase tracking-tight">
                             Joined{" "}
                             {new Date(emp.joiningDate).toLocaleDateString()}
                           </p>
                         </div>
-                      </div>
+                      </Link>
                     </td>
                     <td className="px-6 py-4">
                       <p className="text-[var(--text-primary)] text-xs">

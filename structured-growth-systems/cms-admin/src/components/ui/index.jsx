@@ -1,14 +1,14 @@
 import { X, AlertTriangle, Loader2 } from 'lucide-react'
 
-export function Spinner({ size = 16, className = '' }) {
+function Spinner({ size = 16, className = '' }) {
   return <Loader2 size={size} className={'animate-spin text-amber-500 ' + className} />
 }
 
-export function Skeleton({ className = '' }) {
+function Skeleton({ className = '' }) {
   return <div className={'skeleton rounded-sm ' + className} />
 }
 
-export function TableSkeleton({ rows = 6, cols = 5 }) {
+function TableSkeleton({ rows = 6, cols = 5 }) {
   return Array.from({ length: rows }).map((_, r) => (
     <tr key={r} className="border-b border-[var(--border)]">
       {Array.from({ length: cols }).map((_, c) => (
@@ -20,7 +20,7 @@ export function TableSkeleton({ rows = 6, cols = 5 }) {
   ))
 }
 
-export function Empty({ icon: Icon, message, action }) {
+function Empty({ icon: Icon, message, action }) {
   return (
     <div className="flex flex-col items-center justify-center py-20 text-center">
       {Icon && (
@@ -34,7 +34,7 @@ export function Empty({ icon: Icon, message, action }) {
   )
 }
 
-export function ConfirmModal({ open, title, message, confirmLabel = 'Confirm', onConfirm, onCancel, loading }) {
+function ConfirmModal({ open, title, message, confirmLabel = 'Confirm', onConfirm, onCancel, loading }) {
   if (!open) return null
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
@@ -61,7 +61,7 @@ export function ConfirmModal({ open, title, message, confirmLabel = 'Confirm', o
   )
 }
 
-export function SlideOver({ open, onClose, title, children }) {
+function SlideOver({ open, onClose, title, children }) {
   if (!open) return null
   return (
     <div className="fixed inset-0 z-40 flex justify-end">
@@ -81,7 +81,7 @@ export function SlideOver({ open, onClose, title, children }) {
   )
 }
 
-export function Pagination({ pagination, onPageChange }) {
+function Pagination({ pagination, onPageChange }) {
   if (!pagination || pagination.totalPages <= 1) return null
   const { page, totalPages, total, limit } = pagination
   const from = (page - 1) * limit + 1
@@ -108,12 +108,12 @@ export function Pagination({ pagination, onPageChange }) {
   )
 }
 
-export function StatusBadge({ status }) {
+function StatusBadge({ status }) {
   const map = { published: 'badge-published', draft: 'badge-draft', new: 'badge-new', contacted: 'badge-contacted', closed: 'badge-closed' }
   return <span className={map[status] || 'badge'}>{status}</span>
 }
 
-export function SearchInput({ value, onChange, placeholder = 'Search…' }) {
+function SearchInput({ value, onChange, placeholder = 'Search…' }) {
   return (
     <div className="relative">
       <svg className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-muted)]" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
@@ -122,18 +122,18 @@ export function SearchInput({ value, onChange, placeholder = 'Search…' }) {
   )
 }
 
-export function SelectFilter({ value, onChange, options, placeholder }) {
+function SelectFilter({ value, onChange, options, placeholder }) {
   return (
     <select value={value} onChange={e => onChange(e.target.value)}
       className="input-field h-8 text-xs w-36 pr-8 appearance-none"
-      style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%235c5a56' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E\")", backgroundRepeat: 'no-repeat', backgroundPosition: 'right 8px center' }}>
+      style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E\")", backgroundRepeat: 'no-repeat', backgroundPosition: 'right 8px center' }}>
       {placeholder && <option value="">{placeholder}</option>}
       {options.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
     </select>
   )
 }
 
-export function PageShell({ title, subtitle, actions, children }) {
+function PageShell({ title, subtitle, actions, children }) {
   return (
     <div className="flex flex-col h-full">
       <div className="flex items-center justify-between px-6 h-14 border-b border-[var(--border)] shrink-0 bg-[var(--bg-surface)]">
@@ -147,3 +147,19 @@ export function PageShell({ title, subtitle, actions, children }) {
     </div>
   )
 }
+import DateRangePicker from "./DateRangePicker";
+
+export {
+  Spinner,
+  Skeleton,
+  TableSkeleton,
+  Empty,
+  ConfirmModal,
+  SlideOver,
+  Pagination,
+  StatusBadge,
+  SearchInput,
+  SelectFilter,
+  PageShell,
+  DateRangePicker,
+};

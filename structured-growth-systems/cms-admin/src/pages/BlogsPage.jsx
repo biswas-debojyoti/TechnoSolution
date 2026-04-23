@@ -24,7 +24,7 @@ function BlogImage({ blog }) {
     );
   return (
     <img
-      src={baseUrl + blog.imageUrl}
+      src={baseUrl + blog.imageUrl + '?t=' + new Date(blog.updatedAt).getTime()}
       alt={blog.heading}
       className="w-9 h-9 rounded-sm object-cover shrink-0 border border-[var(--border)]"
     />

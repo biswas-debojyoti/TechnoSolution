@@ -425,6 +425,10 @@ export default function RichEditor({
 
   // ── Insert helpers ─────────────────────────────────────────────────────────
   const insertImage = (file) => {
+    if (file.size > 1 * 1024 * 1024) {
+      alert("Image must be under 1MB.");
+      return;
+    }
     const reader = new FileReader();
     reader.onload = (e) => {
       exec(

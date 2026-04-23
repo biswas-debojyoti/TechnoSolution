@@ -15,6 +15,8 @@ import BlogFormPage    from './pages/BlogFormPage'
 import InquiriesPage   from './pages/InquiriesPage'
 import EmployeesPage   from './pages/EmployeesPage'
 import EmployeeFormPage from './pages/EmployeeFormPage'
+import EmployeeProfilePage from './pages/EmployeeProfilePage'
+import ExpensesPage from './pages/ExpensesPage'
 import LeadsPage from './pages/LeadsPage'
 import ClientsPage from './pages/ClientsPage'
 import ClientDetailPage from './pages/ClientDetailPage'
@@ -54,7 +56,9 @@ export default function App() {
                   <Route path="/inquiries"         element={<InquiriesPage />} />
                   <Route path="/employees"         element={<EmployeesPage />} />
                   <Route path="/employees/new"     element={<EmployeeFormPage />} />
+                  <Route path="/employees/:id"      element={<EmployeeProfilePage />} />
                   <Route path="/employees/:id/edit" element={<EmployeeFormPage />} />
+                  <Route path="/expenses"          element={<ExpensesPage />} />
                   <Route path="/leads"             element={<LeadsPage />} />
                   <Route path="/leads/new"         element={<EntityFormPage />} />
                   <Route path="/leads/:id/edit"    element={<EntityFormPage />} />

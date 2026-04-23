@@ -189,7 +189,6 @@ const getBlogImage = async (req, res, next) => {
     }
 
     res.set("Content-Type", blog.image.contentType);
-    res.set("Cache-Control", "public, max-age=86400"); // 1 day
     return res.send(blog.image.data);
   } catch (error) {
     next(error);
@@ -210,15 +209,17 @@ const updateBlog = async (req, res, next) => {
       return sendError(res, "No update fields provided", 400);
     }
 
-    const blog = await Blog.findByIdAndUpdate(
-      req.params.id,
-      { $set: payload },
-      { new: true, runValidators: true },
-    );
-
+    const blog = await Blog.findById(req.params.id);
     if (!blog) {
       return sendError(res, "Blog not found", 404);
     }
+
+    // Apply updates manually to ensure proper handling of nested objects/binary data
+    Object.keys(payload).forEach((key) => {
+      blog[key] = payload[key];
+    });
+
+    await blog.save();
 
     const blogObj = stripImageBuffer(blog);
     return sendSuccess(res, { blog: blogObj }, "Blog updated successfully");

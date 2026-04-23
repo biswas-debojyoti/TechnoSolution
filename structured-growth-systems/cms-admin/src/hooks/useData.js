@@ -116,3 +116,25 @@ export function useClient(id) {
   return { client: data?.client, isLoading, isError: !!error, error, mutate }
 }
 
+export function useExpenses(params = {}) {
+  const query = new URLSearchParams(params).toString()
+  const key = 'expenses' + (query ? '?' + query : '')
+  const { data, error, isLoading, mutate } = useSWR(key, fetcher, {
+    revalidateOnFocus: false,
+    keepPreviousData: true,
+  })
+  return { 
+    expenses: data?.data || [], 
+    pagination: data?.pagination, 
+    isLoading, 
+    isError: !!error, 
+    error, 
+    mutate 
+  }
+}
+
+export function useExpense(id) {
+  const { data, error, isLoading, mutate } = useSWR(id ? 'expenses/' + id : null, fetcher, { revalidateOnFocus: false })
+  return { expense: data?.expense, isLoading, isError: !!error, error, mutate }
+}
+

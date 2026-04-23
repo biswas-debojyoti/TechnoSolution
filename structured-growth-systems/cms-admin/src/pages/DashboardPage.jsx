@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { FileText, MessageSquare, TrendingUp, Eye, Plus, ArrowRight, Clock, Users, UserCheck, Briefcase, Calendar } from 'lucide-react'
 import { useBlogs, useInquiries, useDashboardStats } from '../hooks/useData'
 import { useAuth } from '../context/AuthContext'
-import { Skeleton, StatusBadge } from '../components/ui/index'
+import { Skeleton, StatusBadge, DateRangePicker } from '../components/ui/index'
 import { blogApi } from '../lib/api'
 
 function StatCard({ icon: Icon, label, value, sub, accent, loading, isCurrency }) {
@@ -32,7 +32,7 @@ function RecentBlogRow({ blog }) {
       className="flex items-center gap-3 px-4 py-2.5 hover:bg-[var(--bg-hover)] transition-colors group">
       <div className="w-8 h-8 rounded-sm bg-[var(--bg-elevated)] border border-[var(--border)] overflow-hidden shrink-0">
         {blog.image?.hasImage
-          ? <img src={blogApi.imageUrl(blog._id)} alt="" className="w-full h-full object-cover" />
+          ? <img src={blogApi.imageUrl(blog._id) + '?t=' + new Date(blog.updatedAt).getTime()} alt="" className="w-full h-full object-cover" />
           : <FileText size={13} className="m-auto mt-2 text-[var(--text-muted)]" />}
       </div>
       <div className="flex-1 min-w-0">
@@ -61,31 +61,26 @@ function RecentInquiryRow({ inq }) {
 
 export default function DashboardPage() {
   const { admin } = useAuth()
-  const [dateRange, setDateRange] = useState('all') // 'today', '7d', '30d', 'all'
+  const [range, setRange] = useState(() => {
+    const end = new Date()
+    const start = new Date()
+    start.setDate(start.getDate() - 30)
+    return { start, end }
+  })
   
   const getParams = () => {
-    const params = {}
-    const now = new Date()
-    if (dateRange === 'today') {
-      params.startDate = new Date(now.setHours(0, 0, 0, 0)).toISOString()
-    } else if (dateRange === '7d') {
-      params.startDate = new Date(now.setDate(now.getDate() - 7)).toISOString()
-    } else if (dateRange === '30d') {
-      params.startDate = new Date(now.setDate(now.getDate() - 30)).toISOString()
+    return {
+      startDate: range.start ? range.start.toISOString() : undefined,
+      endDate: range.end ? range.end.toISOString() : undefined
     }
-    return params
   }
 
   const { stats, isLoading: statsLoading } = useDashboardStats(getParams())
   const { blogs, isLoading: blogLoading } = useBlogs({ limit: 5 })
   const { inquiries, isLoading: inqLoading } = useInquiries({ limit: 5 })
 
-  const rangeLabels = {
-    today: 'Today',
-    '7d': 'Last 7 Days',
-    '30d': 'Last 30 Days',
-    all: 'All Time'
-  }
+  const currentSubLabel = !range.start ? 'All Time' : 
+    `${range.start.toLocaleDateString()} ${range.end ? '– ' + range.end.toLocaleDateString() : ''}`
 
   return (
     <div className="flex flex-col h-full">
@@ -101,21 +96,7 @@ export default function DashboardPage() {
         </div>
         
         <div className="flex items-center gap-3">
-          <div className="flex items-center bg-[var(--bg-elevated)] border border-[var(--border)] rounded-md p-1">
-            {Object.entries(rangeLabels).map(([key, label]) => (
-              <button
-                key={key}
-                onClick={() => setDateRange(key)}
-                className={`px-3 py-1 text-[10px] font-medium rounded transition-colors ${
-                  dateRange === key 
-                    ? 'bg-amber-500 text-black' 
-                    : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'
-                }`}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
+          <DateRangePicker value={range} onChange={setRange} />
           <Link to="/blogs/new" className="btn-primary text-xs py-1.5 px-3">
             <Plus size={13} /> New Blog
           </Link>
@@ -129,28 +110,28 @@ export default function DashboardPage() {
             icon={Users} 
             label="Total Leads" 
             value={stats?.leads} 
-            sub={rangeLabels[dateRange]} 
+            sub={currentSubLabel} 
             loading={statsLoading} 
           />
           <StatCard 
             icon={UserCheck} 
             label="Total Clients" 
             value={stats?.clients} 
-            sub={rangeLabels[dateRange]} 
+            sub={currentSubLabel} 
             loading={statsLoading} 
           />
           <StatCard 
             icon={MessageSquare} 
             label="Total Enquiry" 
             value={stats?.inquiries} 
-            sub={rangeLabels[dateRange]} 
+            sub={currentSubLabel} 
             loading={statsLoading} 
           />
           <StatCard 
             icon={TrendingUp} 
             label="Total Revenue" 
             value={stats?.revenue} 
-            sub={rangeLabels[dateRange]} 
+            sub={currentSubLabel} 
             loading={statsLoading} 
             isCurrency={true} 
             accent="bg-emerald-500"
