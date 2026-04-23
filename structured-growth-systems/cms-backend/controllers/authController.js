@@ -12,15 +12,21 @@ const login = async (req, res, next) => {
     const { email, password } = req.body;
     console.log(`Login Attempt: ${email}`);
 
-    // Check Admin first
-    let user = await Admin.findOne({ email }).select("+password");
-    
-    if (!user) {
-        console.log(`User not found: ${email}`);
-    } else {
-        console.log(`User found: ${email}, role: ${user.role}, status: ${user.isActive}`);
+    // 🔥 AUTO-SEED CHECK: If no admins exist, create the default one
+    const adminCount = await Admin.countDocuments();
+    if (adminCount === 0) {
+      console.log("No admins found in database. Auto-seeding default admin...");
+      await Admin.create({
+        email: "admin@gmail.com",
+        password: "123456",
+        name: "Super Admin",
+        role: "superadmin"
+      });
+      console.log("Default admin created: admin@gmail.com / 123456");
     }
 
+    // Check Admin first
+    let user = await Admin.findOne({ email }).select("+password");
     let isEmployee = false;
 
     // If not Admin, check Employee
