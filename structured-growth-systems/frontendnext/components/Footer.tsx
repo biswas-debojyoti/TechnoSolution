@@ -42,7 +42,7 @@ function Footer() {
 className='flex gap-3'
               >
                 <Phone size={18} />
-                +918383997723
+                +9183839-97723
               </a>
               {/* <p>+91 8276832626</p> */}
               {/* <p>ommdigitalsolution@gmail.com</p> */}

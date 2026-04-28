@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Plus, Pencil, Trash2, FileText, Image } from 'lucide-react'
+import { Plus, Pencil, Trash2, FileText, Image, Star } from 'lucide-react'
 import { useBlogs, useDeleteBlog } from '../../hooks/useData'
+import { api } from '../../lib/api'
 import {
   LoadingState, ErrorState, EmptyState,
   Pagination, SearchInput, Select,
@@ -34,6 +35,18 @@ export default function BlogList() {
       toast.error(e?.response?.data?.message || 'Delete failed')
     } finally {
       setDeleteTarget(null)
+    }
+  }
+
+  const handleToggleFeatured = async (blog) => {
+    try {
+      const fd = new FormData();
+      fd.append('isFeatured', !blog.isFeatured);
+      await api.put(`/blogs/${blog._id}`, fd);
+      toast.success(!blog.isFeatured ? 'Blog marked as featured' : 'Blog unmarked as featured');
+      mutate();
+    } catch (e) {
+      toast.error(e?.response?.data?.message || 'Failed to update featured status');
     }
   }
 
@@ -94,6 +107,7 @@ export default function BlogList() {
                   <tr>
                     <th className="th">Title</th>
                     <th className="th">Status</th>
+                    <th className="th text-center">Featured</th>
                     <th className="th">Image</th>
                     <th className="th">Created</th>
                     <th className="th text-right">Actions</th>
@@ -110,6 +124,15 @@ export default function BlogList() {
                       </td>
                       <td className="td">
                         <span className={`badge-${blog.status} badge`}>{blog.status}</span>
+                      </td>
+                      <td className="td text-center">
+                        <button 
+                          onClick={() => handleToggleFeatured(blog)}
+                          className={`btn-icon btn-sm mx-auto ${blog.isFeatured ? 'text-amber hover:text-amber/80' : 'text-ink-600 hover:text-amber/60'}`}
+                          title={blog.isFeatured ? "Unmark Featured" : "Mark as Featured"}
+                        >
+                          <Star className={`w-4 h-4 ${blog.isFeatured ? 'fill-current' : ''}`} />
+                        </button>
                       </td>
                       <td className="td">
                         {blog.image?.hasImage ? (
@@ -160,7 +183,14 @@ export default function BlogList() {
                     </div>
                     <span className={`badge-${blog.status} badge flex-shrink-0`}>{blog.status}</span>
                   </div>
-                  <div className="flex items-center gap-2 mt-3">
+                  <div className="flex items-center gap-2 mt-3 flex-wrap">
+                    <button 
+                      onClick={() => handleToggleFeatured(blog)} 
+                      className={`btn-ghost btn btn-sm ${blog.isFeatured ? 'text-amber bg-amber/10' : 'text-ink-500'}`}
+                    >
+                      <Star className={`w-3.5 h-3.5 ${blog.isFeatured ? 'fill-current' : ''}`} /> 
+                      {blog.isFeatured ? 'Featured' : 'Feature'}
+                    </button>
                     <button onClick={() => navigate(`/blogs/${blog._id}/edit`)} className="btn-ghost btn btn-sm">
                       <Pencil className="w-3.5 h-3.5" /> Edit
                     </button>

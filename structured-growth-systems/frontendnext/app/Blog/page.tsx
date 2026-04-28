@@ -240,8 +240,11 @@ function BlogCard({ blog, index }: { blog: Blog; index: number }) {
 export default function Blog() {
   const [searchQuery, setSearchQuery] = useState("");
   const [blogs, setBlogs] = useState<Blog[]>([]);
+  const [featuredBlog, setFeaturedBlog] = useState<Blog | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   // ── Fetch ────────────────────────────────────────────────────────────────
   useEffect(() => {
@@ -250,22 +253,42 @@ export default function Blog() {
       try {
         setLoading(true);
         setError(null);
-        const res = await fetch(`${BASE_URL}/blogs`, {
-          signal: controller.signal,
-        });
-        if (!res.ok) throw new Error(`API responded with status ${res.status}`);
-        const json = await res.json();
+        
+        const [featuredRes, gridRes] = await Promise.all([
+          fetch(`${BASE_URL}/blogs?isFeatured=true&limit=1`, { signal: controller.signal }),
+          fetch(`${BASE_URL}/blogs?page=${currentPage}&limit=9&excludeFeatured=true`, { signal: controller.signal })
+        ]);
 
-        // Handle { data: [] }, { blogs: [] }, or plain []
-        const list: Blog[] = Array.isArray(json)
-          ? json
-          : Array.isArray(json?.data)
-            ? json.data
-            : Array.isArray(json?.blogs)
-              ? json.blogs
+        if (!gridRes.ok) throw new Error(`API responded with status ${gridRes.status}`);
+        
+        const featuredJson = await featuredRes.json();
+        const gridJson = await gridRes.json();
+
+        // Handle featured blog
+        const featuredList: Blog[] = Array.isArray(featuredJson)
+          ? featuredJson
+          : Array.isArray(featuredJson?.data)
+            ? featuredJson.data
+            : Array.isArray(featuredJson?.blogs)
+              ? featuredJson.blogs
+              : [];
+        setFeaturedBlog(featuredList[0] || null);
+
+        // Handle grid blogs
+        const list: Blog[] = Array.isArray(gridJson)
+          ? gridJson
+          : Array.isArray(gridJson?.data)
+            ? gridJson.data
+            : Array.isArray(gridJson?.blogs)
+              ? gridJson.blogs
               : [];
 
-        // Newest-first — latest uploaded = featured
+        if (gridJson?.pagination?.totalPages) {
+          setTotalPages(gridJson.pagination.totalPages);
+        } else {
+          setTotalPages(1);
+        }
+
         setBlogs(sortByDateDesc(list));
       } catch (err: unknown) {
         if (err instanceof Error && err.name === "AbortError") return;
@@ -279,10 +302,10 @@ export default function Blog() {
 
     fetchBlogs();
     return () => controller.abort();
-  }, []);
+  }, [currentPage]);
 
   // ── Search filter ────────────────────────────────────────────────────────
-  const filtered = blogs.filter((b) => {
+  const gridBlogs = blogs.filter((b) => {
     if (!searchQuery.trim()) return true;
     const q = searchQuery.toLowerCase();
     return (
@@ -290,9 +313,6 @@ export default function Blog() {
       getExcerpt(b).toLowerCase().includes(q)
     );
   });
-
-  const featuredBlog = filtered[0] ?? null;
-  const gridBlogs = filtered.slice(1);
 
   return (
     <div className="w-full pt-20 pb-40">
@@ -367,6 +387,52 @@ export default function Blog() {
               {gridBlogs.map((blog, i) => (
                 <BlogCard key={blog._id} blog={blog} index={i} />
               ))}
+            </div>
+          )}
+
+          {/* Pagination */}
+          {!loading && !error && totalPages > 1 && (
+            <div className="flex justify-center items-center gap-2 mt-16">
+              <button
+                onClick={() => {
+                  setCurrentPage(p => Math.max(1, p - 1));
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }}
+                disabled={currentPage === 1}
+                className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-white/70 hover:bg-white/10 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed transition"
+              >
+                Previous
+              </button>
+              
+              <div className="flex items-center gap-1 mx-2 md:mx-4 overflow-x-auto max-w-[50vw]" style={{ scrollbarWidth: 'none' }}>
+                {[...Array(totalPages)].map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => {
+                      setCurrentPage(i + 1);
+                      window.scrollTo({ top: 0, behavior: "smooth" });
+                    }}
+                    className={`w-10 h-10 shrink-0 rounded-xl flex items-center justify-center text-sm font-medium transition ${
+                      currentPage === i + 1
+                        ? "bg-brand-orange text-black"
+                        : "bg-white/5 border border-white/10 text-white/70 hover:bg-white/10 hover:text-white"
+                    }`}
+                  >
+                    {i + 1}
+                  </button>
+                ))}
+              </div>
+
+              <button
+                onClick={() => {
+                  setCurrentPage(p => Math.min(totalPages, p + 1));
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }}
+                disabled={currentPage === totalPages}
+                className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-white/70 hover:bg-white/10 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed transition"
+              >
+                Next
+              </button>
             </div>
           )}
 

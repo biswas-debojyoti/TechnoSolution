@@ -30,6 +30,7 @@ export default function BlogFormPage() {
     heading: "",
     subHeading: "",
     status: "draft",
+    isFeatured: false,
   });
   const [tags, setTags] = useState([]);
   const [tagInput, setTagInput] = useState("");
@@ -47,6 +48,7 @@ export default function BlogFormPage() {
         heading: blog.heading || "",
         subHeading: blog.subHeading || "",
         status: blog.status || "draft",
+        isFeatured: blog.isFeatured || false,
       });
       setTags(blog.tags || []);
       if (blog.content) setContent(blog.content);
@@ -97,6 +99,7 @@ export default function BlogFormPage() {
       fd.append("heading", form.heading.trim());
       fd.append("subHeading", form.subHeading.trim());
       fd.append("status", statusOverride || form.status);
+      fd.append("isFeatured", form.isFeatured);
       fd.append("tags", JSON.stringify(tags));
       fd.append("content", JSON.stringify(content));
       if (imageFile) fd.append("image", imageFile);
@@ -279,6 +282,29 @@ export default function BlogFormPage() {
                   </button>
                 ))}
               </div>
+            </div>
+
+            {/* Featured Post */}
+            <div>
+              <p className="section-label mb-2">Featured Post</p>
+              <label className="flex items-center gap-3 cursor-pointer group">
+                <div className={`w-4 h-4 rounded-sm flex items-center justify-center border transition-colors ${
+                  form.isFeatured 
+                    ? "bg-amber-500/20 border-amber-500 text-amber-500" 
+                    : "bg-[var(--bg-hover)] border-[var(--border)] text-transparent group-hover:border-amber-500/50"
+                }`}>
+                  <svg viewBox="0 0 14 14" fill="none" className="w-3 h-3" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M11.6666 3.5L5.24992 9.91667L2.33325 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+                <span className="text-xs text-[var(--text-secondary)] group-hover:text-[var(--text-primary)] transition-colors">Mark as Featured</span>
+                <input 
+                  type="checkbox" 
+                  className="hidden" 
+                  checked={form.isFeatured} 
+                  onChange={(e) => setForm({ ...form, isFeatured: e.target.checked })} 
+                />
+              </label>
             </div>
 
             {/* Featured image */}

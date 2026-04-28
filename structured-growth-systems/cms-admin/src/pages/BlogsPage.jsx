@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Plus, FileText, Pencil, Trash2, ImageOff } from "lucide-react";
+import { Plus, FileText, Pencil, Trash2, ImageOff, Star } from "lucide-react";
 import { useBlogs } from "../hooks/useData";
 import { blogApi } from "../lib/api";
 import { useToast } from "../context/ToastContext";
@@ -62,6 +62,18 @@ export default function BlogsPage() {
     }
   };
 
+  const handleToggleFeatured = async (blog) => {
+    try {
+      const fd = new FormData();
+      fd.append("isFeatured", !blog.isFeatured);
+      await blogApi.update(blog._id, fd);
+      toast.success(blog.isFeatured ? "Unmarked featured" : "Marked as featured");
+      mutate();
+    } catch(e) {
+      toast.error("Failed to update featured status");
+    }
+  };
+
   const handleSearch = (val) => {
     setSearch(val);
     setPage(1);
@@ -101,7 +113,7 @@ export default function BlogsPage() {
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b border-[var(--border)] bg-[var(--bg-elevated)]">
-              {["Post", "Sub-heading", "Status", "Created", "Actions"].map(
+              {["Post", "Sub-heading", "Status", "Featured", "Created", "Actions"].map(
                 (h) => (
                   <th
                     key={h}
@@ -115,10 +127,10 @@ export default function BlogsPage() {
           </thead>
           <tbody>
             {isLoading ? (
-              <TableSkeleton rows={8} cols={5} />
+              <TableSkeleton rows={8} cols={6} />
             ) : blogs.length === 0 ? (
               <tr>
-                <td colSpan={5}>
+                <td colSpan={6}>
                   <Empty
                     icon={FileText}
                     message={
@@ -163,6 +175,20 @@ export default function BlogsPage() {
                   {/* Status */}
                   <td className="px-4 py-3">
                     <StatusBadge status={blog.status} />
+                  </td>
+                  {/* Featured */}
+                  <td className="px-4 py-3">
+                    <button
+                      onClick={() => handleToggleFeatured(blog)}
+                      className={`p-1.5 rounded-sm transition-colors ${
+                        blog.isFeatured 
+                          ? "text-amber-500 bg-amber-500/10 hover:bg-amber-500/20" 
+                          : "text-[var(--text-muted)] hover:text-amber-500 hover:bg-amber-500/10"
+                      }`}
+                      title={blog.isFeatured ? "Unmark Featured" : "Mark as Featured"}
+                    >
+                      <Star size={14} className={blog.isFeatured ? "fill-current" : ""} />
+                    </button>
                   </td>
                   {/* Created */}
                   <td className="px-4 py-3 text-[var(--text-muted)] font-mono text-xs whitespace-nowrap">

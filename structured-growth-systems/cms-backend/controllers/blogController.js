@@ -16,6 +16,7 @@ const buildBlogPayload = (body, file) => {
   if (body.heading !== undefined) payload.heading = body.heading;
   if (body.subHeading !== undefined) payload.subHeading = body.subHeading;
   if (body.status !== undefined) payload.status = body.status;
+  if (body.isFeatured !== undefined) payload.isFeatured = body.isFeatured === 'true' || body.isFeatured === true;
 
   if (body.tags !== undefined) {
     try {
@@ -75,6 +76,11 @@ const createBlog = async (req, res, next) => {
     }
 
     const blog = await Blog.create(payload);
+    
+    if (blog.isFeatured) {
+      await Blog.updateMany({ _id: { $ne: blog._id } }, { isFeatured: false });
+    }
+    
     const blogObj = stripImageBuffer(blog);
 
     return sendSuccess(
@@ -106,6 +112,12 @@ const getAllBlogs = async (req, res, next) => {
       }
       filter.status = req.query.status;
     }
+    if (req.query.isFeatured !== undefined) {
+      filter.isFeatured = req.query.isFeatured === "true";
+    } else if (req.query.excludeFeatured === "true") {
+      filter.isFeatured = { $ne: true };
+    }
+    
     if (req.query.search) {
       filter.$or = [
         { heading: { $regex: req.query.search, $options: "i" } },
@@ -220,6 +232,10 @@ const updateBlog = async (req, res, next) => {
     });
 
     await blog.save();
+
+    if (blog.isFeatured) {
+      await Blog.updateMany({ _id: { $ne: blog._id } }, { isFeatured: false });
+    }
 
     const blogObj = stripImageBuffer(blog);
     return sendSuccess(res, { blog: blogObj }, "Blog updated successfully");
