@@ -3,12 +3,13 @@ import { useNavigate, useParams, Link } from 'react-router-dom'
 import { 
   ArrowLeft, Mail, Phone, Calendar, Briefcase, User, 
   Shield, DollarSign, FileText, Download, UserCircle, 
-  Clock, Hash, MapPin, Pencil
+  Clock, Hash, MapPin, Pencil, Plus, CreditCard, Layers, Receipt, TrendingUp
 } from 'lucide-react'
-import { useEmployee } from '../hooks/useData'
-import { employeeApi } from '../lib/api'
+import { useEmployee, useEmployeeSalaries } from '../hooks/useData'
+import { employeeApi, settingsApi } from '../lib/api'
 import { useToast } from '../context/ToastContext'
 import { useAuth } from '../context/AuthContext'
+import { generateSalarySlipPDF } from '../lib/salarySlipGenerator'
 
 const DetailCard = ({ title, icon: Icon, children, actions }) => (
   <div className="card overflow-hidden">
@@ -43,6 +44,20 @@ export default function EmployeeProfilePage() {
   const { admin } = useAuth()
   
   const { employee, isLoading, error } = useEmployee(id)
+  const { salaries, isLoading: salariesLoading, mutate: mutateSalaries } = useEmployeeSalaries(id)
+
+  const [activeTab, setActiveTab] = useState('overview')
+  const [showPaymentModal, setShowPaymentModal] = useState(false)
+  const [loading, setLoading] = useState(false)
+  
+  const [paymentData, setPaymentData] = useState(() => {
+    const d = new Date()
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+    return {
+      month: months[d.getMonth()],
+      year: d.getFullYear(),
+    }
+  })
 
   const hasWriteAccess = ["admin", "superadmin"].includes(admin?.role) || admin?.permissions?.includes("write")
 
@@ -69,6 +84,52 @@ export default function EmployeeProfilePage() {
 
   const formatCurrency = (val) => {
     return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(val || 0)
+  }
+
+  const handleAddPayment = async () => {
+    setLoading(true)
+    try {
+      const s = employee.salarySetup || {}
+      const earnings = { basic: s.basic||0, hra: s.hra||0, conveyance: s.conveyance||0, allowance: s.allowance||0 }
+      const deductions = { pf: s.pf||0, esi: s.esi||0, tax: s.tax||0, deduction: s.deduction||0 }
+      const netSalary = Object.values(earnings).reduce((a,b)=>a+b,0) - Object.values(deductions).reduce((a,b)=>a+b,0)
+      
+      const payload = {
+        month: paymentData.month,
+        year: paymentData.year,
+        earnings,
+        deductions,
+        netSalary
+      }
+      
+      await employeeApi.recordSalary(id, payload)
+      toast.success('Salary payment recorded')
+      mutateSalaries()
+      setShowPaymentModal(false)
+    } catch (err) {
+      toast.error(err?.response?.data?.message || 'Error recording salary')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleDownloadSlip = async (salary) => {
+    try {
+      const res = await settingsApi.get()
+      const settings = res.data.success ? res.data.data : null
+      generateSalarySlipPDF(employee, salary, settings)
+      toast.success('Salary slip generated')
+    } catch (err) {
+      toast.error('Failed to generate slip')
+    }
+  }
+
+  const netMonthlySalary = () => {
+    if (!employee?.salarySetup) return 0;
+    const s = employee.salarySetup;
+    const earn = (s.basic||0) + (s.hra||0) + (s.conveyance||0) + (s.allowance||0);
+    const ded = (s.pf||0) + (s.esi||0) + (s.tax||0) + (s.deduction||0);
+    return earn - ded;
   }
 
   return (
@@ -141,11 +202,36 @@ export default function EmployeeProfilePage() {
               </div>
             </div>
           </div>
-
+          
+          <div className="flex items-center gap-2 mt-4 md:mt-0">
           </div>
         </div>
+      </div>
+
+      {/* Tabs */}
+      <div className="flex items-center border-b border-[var(--border)] gap-8 px-8 shrink-0 bg-[var(--bg-surface)]">
+        <button 
+          onClick={() => setActiveTab('overview')}
+          className={`pb-3 text-sm font-bold transition-all relative ${activeTab === 'overview' ? 'text-amber-500' : 'text-[var(--text-muted)] hover:text-[var(--text-secondary)]'}`}
+        >
+          <div className="flex items-center gap-2 uppercase tracking-wider">
+             <Layers size={14} /> Profile Overview
+          </div>
+          {activeTab === 'overview' && <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-amber-500 rounded-full" />}
+        </button>
+        <button 
+          onClick={() => setActiveTab('salaries')}
+          className={`pb-3 text-sm font-bold transition-all relative ${activeTab === 'salaries' ? 'text-amber-500' : 'text-[var(--text-muted)] hover:text-[var(--text-secondary)]'}`}
+        >
+          <div className="flex items-center gap-2 uppercase tracking-wider">
+             <CreditCard size={14} /> Salary & Payments
+          </div>
+          {activeTab === 'salaries' && <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-amber-500 rounded-full" />}
+        </button>
+      </div>
       {/* Content Grid */}
       <div className="flex-1 overflow-y-auto p-8">
+        {activeTab === 'overview' && (
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
           
           {/* Left Column - Core Info */}
@@ -170,7 +256,7 @@ export default function EmployeeProfilePage() {
                 <div className="space-y-6">
                   <InfoItem label="Designation" value={employee.designation} icon={Briefcase} />
                   <div className="p-4 rounded-xl bg-emerald-500/5 border border-emerald-500/10">
-                    <InfoItem label="Current Salary" value={formatCurrency(employee.salary)} icon={DollarSign} />
+                    <InfoItem label="Net Monthly Salary" value={formatCurrency(netMonthlySalary())} icon={DollarSign} />
                   </div>
                 </div>
                 <div className="space-y-4">
@@ -245,7 +331,58 @@ export default function EmployeeProfilePage() {
           </div>
 
         </div>
+        )}
+        
+        {activeTab === 'salaries' && (
+          <div className="w-full space-y-6">
+             <div className="card overflow-hidden">
+                 <table className="w-full text-left text-sm whitespace-nowrap">
+                    <thead className="bg-[var(--bg-elevated)] border-b border-[var(--border)] text-[var(--text-secondary)] uppercase text-[10px] tracking-wider font-mono">
+                       <tr>
+                          <th className="px-6 py-4 font-bold">Month / Year</th>
+                          <th className="px-6 py-4 font-bold">Payment Date</th>
+                          <th className="px-6 py-4 font-bold text-right">Net Paid</th>
+                          <th className="px-6 py-4 font-bold text-right">Action</th>
+                       </tr>
+                    </thead>
+                    <tbody className="divide-y divide-[var(--border)]">
+                       {salariesLoading ? (
+                         <tr><td colSpan="4" className="text-center py-8">Loading...</td></tr>
+                       ) : salaries.length === 0 ? (
+                         <tr>
+                           <td colSpan="4" className="px-6 py-12 text-center text-[var(--text-muted)] italic">
+                             <Receipt size={32} className="mx-auto mb-3 opacity-20" />
+                             No salary payments recorded yet.
+                           </td>
+                         </tr>
+                       ) : (
+                         salaries.map(salary => (
+                           <tr key={salary._id} className="hover:bg-[var(--bg-hover)] transition-colors group">
+                              <td className="px-6 py-4 font-bold">{salary.month} {salary.year}</td>
+                              <td className="px-6 py-4 font-mono text-xs">{new Date(salary.paymentDate).toLocaleDateString()}</td>
+                              <td className="px-6 py-4 text-right">
+                                 <span className="font-bold text-emerald-500 font-mono text-base">{formatCurrency(salary.netSalary)}</span>
+                              </td>
+                              <td className="px-6 py-4 text-right">
+                                 <button 
+                                    onClick={() => handleDownloadSlip(salary)}
+                                    className="p-1.5 rounded-sm text-amber-500 hover:bg-amber-500/10 transition-all border border-amber-500 flex items-center gap-2 ml-auto"
+                                    title="Download Slip"
+                                 >
+                                    <Download size={14} /> Download Slip
+                                 </button>
+                              </td>
+                           </tr>
+                         ))
+                       )}
+                    </tbody>
+                 </table>
+             </div>
+          </div>
+        )}
       </div>
+
+      {/* Record Salary Modal Removed - Use Global Salary Page instead */}
     </div>
   )
 }

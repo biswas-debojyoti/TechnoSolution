@@ -63,6 +63,10 @@ export const employeeApi = {
   delete: (id) => api.delete('employees/' + id),
   imageUrl: (id) => BASE_URL + 'employees/' + id + '/image',
   documentUrl: (id, docId) => BASE_URL + 'employees/' + id + '/documents/' + docId,
+  recordSalary: (id, data) => api.post('employees/' + id + '/salaries', data),
+  getSalaries: (id) => api.get('employees/' + id + '/salaries'),
+  getGlobalSalaries: (params) => api.get('employees/salaries/all', { params }),
+  getActiveEmployees: () => api.get('employees/active/basic'),
 }
 
 export const leadApi = {

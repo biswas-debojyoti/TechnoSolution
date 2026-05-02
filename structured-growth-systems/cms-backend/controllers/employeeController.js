@@ -1,4 +1,5 @@
 const Employee = require("../models/Employee");
+const SalaryPayment = require("../models/SalaryPayment");
 const { sendSuccess, sendError, sendPaginated } = require("../utils/apiResponse");
 
 /**
@@ -19,6 +20,8 @@ const createEmployee = async (req, res, next) => {
       userId,
       password,
       permissions,
+      salarySetup,
+      accountDetails
     } = req.body;
 
     const existingUser = await Employee.findOne({ userId });
@@ -35,6 +38,15 @@ const createEmployee = async (req, res, next) => {
       }
     }
 
+    let parsedSalarySetup = undefined;
+    let parsedAccountDetails = undefined;
+    if (salarySetup) {
+      try { parsedSalarySetup = typeof salarySetup === "string" ? JSON.parse(salarySetup) : salarySetup; } catch(e){}
+    }
+    if (accountDetails) {
+      try { parsedAccountDetails = typeof accountDetails === "string" ? JSON.parse(accountDetails) : accountDetails; } catch(e){}
+    }
+
     const newEmployee = new Employee({
       name,
       age,
@@ -47,6 +59,8 @@ const createEmployee = async (req, res, next) => {
       password,
       permissions: parsedPermissions,
       status: "active",
+      salarySetup: parsedSalarySetup,
+      accountDetails: parsedAccountDetails,
     });
 
     if (req.files) {
@@ -164,6 +178,8 @@ const updateEmployee = async (req, res, next) => {
       userId,
       password,
       permissions,
+      salarySetup,
+      accountDetails,
     } = req.body;
 
     const employee = await Employee.findById(req.params.id);
@@ -191,6 +207,17 @@ const updateEmployee = async (req, res, next) => {
       } catch (err) {
         // keep old perms if invalid JSON
       }
+    }
+
+    if (salarySetup) {
+      try {
+        employee.salarySetup = typeof salarySetup === "string" ? JSON.parse(salarySetup) : salarySetup;
+      } catch (err) {}
+    }
+    if (accountDetails) {
+      try {
+        employee.accountDetails = typeof accountDetails === "string" ? JSON.parse(accountDetails) : accountDetails;
+      } catch (err) {}
     }
 
     if (req.files) {
@@ -281,6 +308,104 @@ const getEmployeeDocument = async (req, res, next) => {
   }
 };
 
+/**
+ * @desc    Record a salary payment
+ * @route   POST /api/employees/:id/salaries
+ * @access  Private (Write permission)
+ */
+const recordSalaryPayment = async (req, res, next) => {
+  try {
+    const { month, year, earnings, deductions, netSalary } = req.body;
+    
+    // Validate employee exists
+    const employee = await Employee.findById(req.params.id);
+    if (!employee) return sendError(res, "Employee not found", 404);
+
+    const newPayment = new SalaryPayment({
+      employeeId: req.params.id,
+      month,
+      year,
+      earnings,
+      deductions,
+      netSalary,
+      addedBy: req.admin ? req.admin.id : null,
+    });
+
+    await newPayment.save();
+    return sendSuccess(res, newPayment, "Salary payment recorded successfully", 201);
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * @desc    Get salary history
+ * @route   GET /api/employees/:id/salaries
+ * @access  Private
+ */
+const getSalaryHistory = async (req, res, next) => {
+  try {
+    const payments = await SalaryPayment.find({ employeeId: req.params.id }).sort({ year: -1, month: -1 });
+    return sendSuccess(res, { salaries: payments }, "Salary history fetched successfully");
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * @desc    Get all salary payments across all employees
+ * @route   GET /api/employees/salaries/all
+ * @access  Private
+ */
+const getAllSalaries = async (req, res, next) => {
+  try {
+    const { year, search, employeeId } = req.query;
+    let filter = {};
+    if (year) {
+      filter.year = parseInt(year, 10);
+    }
+    
+    if (employeeId) {
+      filter.employeeId = employeeId;
+    }
+    
+    if (search) {
+      const employees = await Employee.find({
+        $or: [
+          { name: { $regex: search, $options: "i" } },
+          { userId: { $regex: search, $options: "i" } },
+        ]
+      }).select('_id');
+      filter.employeeId = { $in: employees.map(emp => emp._id) };
+    }
+
+    const payments = await SalaryPayment.find(filter)
+      .populate('employeeId', 'name userId designation')
+      .sort({ year: -1, month: -1, createdAt: -1 });
+
+    return sendSuccess(res, { salaries: payments }, "All salaries fetched successfully");
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * @desc    Get all active employees (basic info for dropdowns)
+ * @route   GET /api/employees/active/basic
+ * @access  Private
+ */
+const getAllActiveEmployees = async (req, res, next) => {
+  try {
+    const employees = await Employee.find({ status: "active" })
+      .select("name userId designation salarySetup")
+      .sort({ name: 1 })
+      .lean();
+    return sendSuccess(res, { employees }, "Active employees fetched successfully");
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   createEmployee,
   getAllEmployees,
@@ -290,4 +415,8 @@ module.exports = {
   deleteEmployee,
   getEmployeeImage,
   getEmployeeDocument,
+  recordSalaryPayment,
+  getSalaryHistory,
+  getAllSalaries,
+  getAllActiveEmployees,
 };

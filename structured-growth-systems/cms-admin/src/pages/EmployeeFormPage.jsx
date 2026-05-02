@@ -28,10 +28,11 @@ export default function EmployeeFormPage() {
     whatsappNo: '',
     designation: '',
     joiningDate: '',
-    salary: '',
     userId: '',
     password: '',
-    permissions: ['dashboard:read']
+    permissions: ['dashboard:read'],
+    salarySetup: { basic: '', hra: '', conveyance: '', allowance: '', pf: '', esi: '', tax: '', deduction: '' },
+    accountDetails: { bankName: '', accountNo: '', ifsc: '', panNo: '' }
   })
 
   const [imageFile, setImageFile] = useState(null)
@@ -49,10 +50,11 @@ export default function EmployeeFormPage() {
         whatsappNo: employee.whatsappNo || '',
         designation: employee.designation || '',
         joiningDate: employee.joiningDate ? employee.joiningDate.split('T')[0] : '',
-        salary: employee.salary || '',
         userId: employee.userId || '',
         password: '', // Don't populate password
-        permissions: employee.permissions || ['dashboard:read']
+        permissions: employee.permissions || ['dashboard:read'],
+        salarySetup: employee.salarySetup || { basic: '', hra: '', conveyance: '', allowance: '', pf: '', esi: '', tax: '', deduction: '' },
+        accountDetails: employee.accountDetails || { bankName: '', accountNo: '', ifsc: '', panNo: '' }
       })
       setExistingDocs(employee.documents || [])
     }
@@ -60,7 +62,22 @@ export default function EmployeeFormPage() {
 
   const handleChange = (e) => {
     const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
+    if (name.startsWith('salarySetup.')) {
+      const field = name.split('.')[1]
+      setFormData(prev => ({ ...prev, salarySetup: { ...prev.salarySetup, [field]: value } }))
+    } else if (name.startsWith('accountDetails.')) {
+      const field = name.split('.')[1]
+      setFormData(prev => ({ ...prev, accountDetails: { ...prev.accountDetails, [field]: value } }))
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }))
+    }
+  }
+
+  const calcNetSalary = () => {
+    const s = formData.salarySetup;
+    const earn = (Number(s.basic)||0) + (Number(s.hra)||0) + (Number(s.conveyance)||0) + (Number(s.allowance)||0);
+    const ded = (Number(s.pf)||0) + (Number(s.esi)||0) + (Number(s.tax)||0) + (Number(s.deduction)||0);
+    return earn - ded;
   }
 
   const handleModulePermissionChange = (moduleId, type, checked) => {
@@ -123,7 +140,7 @@ export default function EmployeeFormPage() {
       const data = new FormData()
       
       Object.keys(formData).forEach((key) => {
-        if (key === 'permissions') {
+        if (key === 'permissions' || key === 'salarySetup' || key === 'accountDetails') {
           data.append(key, JSON.stringify(formData[key]))
         } else if (key === 'password') {
           if (formData[key]) data.append(key, formData[key]) // Only send if not empty
@@ -218,12 +235,81 @@ export default function EmployeeFormPage() {
                     <label className="text-xs font-medium text-[var(--text-secondary)]">Joining Date</label>
                     <input type="date" name="joiningDate" required value={formData.joiningDate} onChange={handleChange} className="input-field text-sm py-1.5" />
                   </div>
-                  <div className="space-y-1 col-span-2">
-                    <label className="text-xs font-medium text-[var(--text-secondary)]">Salary</label>
-                    <div className="relative">
-                      <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[var(--text-muted)] text-sm">$</span>
-                      <input type="number" name="salary" required value={formData.salary} onChange={handleChange} className="input-field pl-6 text-sm py-1.5" />
+                </div>
+              </div>
+
+              <div>
+                <h3 className="section-label mb-3 pb-1 border-b border-[var(--border)] text-xs">Salary Setup</h3>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-3 p-3 rounded-lg bg-emerald-500/5 border border-emerald-500/10">
+                    <h4 className="text-[10px] uppercase font-bold text-emerald-600 tracking-wider">Earnings</h4>
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between gap-2">
+                        <label className="text-[11px] text-[var(--text-secondary)]">Basic</label>
+                        <input type="number" name="salarySetup.basic" value={formData.salarySetup.basic} onChange={handleChange} className="input-field text-xs py-1 w-24 text-right" />
+                      </div>
+                      <div className="flex items-center justify-between gap-2">
+                        <label className="text-[11px] text-[var(--text-secondary)]">HRA</label>
+                        <input type="number" name="salarySetup.hra" value={formData.salarySetup.hra} onChange={handleChange} className="input-field text-xs py-1 w-24 text-right" />
+                      </div>
+                      <div className="flex items-center justify-between gap-2">
+                        <label className="text-[11px] text-[var(--text-secondary)]">Conveyance</label>
+                        <input type="number" name="salarySetup.conveyance" value={formData.salarySetup.conveyance} onChange={handleChange} className="input-field text-xs py-1 w-24 text-right" />
+                      </div>
+                      <div className="flex items-center justify-between gap-2">
+                        <label className="text-[11px] text-[var(--text-secondary)]">Other Allow.</label>
+                        <input type="number" name="salarySetup.allowance" value={formData.salarySetup.allowance} onChange={handleChange} className="input-field text-xs py-1 w-24 text-right" />
+                      </div>
                     </div>
+                  </div>
+                  
+                  <div className="space-y-3 p-3 rounded-lg bg-red-500/5 border border-red-500/10">
+                    <h4 className="text-[10px] uppercase font-bold text-red-600 tracking-wider">Deductions</h4>
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between gap-2">
+                        <label className="text-[11px] text-[var(--text-secondary)]">PF</label>
+                        <input type="number" name="salarySetup.pf" value={formData.salarySetup.pf} onChange={handleChange} className="input-field text-xs py-1 w-24 text-right" />
+                      </div>
+                      <div className="flex items-center justify-between gap-2">
+                        <label className="text-[11px] text-[var(--text-secondary)]">ESI</label>
+                        <input type="number" name="salarySetup.esi" value={formData.salarySetup.esi} onChange={handleChange} className="input-field text-xs py-1 w-24 text-right" />
+                      </div>
+                      <div className="flex items-center justify-between gap-2">
+                        <label className="text-[11px] text-[var(--text-secondary)]">Tax / TDS</label>
+                        <input type="number" name="salarySetup.tax" value={formData.salarySetup.tax} onChange={handleChange} className="input-field text-xs py-1 w-24 text-right" />
+                      </div>
+                      <div className="flex items-center justify-between gap-2">
+                        <label className="text-[11px] text-[var(--text-secondary)]">Other Ded.</label>
+                        <input type="number" name="salarySetup.deduction" value={formData.salarySetup.deduction} onChange={handleChange} className="input-field text-xs py-1 w-24 text-right" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="mt-3 p-3 rounded-lg bg-[var(--bg-elevated)] border border-[var(--border)] flex items-center justify-between">
+                  <span className="text-xs font-bold text-[var(--text-primary)] uppercase">Net Monthly Salary</span>
+                  <span className="text-sm font-bold text-emerald-500 font-mono">₹{calcNetSalary().toLocaleString('en-IN')}</span>
+                </div>
+              </div>
+
+              <div>
+                <h3 className="section-label mb-3 pb-1 border-b border-[var(--border)] text-xs">Bank Details</h3>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="space-y-1">
+                    <label className="text-xs font-medium text-[var(--text-secondary)]">Bank Name</label>
+                    <input type="text" name="accountDetails.bankName" value={formData.accountDetails.bankName} onChange={handleChange} className="input-field text-sm py-1.5" />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-xs font-medium text-[var(--text-secondary)]">Account No</label>
+                    <input type="text" name="accountDetails.accountNo" value={formData.accountDetails.accountNo} onChange={handleChange} className="input-field text-sm py-1.5" />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-xs font-medium text-[var(--text-secondary)]">IFSC Code</label>
+                    <input type="text" name="accountDetails.ifsc" value={formData.accountDetails.ifsc} onChange={handleChange} className="input-field text-sm py-1.5" />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-xs font-medium text-[var(--text-secondary)]">PAN No</label>
+                    <input type="text" name="accountDetails.panNo" value={formData.accountDetails.panNo} onChange={handleChange} className="input-field text-sm py-1.5" />
                   </div>
                 </div>
               </div>

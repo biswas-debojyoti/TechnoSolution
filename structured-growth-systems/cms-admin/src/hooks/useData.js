@@ -72,6 +72,23 @@ export function useEmployee(id) {
   return { employee: data?.employee, isLoading, isError: !!error, error, mutate }
 }
 
+export function useEmployeeSalaries(id) {
+  const { data, error, isLoading, mutate } = useSWR(id ? 'employees/' + id + '/salaries' : null, fetcher, { revalidateOnFocus: false })
+  return { salaries: data?.salaries || [], isLoading, isError: !!error, error, mutate }
+}
+
+export function useGlobalSalaries(params = {}) {
+  const query = new URLSearchParams(params).toString()
+  const key = 'employees/salaries/all' + (query ? '?' + query : '')
+  const { data, error, isLoading, mutate } = useSWR(key, fetcher, { revalidateOnFocus: false })
+  return { salaries: data?.salaries || [], isLoading, isError: !!error, error, mutate }
+}
+
+export function useActiveEmployees() {
+  const { data, error, isLoading } = useSWR('employees/active/basic', fetcher, { revalidateOnFocus: false })
+  return { employees: data?.employees || [], isLoading, isError: !!error, error }
+}
+
 export function useLeads(params = {}) {
   const query = new URLSearchParams(params).toString()
   const key = 'leads' + (query ? '?' + query : '')

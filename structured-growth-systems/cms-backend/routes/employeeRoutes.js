@@ -10,6 +10,10 @@ const {
   deleteEmployee,
   getEmployeeImage,
   getEmployeeDocument,
+  recordSalaryPayment,
+  getSalaryHistory,
+  getAllSalaries,
+  getAllActiveEmployees,
 } = require("../controllers/employeeController");
 
 const { protect, restrictTo, requireModuleAccess } = require("../middleware/authMiddleware");
@@ -20,10 +24,17 @@ const {
   paginationValidator,
 } = require("../middleware/validationMiddleware");
 
-
 // @route  GET /api/employees
 // @desc   Get all employees (Admin + Read/Write Employees)
 router.get("/", protect, requireModuleAccess("employees", "read"), paginationValidator, getAllEmployees);
+
+// @route  GET /api/employees/active/basic
+// @desc   Get active employees for dropdowns
+router.get("/active/basic", protect, requireModuleAccess("employees", "read"), getAllActiveEmployees);
+
+// @route  GET /api/employees/salaries/all
+// @desc   Get global salaries
+router.get("/salaries/all", protect, requireModuleAccess("employees", "read"), getAllSalaries);
 
 // @route  GET /api/employees/:id
 router.get("/:id", protect, requireModuleAccess("employees", "read"), getEmployeeById);
@@ -74,5 +85,13 @@ router.get("/:id/image", getEmployeeImage);
 // @route  GET /api/employees/:id/documents/:docId
 // Public to allow easy downloads
 router.get("/:id/documents/:docId", getEmployeeDocument);
+
+// @route  POST /api/employees/:id/salaries
+// @desc   Record a salary payment
+router.post("/:id/salaries", protect, requireModuleAccess("employees", "write"), recordSalaryPayment);
+
+// @route  GET /api/employees/:id/salaries
+// @desc   Get salary history
+router.get("/:id/salaries", protect, requireModuleAccess("employees", "read"), getSalaryHistory);
 
 module.exports = router;

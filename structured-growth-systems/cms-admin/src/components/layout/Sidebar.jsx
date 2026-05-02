@@ -6,6 +6,7 @@ import {
 import { useAuth } from '../../context/AuthContext'
 import { useTheme } from '../../context/ThemeContext'
 import clsx from 'clsx'
+import { useState } from 'react'
 
 const navItems = [
   { to: '/',         icon: LayoutDashboard, label: 'Dashboard',  exact: true },
@@ -14,13 +15,21 @@ const navItems = [
   { to: '/leads',     icon: Users,            label: 'Leads'                   },
   { to: '/clients',   icon: Briefcase,        label: 'Clients'                 },
   { to: '/expenses',  icon: DollarSign,       label: 'Expenses'                },
-  { to: '/employees', icon: Users,            label: 'Employees'               },
+  { 
+    icon: Users, label: 'Employees',
+    subItems: [
+      { to: '/employees', label: 'Register New', exact: true },
+      { to: '/employees/salaries', label: 'Salary' },
+      { to: '/employees/attendance', label: 'Attendance' }
+    ]
+  },
 ]
 
 export default function Sidebar() {
   const { admin, logout } = useAuth()
   const location = useLocation()
   const { theme, toggleTheme } = useTheme()
+  const [expanded, setExpanded] = useState({ Employees: location.pathname.startsWith('/employees') })
 
   return (
     <aside className="w-56 shrink-0 flex flex-col h-full bg-[var(--bg-surface)] border-r border-[var(--border)]">
@@ -47,14 +56,64 @@ export default function Sidebar() {
       {/* Nav */}
       <nav className="flex-1 px-2 py-4 space-y-0.5">
         <p className="section-label px-3 mb-3">Navigation</p>
-        {navItems.map(({ to, icon: Icon, label, exact }) => {
+        {navItems.map(({ to, icon: Icon, label, exact, subItems }) => {
+          if (subItems) {
+            const isAnyActive = location.pathname.startsWith('/employees')
+            const isExpanded = expanded[label]
+            
+            return (
+              <div key={label} className="mb-1">
+                <button
+                  onClick={() => setExpanded(p => ({ ...p, [label]: !p[label] }))}
+                  className={clsx(
+                    'w-full flex items-center gap-3 px-3 py-2 rounded-sm text-sm transition-all duration-100 group',
+                    isAnyActive ? 'text-amber-500' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-hover)]'
+                  )}
+                >
+                  <Icon size={15} className={clsx('shrink-0', isAnyActive ? 'text-amber-500' : 'text-[var(--text-muted)] group-hover:text-[var(--text-secondary)]')} />
+                  <span style={{ fontFamily: 'DM Sans, sans-serif' }}>{label}</span>
+                  <ChevronRight size={12} className={clsx("ml-auto transition-transform", isExpanded ? "rotate-90 text-amber-500" : "text-[var(--text-muted)]")} />
+                </button>
+                
+                {isExpanded && (
+                  <div className="mt-1 ml-4 border-l border-[var(--border)] pl-2 space-y-0.5">
+                    {subItems.map((sub) => {
+                      // Custom active logic for 'Register New' vs others
+                      let subActive = false
+                      if (sub.to === '/employees') {
+                        subActive = location.pathname === '/employees' || location.pathname === '/employees/new' || (location.pathname.startsWith('/employees/') && !location.pathname.includes('salaries') && !location.pathname.includes('attendance'))
+                      } else {
+                        subActive = location.pathname.startsWith(sub.to)
+                      }
+
+                      return (
+                        <NavLink
+                          key={sub.label}
+                          to={sub.to}
+                          className={clsx(
+                            'block px-3 py-1.5 rounded-sm text-xs transition-all duration-100',
+                            subActive
+                              ? 'bg-amber-500/10 text-amber-500 font-bold'
+                              : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-hover)]'
+                          )}
+                        >
+                          {sub.label}
+                        </NavLink>
+                      )
+                    })}
+                  </div>
+                )}
+              </div>
+            )
+          }
+
           const active = exact ? location.pathname === to : location.pathname.startsWith(to)
           return (
             <NavLink
               key={to}
               to={to}
               className={clsx(
-                'flex items-center gap-3 px-3 py-2 rounded-sm text-sm transition-all duration-100 group',
+                'flex items-center gap-3 px-3 py-2 rounded-sm text-sm transition-all duration-100 group mb-0.5',
                 active
                   ? 'bg-amber-500/10 text-amber-400 border-l-2 border-amber-500'
                   : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-hover)] border-l-2 border-transparent'

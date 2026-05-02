@@ -29,7 +29,22 @@ const employeeSchema = new mongoose.Schema(
     },
     salary: {
       type: Number,
-      required: true,
+    },
+    salarySetup: {
+      basic: { type: Number, default: 0 },
+      hra: { type: Number, default: 0 },
+      conveyance: { type: Number, default: 0 },
+      allowance: { type: Number, default: 0 },
+      pf: { type: Number, default: 0 },
+      esi: { type: Number, default: 0 },
+      tax: { type: Number, default: 0 },
+      deduction: { type: Number, default: 0 }
+    },
+    accountDetails: {
+      bankName: { type: String, trim: true },
+      accountNo: { type: String, trim: true },
+      ifsc: { type: String, trim: true },
+      panNo: { type: String, trim: true }
     },
     userId: {
       type: String,

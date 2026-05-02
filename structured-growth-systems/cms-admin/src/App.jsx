@@ -16,6 +16,8 @@ import InquiriesPage   from './pages/InquiriesPage'
 import EmployeesPage   from './pages/EmployeesPage'
 import EmployeeFormPage from './pages/EmployeeFormPage'
 import EmployeeProfilePage from './pages/EmployeeProfilePage'
+import SalariesPage from './pages/SalariesPage'
+import AttendancePage from './pages/AttendancePage'
 import ExpensesPage from './pages/ExpensesPage'
 import LeadsPage from './pages/LeadsPage'
 import ClientsPage from './pages/ClientsPage'
@@ -57,6 +59,8 @@ export default function App() {
                   <Route path="/inquiries"         element={<InquiriesPage />} />
                   <Route path="/employees"         element={<EmployeesPage />} />
                   <Route path="/employees/new"     element={<EmployeeFormPage />} />
+                  <Route path="/employees/salaries" element={<SalariesPage />} />
+                  <Route path="/employees/attendance" element={<AttendancePage />} />
                   <Route path="/employees/:id"      element={<EmployeeProfilePage />} />
                   <Route path="/employees/:id/edit" element={<EmployeeFormPage />} />
                   <Route path="/expenses"          element={<ExpensesPage />} />

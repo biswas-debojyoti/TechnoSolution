@@ -2,6 +2,7 @@ const Lead = require("../models/Lead");
 const Client = require("../models/Client");
 const Inquiry = require("../models/Inquiry");
 const Blog = require("../models/Blog");
+const Expense = require("../models/Expense");
 const { sendSuccess } = require("../utils/apiResponse");
 
 /**
@@ -49,7 +50,8 @@ const getDashboardStats = async (req, res, next) => {
       publishedBlogs,
       newInquiries,
       revenueResult,
-      monthlyRevenueAgg
+      monthlyRevenueAgg,
+      monthlyExpenseAgg
     ] = await Promise.all([
       Lead.countDocuments(dateFilter),
       Client.countDocuments(dateFilter),
@@ -74,6 +76,19 @@ const getDashboardStats = async (req, res, next) => {
           }
         },
         { $sort: { "_id.year": 1, "_id.month": 1 } }
+      ]),
+      Expense.aggregate([
+        { $match: { status: "paid", date: { $gte: twelveMonthsAgo } } },
+        { 
+          $group: { 
+            _id: { 
+              year: { $year: "$date" }, 
+              month: { $month: "$date" } 
+            },
+            total: { $sum: "$amount" }
+          }
+        },
+        { $sort: { "_id.year": 1, "_id.month": 1 } }
       ])
     ]);
 
@@ -88,11 +103,13 @@ const getDashboardStats = async (req, res, next) => {
       const year = d.getFullYear();
       const month = d.getMonth() + 1; // 1-12
       
-      const found = monthlyRevenueAgg.find(m => m._id.year === year && m._id.month === month);
+      const foundRev = monthlyRevenueAgg.find(m => m._id.year === year && m._id.month === month);
+      const foundExp = monthlyExpenseAgg.find(m => m._id.year === year && m._id.month === month);
       
       monthlyRevenue.push({
         name: monthNames[month - 1],
-        revenue: found ? found.total : 0
+        revenue: foundRev ? foundRev.total : 0,
+        expense: foundExp ? foundExp.total : 0
       });
     }
 
