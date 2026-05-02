@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { ArrowLeft, Save, UploadCloud, File as FileIcon, X, Info } from 'lucide-react'
+import { ArrowLeft, Save, UploadCloud, File as FileIcon, X, Info, Eye, EyeOff } from 'lucide-react'
 import { employeeApi } from '../lib/api'
 import { useEmployee } from '../hooks/useData'
 import { useToast } from '../context/ToastContext'
@@ -37,6 +37,7 @@ export default function EmployeeFormPage() {
   const [imageFile, setImageFile] = useState(null)
   const [documentFiles, setDocumentFiles] = useState([])
   const [existingDocs, setExistingDocs] = useState([])
+  const [showPassword, setShowPassword] = useState(false)
 
   // Populate form if editing
   useEffect(() => {
@@ -236,7 +237,26 @@ export default function EmployeeFormPage() {
                   </div>
                   <div className="space-y-1">
                     <label className="text-xs font-medium text-[var(--text-secondary)]">New Password</label>
-                    <input type="password" name="password" required={!isEdit} value={formData.password} onChange={handleChange} className="input-field text-sm py-1.5" placeholder={isEdit ? "•••••••• (Leave blank to keep same)" : "••••••••"} minLength="6" />
+                    <div className="relative">
+                      <input 
+                        type={showPassword ? "text" : "password"} 
+                        name="password" 
+                        required={!isEdit} 
+                        value={formData.password} 
+                        onChange={handleChange} 
+                        className="input-field text-sm py-1.5 pr-8" 
+                        placeholder={isEdit ? "•••••••• (Leave blank to keep same)" : "••••••••"} 
+                        minLength="6" 
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword(v => !v)}
+                        className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[var(--text-muted)] hover:text-[var(--text-secondary)]"
+                        tabIndex="-1"
+                      >
+                        {showPassword ? <EyeOff size={14} /> : <Eye size={14} />}
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>

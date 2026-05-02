@@ -1,7 +1,7 @@
 import { NavLink, useLocation } from 'react-router-dom'
 import {
   LayoutDashboard, FileText, MessageSquare,
-  LogOut, ChevronRight, Zap, Users, Sun, Moon, Briefcase, Settings, DollarSign
+  LogOut, ChevronRight, Zap, Users, Sun, Moon, Briefcase, Settings, DollarSign, User
 } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import { useTheme } from '../../context/ThemeContext'
@@ -13,8 +13,8 @@ const navItems = [
   { to: '/inquiries', icon: MessageSquare,    label: 'Inquiries'               },
   { to: '/leads',     icon: Users,            label: 'Leads'                   },
   { to: '/clients',   icon: Briefcase,        label: 'Clients'                 },
-  { to: '/employees', icon: Users,            label: 'Employees'               },
   { to: '/expenses',  icon: DollarSign,       label: 'Expenses'                },
+  { to: '/employees', icon: Users,            label: 'Employees'               },
 ]
 
 export default function Sidebar() {
@@ -77,6 +77,18 @@ export default function Sidebar() {
           </p>
           <p className="text-xs text-[var(--text-muted)] truncate">{admin?.email}</p>
         </div>
+        <NavLink
+          to="/profile"
+          className={clsx(
+            'flex items-center gap-2.5 px-3 py-2 rounded-sm text-sm mb-1 transition-colors duration-150',
+            location.pathname === '/profile'
+              ? 'bg-amber-500/10 text-amber-400 border-l-2 border-amber-500'
+              : 'text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-hover)] border-l-2 border-transparent'
+          )}
+        >
+          <User size={14} className="shrink-0" />
+          <span>My Profile</span>
+        </NavLink>
         <NavLink
           to="/settings"
           className={clsx(

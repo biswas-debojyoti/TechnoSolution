@@ -61,12 +61,12 @@ export default function LoginPage() {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="section-label block mb-1.5">Email</label>
+              <label className="section-label block mb-1.5">Email or User ID</label>
               <input
-                type="email"
+                type="text"
                 value={form.email}
                 onChange={e => setForm(p => ({ ...p, email: e.target.value }))}
-                placeholder="admin@example.com"
+                placeholder="admin@example.com / Employee ID"
                 className="input-field"
                 autoComplete="email"
                 autoFocus

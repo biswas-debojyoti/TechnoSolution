@@ -34,6 +34,7 @@ export const fetcher = async (url) => {
 export const authApi = {
   login: (data) => api.post('auth/login', data),
   me: () => api.get('auth/me'),
+  updateProfile: (data) => api.put('auth/profile', data),
 }
 
 export const blogApi = {

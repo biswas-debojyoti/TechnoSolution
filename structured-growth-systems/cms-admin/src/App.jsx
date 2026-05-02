@@ -22,6 +22,7 @@ import ClientsPage from './pages/ClientsPage'
 import ClientDetailPage from './pages/ClientDetailPage'
 import EntityFormPage from './pages/EntityFormPage'
 import SettingsPage from './pages/SettingsPage'
+import ProfilePage from './pages/ProfilePage'
 
 
 const swrConfig = {
@@ -66,6 +67,7 @@ export default function App() {
                   <Route path="/clients/:id"      element={<ClientDetailPage />} />
                   <Route path="/clients/:id/edit"  element={<EntityFormPage />} />
                   <Route path="/settings"          element={<SettingsPage />} />
+                  <Route path="/profile"           element={<ProfilePage />} />
 
                 </Route>
               </Route>

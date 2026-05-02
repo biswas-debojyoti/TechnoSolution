@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts'
 import { FileText, MessageSquare, TrendingUp, Eye, Plus, ArrowRight, Clock, Users, UserCheck, Briefcase, Calendar } from 'lucide-react'
 import { useBlogs, useInquiries, useDashboardStats } from '../hooks/useData'
 import { useAuth } from '../context/AuthContext'
@@ -156,20 +157,41 @@ export default function DashboardPage() {
             }
           </div>
 
-          {/* Recent inquiries */}
-          <div className="card overflow-hidden">
-            <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--border)]">
-              <p className="text-xs font-semibold text-[var(--text-secondary)]" style={{ fontFamily: 'Syne, sans-serif' }}>Recent Inquiries</p>
-              <Link to="/inquiries" className="text-xs text-amber-400 hover:text-amber-300 flex items-center gap-1">
-                All inquiries <ArrowRight size={11} />
-              </Link>
+          {/* 12 Monthly Revenue Chart */}
+          <div className="card overflow-hidden flex flex-col">
+            <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--border)] shrink-0">
+              <p className="text-xs font-semibold text-[var(--text-secondary)]" style={{ fontFamily: 'Syne, sans-serif' }}>12 Monthly Revenue</p>
             </div>
-            {inqLoading
-              ? <div className="p-4 space-y-3">{Array(4).fill(0).map((_,i) => <Skeleton key={i} className="h-8" />)}</div>
-              : inquiries.length === 0
-                ? <p className="text-xs text-[var(--text-muted)] p-6 text-center">No inquiries yet.</p>
-                : inquiries.slice(0, 5).map(inq => <RecentInquiryRow key={inq._id} inq={inq} />)
-            }
+            <div className="p-4 flex-1 min-h-[250px]">
+              {statsLoading ? (
+                <div className="w-full h-full space-y-3">{Array(4).fill(0).map((_,i) => <Skeleton key={i} className="h-8" />)}</div>
+              ) : (
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={stats?.monthlyRevenue || []} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                    <XAxis 
+                      dataKey="name" 
+                      axisLine={false} 
+                      tickLine={false} 
+                      tick={{ fill: 'var(--text-muted)', fontSize: 11 }} 
+                      dy={10}
+                    />
+                    <YAxis 
+                      axisLine={false} 
+                      tickLine={false} 
+                      tick={{ fill: 'var(--text-muted)', fontSize: 11 }} 
+                      tickFormatter={(val) => `₹${val}`}
+                    />
+                    <Tooltip 
+                      cursor={{ fill: 'var(--bg-hover)' }}
+                      contentStyle={{ backgroundColor: 'var(--bg-elevated)', borderColor: 'var(--border)', borderRadius: '6px' }}
+                      itemStyle={{ color: 'var(--text-primary)' }}
+                      formatter={(val) => [`₹${val}`, 'Revenue']}
+                    />
+                    <Bar dataKey="revenue" fill="#10b981" radius={[4, 4, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              )}
+            </div>
           </div>
         </div>
 
