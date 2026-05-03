@@ -128,6 +128,15 @@ const EMOJIS = [
   "❤️",
   "🎯",
 ];
+const LINE_GAPS = [
+  { label: "Default", value: "normal" },
+  { label: "1.0", value: "1" },
+  { label: "1.2", value: "1.2" },
+  { label: "1.5", value: "1.5" },
+  { label: "1.8", value: "1.8" },
+  { label: "2.0", value: "2" },
+  { label: "2.5", value: "2.5" },
+];
 
 // ─── Small UI pieces ──────────────────────────────────────────────────────────
 function Sep() {
@@ -406,6 +415,38 @@ export default function RichEditor({
     }
   };
 
+  // ── Line Gap (line-height) ─────────────────────────────────────────────────
+  const applyLineGap = (val) => {
+    const sel = window.getSelection();
+    if (!sel || sel.rangeCount === 0) return;
+
+    let node = sel.anchorNode;
+    while (node && node !== editorRef.current) {
+      if (
+        node.nodeType === 1 &&
+        ["P", "H1", "H2", "H3", "LI", "BLOCKQUOTE", "DIV"].includes(node.tagName)
+      ) {
+        node.style.lineHeight = val;
+        emitChange();
+        return;
+      }
+      node = node.parentNode;
+    }
+
+    // Fallback: wrap in div if no block container found
+    exec("formatBlock", "DIV");
+    const newSel = window.getSelection();
+    let newNode = newSel.anchorNode;
+    while (newNode && newNode !== editorRef.current) {
+      if (newNode.nodeType === 1 && newNode.tagName === "DIV") {
+        newNode.style.lineHeight = val;
+        break;
+      }
+      newNode = newNode.parentNode;
+    }
+    emitChange();
+  };
+
   // ── Font color & highlight ─────────────────────────────────────────────────
   const applyFontColor = (color) => exec("foreColor", color);
   const applyHighlight = (color) =>
@@ -489,10 +530,10 @@ export default function RichEditor({
   // ─────────────────────────────────────────────────────────────────────────
   return (
     <div
-      className={`flex flex-col border border-slate-200 rounded-xl shadow-sm bg-white overflow-hidden ${className}`}
+      className={`flex flex-col border border-slate-200 rounded-xl shadow-sm bg-white ${className}`}
     >
       {/* ── TOOLBAR ─────────────────────────────────────────────────────────── */}
-      <div className="bg-white border-b border-slate-200 px-2 py-1.5 flex flex-wrap items-center gap-0.5 sticky top-0 z-50 select-none">
+      <div className="bg-white border-b border-slate-200 px-2 py-1.5 flex flex-wrap items-center gap-0.5 sticky top-0 z-50 select-none rounded-t-xl">
         {/* Undo / Redo */}
         <ToolbarBtn onClick={() => exec("undo")} title="Undo (Ctrl+Z)">
           <svg viewBox="0 0 16 16" className="w-3.5 h-3.5" fill="currentColor">
@@ -538,6 +579,14 @@ export default function RichEditor({
           }))}
           onSelect={applyFontSize}
           width="w-24"
+        />
+
+        {/* Line Gap */}
+        <Dropdown
+          label="Line Gap"
+          options={LINE_GAPS}
+          onSelect={applyLineGap}
+          width="w-28"
         />
 
         <Sep />
@@ -850,7 +899,7 @@ export default function RichEditor({
       />
 
       {/* ── STATUS BAR ──────────────────────────────────────────────────────── */}
-      <div className="border-t border-slate-100 px-4 py-1.5 flex items-center justify-between text-[11px] text-slate-400 select-none bg-slate-50/60">
+      <div className="border-t border-slate-100 px-4 py-1.5 flex items-center justify-between text-[11px] text-slate-400 select-none bg-slate-50/60 rounded-b-xl">
         <span className="flex gap-3">
           <span>
             {wordCount} {wordCount === 1 ? "word" : "words"}
