@@ -1,32 +1,14 @@
 "use client";
 import {
   motion,
-  useMotionValue,
-  useSpring,
-  useTransform,
   useInView,
   animate,
 } from "motion/react";
 import {
   ArrowRight,
-  BarChart2,
-  BookOpen,
-  Target,
-  Zap,
   CheckCircle2,
-  Trophy,
-  TrendingUp,
-  Search,
-  LayoutTemplate,
-  Tag,
-  PlaySquare,
-  Smartphone,
-  MousePointer2,
 } from "lucide-react";
 // import gridImage from '../assets/fullchart.jpeg';
-import MarketingDiagnosisOffer from "../components/MarketingDiagnosisOffer";
-import SEO from "../components/SEO";
-import CourseBanner from "../components/CourseBanner";
 import Link from "next/link";
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import Problem from "@/components/HomeComponent/Problem";
@@ -37,9 +19,7 @@ import Process from "@/components/HomeComponent/Process";
 import Authority from "@/components/HomeComponent/Authority";
 import Differentiation from "@/components/HomeComponent/Differentiation";
 import Services from "@/components/HomeComponent/Services";
-import Insights from "@/components/HomeComponent/Insights";
-import Footer from "@/components/HomeComponent/Footer";
-// import Services from "./Services/page";
+import { Blog, FeaturedCard } from "@/app/Blog/page";
 const InlineWidget = lazy(() =>
   import("react-calendly").then((mod) => ({ default: mod.InlineWidget })),
 );
@@ -83,88 +63,49 @@ function Counter({
   );
 }
 
-function TiltCard({
-  children,
-  className = "",
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) {
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
 
-  const mouseXSpring = useSpring(x);
-  const mouseYSpring = useSpring(y);
-
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["10deg", "-10deg"]);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-10deg", "10deg"]);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
-    const xPct = mouseX / width - 0.5;
-    const yPct = mouseY / height - 0.5;
-    x.set(xPct);
-    y.set(yPct);
-  };
-
-  const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
-
-  return (
-    <motion.div
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{
-        rotateX,
-        rotateY,
-        transformStyle: "preserve-3d",
-      }}
-      className={`relative ${className}`}
-    >
-      <div style={{ transform: "translateZ(50px)" }} className="h-full">
-        {children}
-      </div>
-      {/* Glow effect */}
-      <motion.div
-        className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(circle at center, rgba(250, 204, 21, 0.15) 0%, transparent 70%)",
-          transform: "translateZ(-10px)",
-        }}
-      />
-    </motion.div>
-  );
-}
 
 export default function Home() {
+  const [featuredBlog, setFeaturedBlog] = useState<Blog | null>(null);
+  const BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "";
 
+  useEffect(() => {
+    async function fetchLatestFeatured() {
+      try {
+        const res = await fetch(`${BASE_URL}/blogs?isFeatured=true&limit=1`);
+        const json = await res.json();
+        const list = Array.isArray(json) ? json : (json?.data || json?.blogs || []);
+        if (list[0]) setFeaturedBlog(list[0]);
+      } catch (err) {
+        console.error("Failed to fetch featured blog on Home:", err);
+      }
+    }
+    fetchLatestFeatured();
+  }, [BASE_URL]);
 
- 
   return (
     <div className="w-full">
-   
+    
       {/* HERO SECTION */}
       <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden pt-20 pb-32">
         {/* Background Elements */}
         <div className="absolute inset-0 z-0">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-brand-orange/10 rounded-full blur-[120px]" />
-          <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-[150px]" />
-
+          <img 
+            src="/image/nexzenbanner2.jpeg" 
+            alt="Hero Background" 
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-black/70 backdrop-blur-[2px]" />
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-brand-orange/20 rounded-full blur-[120px]" />
+          <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-blue-500/20 rounded-full blur-[150px]" />
         </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-15 items-center">
+        <div className="relative z-10 max-w-4xl mx-auto px-6 text-center flex flex-col items-center">
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="flex flex-col gap-8"
+            className="flex flex-col items-center gap-8"
           >
             <div className="inline-flex items-center gap-2 px-3 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm w-fit">
               <span className="w-2 h-2 rounded-full bg-brand-orange animate-pulse" />
@@ -221,29 +162,6 @@ export default function Home() {
             </div>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 0.2 }}
-            className="relative hidden lg:block"
-          >
-            <div className="profile-wrapper h-100 w-100 mx-auto">
-              <div className="rotating-ring"></div>
-              <div className="profile-image-container ">
-                <img
-                  src="/image/profileImage.jpeg"
-                  alt="Sayed Shahid"
-                  width="320"
-                  height="320"
-                  className="w-full h-full object-cover shadow-2xl"
-                  referrerPolicy="no-referrer"
-                  fetchPriority="high"
-                />
-              </div>
-              {/* Glow effect */}
-              <div className="absolute inset-0 bg-gradient-to-br from-brand-orange/20 to-transparent rounded-full blur-3xl -z-10" />
-            </div>
-          </motion.div>
         </div>
       </section>
       {/* <CourseBanner /> */}
@@ -256,8 +174,55 @@ export default function Home() {
       <Authority/>
       <Differentiation/>
       <Services/>
-     <Insights/>
-     {/* <Footer/> */}
+      
+      {/* LATEST INSIGHTS SECTION */}
+      <section className="pt-24 pb-24 px-6 relative overflow-hidden">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-4xl md:text-5xl font-display font-bold mb-6"
+            >
+              Strategic <span className="text-brand-orange">Insights</span>
+            </motion.h2>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="text-white/60 text-lg max-w-2xl mx-auto"
+            >
+              Learn real strategies, case studies, and frameworks used to scale brands profitably.
+            </motion.p>
+          </div>
+
+          {featuredBlog && (
+            <div className="mb-16">
+              <FeaturedCard blog={featuredBlog} />
+            </div>
+          )}
+
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="flex justify-center"
+          >
+            <Link
+              href="/Blog"
+              className="group inline-flex items-center gap-3 px-8 py-4 bg-white/5 border border-white/10 rounded-full text-white font-bold hover:bg-brand-orange hover:text-black transition-all duration-300 shadow-xl"
+            >
+              View All Articles
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
+            </Link>
+          </motion.div>
+        </div>
+
+        {/* Ambient background glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-orange/5 rounded-full blur-[140px] -z-10" />
+      </section>
 
       
     </div>

@@ -36,7 +36,7 @@ type SubmitStatus = "idle" | "success" | "error";
 function Field({ label, required, children }: { label: string; required?: boolean; children: React.ReactNode }) {
   return (
     <div className="flex flex-col gap-1.5">
-      <label className="text-[10px] font-bold text-white/40 uppercase tracking-[0.2em]">
+      <label className="text-[10px] font-bold text-[var(--text-secondary)] opacity-60 uppercase tracking-[0.2em]">
         {label} {required && <span className="text-[#f97316]">*</span>}
       </label>
       {children}
@@ -112,7 +112,7 @@ export default function AutoContactModal() {
   };
 
   const inputCls =
-    "w-full bg-black/50 border border-white/10 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-white/20 focus:outline-none focus:border-[#f97316] focus:ring-1 focus:ring-[#f97316]/30 transition-all duration-200";
+    "w-full bg-[var(--bg-deep)] border border-[var(--card-border)] rounded-xl px-3.5 py-2.5 text-sm text-[var(--text-primary)] placeholder-[var(--text-secondary)] placeholder:opacity-30 focus:outline-none focus:border-[#f97316] focus:ring-1 focus:ring-[#f97316]/30 transition-all duration-200";
 
   return (
     <AnimatePresence>
@@ -143,14 +143,14 @@ export default function AutoContactModal() {
             transition={{ type: "spring", stiffness: 340, damping: 28 }}
           >
             <div
-              className="relative w-full max-w-lg max-h-[92vh] overflow-y-auto rounded-2xl border border-white/10 bg-[#0d0d0d] shadow-[0_0_100px_rgba(249,115,22,0.10)] flex flex-col"
+              className="relative w-full max-w-lg max-h-[92vh] overflow-y-auto rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)] shadow-[0_0_100px_rgba(249,115,22,0.10)] flex flex-col"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Ambient glow */}
               <div className="pointer-events-none absolute -top-10 right-0 w-72 h-72 bg-[#f97316]/[0.07] rounded-full blur-[90px]" />
 
               {/* Header */}
-              <div className="relative z-10 flex items-start justify-between gap-4 px-6 pt-6 pb-4 border-b border-white/[0.07]">
+              <div className="relative z-10 flex items-start justify-between gap-4 px-6 pt-6 pb-4 border-b border-[var(--card-border)]">
                 <div>
                   <div className="flex items-center gap-2 mb-1">
                     <ShieldCheck className="w-4 h-4 text-[#f97316]" />
@@ -158,16 +158,16 @@ export default function AutoContactModal() {
                       Strategic Evaluation Request
                     </span>
                   </div>
-                  <h2 id="nexzen-modal-title" className="text-xl font-bold text-white leading-snug">
+                  <h2 id="nexzen-modal-title" className="text-xl font-bold text-[var(--text-primary)] leading-snug">
                     Apply for Strategic Review
                   </h2>
-                  <p className="text-white/40 text-xs mt-0.5">
+                  <p className="text-[var(--text-secondary)] text-xs mt-0.5">
                     Access is by application only. Reviewed within 24 h.
                   </p>
                 </div>
                 <button
                   onClick={handleClose}
-                  className="shrink-0 mt-0.5 p-1.5 rounded-lg text-white/40 hover:text-white hover:bg-white/[0.07] transition-all duration-150"
+                  className="shrink-0 mt-0.5 p-1.5 rounded-lg text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--text-secondary)]/[0.07] transition-all duration-150"
                   aria-label="Close"
                 >
                   <X className="w-5 h-5" />
@@ -238,7 +238,7 @@ export default function AutoContactModal() {
               </div>
 
               {/* Footer */}
-              <div className="relative z-10 px-6 pb-6 pt-3 border-t border-white/[0.07] space-y-2">
+              <div className="relative z-10 px-6 pb-6 pt-3 border-t border-[var(--card-border)] space-y-2">
                 <button
                   type="submit" form="nexzen-form" disabled={isSubmitting}
                   className="w-full flex items-center justify-center gap-2 py-3 px-5 rounded-xl text-sm font-bold text-white bg-[#f97316] hover:bg-[#fb923c] active:bg-[#ea6c0a] shadow-[0_0_24px_rgba(249,115,22,0.35)] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed group"
@@ -251,7 +251,7 @@ export default function AutoContactModal() {
                     </>
                   )}
                 </button>
-                <p className="text-center text-[10px] text-white/30 leading-relaxed">
+                <p className="text-center text-[10px] text-[var(--text-secondary)] opacity-60 leading-relaxed">
                   Applications reviewed within 24 hours. You work directly with me — no agency outsourcing.
                 </p>
               </div>

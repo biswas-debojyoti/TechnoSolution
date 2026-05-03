@@ -15,7 +15,7 @@ import MarketingDiagnosisOffer from "@/components/MarketingDiagnosisOffer";
 import Link from "next/link";
 
 // ─── Type — matches actual API response ────────────────────────────────────────
-interface Blog {
+export interface Blog {
   _id: string;
   heading: string;
   subHeading?: string;
@@ -31,15 +31,15 @@ interface Blog {
 // ─── Helpers ───────────────────────────────────────────────────────────────────
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "";
 
-function getTitle(blog: Blog): string {
+export function getTitle(blog: Blog): string {
   return blog.heading ?? "";
 }
 
-function getExcerpt(blog: Blog): string {
+export function getExcerpt(blog: Blog): string {
   return blog.subHeading ?? "";
 }
 
-function getImage(blog: Blog): string {
+export function getImage(blog: Blog): string {
   if (blog.imageUrl) {
     // imageUrl is a relative path like "/blogs/:id/image" — prepend base URL
     return blog.imageUrl.startsWith("http")
@@ -50,15 +50,15 @@ function getImage(blog: Blog): string {
   return `https://picsum.photos/seed/123/1200/800`;
 }
 
-function getSlug(blog: Blog): any {
+export function getSlug(blog: Blog): any {
   return blog?.slug;
 }
 
-function getRawDate(blog: Blog): string {
+export function getRawDate(blog: Blog): string {
   return blog.createdAt ?? blog.updatedAt ?? "";
 }
 
-function getDate(blog: Blog): string {
+export function getDate(blog: Blog): string {
   const raw = getRawDate(blog);
   if (!raw) return "";
   try {
@@ -115,7 +115,7 @@ function SkeletonCard() {
 }
 
 // ─── Featured Card ─────────────────────────────────────────────────────────────
-function FeaturedCard({ blog }: { blog: Blog }) {
+export function FeaturedCard({ blog }: { blog: Blog }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 32 }}
