@@ -10,7 +10,7 @@ function Footer() {
     window.open(url, "_blank");
   };
   return (
-    <div> <footer className="border-t border-white/5 py-12 mt-24 relative z-10">
+    <div> <footer className="border-t border-white/5 py-12 mt-5 relative z-10">
         <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-10">
 
           {/* Brand */}
@@ -19,7 +19,7 @@ function Footer() {
               <span className="text-brand-orange">NEX</span>Zen
             </div>
             <p className="text-sm text-white/40">
-              Creative Growth Systems for modern businesses.
+              Creative Growth Systems For Modern Businesses.
             </p>
           </div>
 
@@ -55,7 +55,7 @@ className='flex gap-3'
           {/* Social + CTA */}
           <div className="flex flex-col gap-4">
             <div className="flex gap-5 text-white/60 items-center text-lg">
-              <a href={`https://wa.me/918383997723?text=${encodeURIComponent("Hi. I want to Connect with you")}`} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors cursor-pointer">
+              <a href={`https://wa.me/919064397581?text=${encodeURIComponent("Hi. I want to Connect with you")}`} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors cursor-pointer">
                 <BsWhatsapp />
               </a>
               <a href="https://youtube.com/@nexzencreativeofficial?si=iCuA12C_JP74X1qn" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">

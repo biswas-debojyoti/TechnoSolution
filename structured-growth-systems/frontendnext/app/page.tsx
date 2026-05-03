@@ -85,17 +85,17 @@ export default function Home() {
 
   return (
     <div className="w-full">
-    
+
       {/* HERO SECTION */}
       <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden pt-20 pb-32">
         {/* Background Elements */}
         <div className="absolute inset-0 z-0">
-          <img 
-            src="/image/nexzenbanner2.jpeg" 
-            alt="Hero Background" 
+          <img
+            src="/image/nexzenbanner2.jpeg"
+            alt="Hero Background"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-black/70 backdrop-blur-[2px]" />
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px]" />
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-brand-orange/20 rounded-full blur-[120px]" />
           <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-blue-500/20 rounded-full blur-[150px]" />
         </div>
@@ -115,12 +115,13 @@ export default function Home() {
             </div>
 
             <h1 className="text-2xl md:text-3xl font-display font-bold leading-[1.1] tracking-tight">
-              Performance Marketing That Turns Ad Spend Into Profit
+              Performance Marketing Agency That Turns Ad Spend Into Predictable Revenue
+
 
             </h1>
 
             <p className="text-sm text-white/60 leading-relaxed max-w-xl">
-              Scale your business with a performance marketing agency focused on Google Ads, Meta Ads, and measurable revenue growth.
+              Scale your business with ROI-driven Google Ads & Meta Ads systems, supported by SEO, social media, and high-converting websites — across India, UK & USA.
             </p>
 
             {/* <div className="flex flex-col sm:flex-row gap-4 pt-4">
@@ -148,7 +149,24 @@ export default function Home() {
                 </button>
               </Link>
             </div>
-              <div className="flex flex-wrap gap-6">
+            <div className="flex flex-wrap gap-6">
+              {[
+                "Google Ads",
+                "Meta Ads",
+                "SEO ",
+                "Social Media ",
+                "Website Development ",
+              ].map((stat) => (
+                <div key={stat} className="flex items-center gap-2 text-xs font-medium text-#A1A1AA uppercase">
+                  <CheckCircle2 className="w-4 h-4 text-[#FF6A00]" />
+                  <p className="text-white text-lg font-semibold">
+
+                  {stat}
+                  </p>
+                </div>
+              ))}
+            </div>
+            <div className="flex flex-wrap gap-6">
               {[
                 "$500K+ Ad Spend Managed",
                 "Multi-Market (India | UK | USA)",
@@ -160,6 +178,7 @@ export default function Home() {
                 </div>
               ))}
             </div>
+
           </motion.div>
 
         </div>
@@ -167,18 +186,18 @@ export default function Home() {
       {/* <CourseBanner /> */}
 
       <Problem />
-      <SystemPositioning/>
-      <EntryPoints/>
-      <Offer/>
-      <Process/>
-      <Authority/>
-      <Differentiation/>
-      <Services/>
-      
+      <SystemPositioning />
+      <EntryPoints />
+      <Offer />
+      <Process />
+      <Authority />
+      <Differentiation />
+      <Services />
+
       {/* LATEST INSIGHTS SECTION */}
-      <section className="pt-24 pb-24 px-6 relative overflow-hidden">
+      <section className="py-5 md:pt-5 md:pb-1 px-6 relative overflow-hidden">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
+          <div className="text-center  mb-6 md:mb-5">
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -188,7 +207,7 @@ export default function Home() {
               Strategic <span className="text-brand-orange">Insights</span>
             </motion.h2>
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
@@ -199,15 +218,12 @@ export default function Home() {
           </div>
 
           {featuredBlog && (
-            <div className="mb-16">
+            <div className="mb-5">
               <FeaturedCard blog={featuredBlog} />
             </div>
           )}
 
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+          <div
             className="flex justify-center"
           >
             <Link
@@ -217,14 +233,14 @@ export default function Home() {
               View All Articles
               <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
             </Link>
-          </motion.div>
+          </div>
         </div>
 
         {/* Ambient background glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-orange/5 rounded-full blur-[140px] -z-10" />
+       
       </section>
 
-      
+
     </div>
   );
 }
