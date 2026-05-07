@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 
+
 export default function EditorJSField({ value, onChange, readOnly = false }) {
   const editorRef = useRef(null)
   const holderRef = useRef(null)

@@ -19,7 +19,7 @@ export default function Insights() {
     {
       icon: <Target className="w-6 h-6 text-primary-accent" />,
       title: "Growth Frameworks",
-      link:"/architecture",
+      link:"/Architecture",
       description: "Structured paths from awareness to conversion for predictable revenue."
     }
   ];
