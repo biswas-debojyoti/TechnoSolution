@@ -164,7 +164,13 @@ export default function EmployeeFormPage() {
       }
       navigate('/employees')
     } catch (err) {
-      toast.error(err?.response?.data?.message || 'Error saving employee')
+      const responseData = err?.response?.data;
+      if (responseData?.errors && Array.isArray(responseData.errors)) {
+        const errorMsgs = responseData.errors.map(e => `${e.field}: ${e.message}`).join(', ');
+        toast.error(`Validation Failed: ${errorMsgs}`);
+      } else {
+        toast.error(responseData?.message || 'Error saving employee')
+      }
     } finally {
       setLoading(false)
     }

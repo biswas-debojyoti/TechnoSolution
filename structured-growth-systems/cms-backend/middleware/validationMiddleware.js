@@ -117,7 +117,7 @@ const createEmployeeValidator = [
   body("whatsappNo").optional().isString(),
   body("designation").notEmpty().withMessage("Designation is required"),
   body("joiningDate").isISO8601().toDate().withMessage("Valid joining date is required"),
-  body("salary").optional({ checkFalsy: true }).isNumeric().withMessage("Valid salary is required"),
+  body("salary").optional({ values: "falsy" }).isNumeric().withMessage("Valid salary is required"),
   body("userId").notEmpty().withMessage("User ID is required").trim(),
   body("password").isLength({ min: 6 }).withMessage("Password must be at least 6 characters"),
   body("permissions").optional(),

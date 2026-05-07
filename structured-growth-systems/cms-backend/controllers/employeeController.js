@@ -3,6 +3,22 @@ const SalaryPayment = require("../models/SalaryPayment");
 const { sendSuccess, sendError, sendPaginated } = require("../utils/apiResponse");
 
 /**
+ * Helper to clean numeric objects (convert empty strings to 0 or null)
+ */
+const cleanNumericObject = (obj) => {
+  if (!obj || typeof obj !== "object") return obj;
+  const cleaned = { ...obj };
+  Object.keys(cleaned).forEach((key) => {
+    if (cleaned[key] === "") {
+      cleaned[key] = 0; // Or undefined if we want to use defaults
+    } else if (!isNaN(cleaned[key])) {
+      cleaned[key] = Number(cleaned[key]);
+    }
+  });
+  return cleaned;
+};
+
+/**
  * @desc    Create a new employee
  * @route   POST /api/employees
  * @access  Private (Write permission)
@@ -41,10 +57,15 @@ const createEmployee = async (req, res, next) => {
     let parsedSalarySetup = undefined;
     let parsedAccountDetails = undefined;
     if (salarySetup) {
-      try { parsedSalarySetup = typeof salarySetup === "string" ? JSON.parse(salarySetup) : salarySetup; } catch(e){}
+      try { 
+        parsedSalarySetup = typeof salarySetup === "string" ? JSON.parse(salarySetup) : salarySetup;
+        parsedSalarySetup = cleanNumericObject(parsedSalarySetup);
+      } catch(e){}
     }
     if (accountDetails) {
-      try { parsedAccountDetails = typeof accountDetails === "string" ? JSON.parse(accountDetails) : accountDetails; } catch(e){}
+      try { 
+        parsedAccountDetails = typeof accountDetails === "string" ? JSON.parse(accountDetails) : accountDetails;
+      } catch(e){}
     }
 
     const newEmployee = new Employee({
@@ -211,7 +232,8 @@ const updateEmployee = async (req, res, next) => {
 
     if (salarySetup) {
       try {
-        employee.salarySetup = typeof salarySetup === "string" ? JSON.parse(salarySetup) : salarySetup;
+        const parsed = typeof salarySetup === "string" ? JSON.parse(salarySetup) : salarySetup;
+        employee.salarySetup = cleanNumericObject(parsed);
       } catch (err) {}
     }
     if (accountDetails) {
