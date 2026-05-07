@@ -8,19 +8,19 @@ const {
   addPayment,
   deletePayment,
 } = require("../controllers/clientController");
-const { protect } = require("../middleware/authMiddleware");
+const { protect, requireModuleAccess } = require("../middleware/authMiddleware");
 
 router.use(protect);
 
 router.route("/")
-  .get(getAllClients);
+  .get(requireModuleAccess("clients", "read"), getAllClients);
 
 router.route("/:id")
-  .get(getClientById)
-  .put(updateClient)
-  .delete(deleteClient);
+  .get(requireModuleAccess("clients", "read"), getClientById)
+  .put(requireModuleAccess("clients", "write"), updateClient)
+  .delete(requireModuleAccess("clients", "write"), deleteClient);
 
-router.post("/:id/payments", addPayment);
-router.delete("/:id/payments/:paymentId", deletePayment);
+router.post("/:id/payments", requireModuleAccess("clients", "write"), addPayment);
+router.delete("/:id/payments/:paymentId", requireModuleAccess("clients", "write"), deletePayment);
 
 module.exports = router;

@@ -9,14 +9,14 @@ import clsx from 'clsx'
 import { useState } from 'react'
 
 const navItems = [
-  { to: '/',         icon: LayoutDashboard, label: 'Dashboard',  exact: true },
-  { to: '/blogs',    icon: FileText,         label: 'Blogs'                   },
-  { to: '/inquiries', icon: MessageSquare,    label: 'Inquiries'               },
-  { to: '/leads',     icon: Users,            label: 'Leads'                   },
-  { to: '/clients',   icon: Briefcase,        label: 'Clients'                 },
-  { to: '/expenses',  icon: DollarSign,       label: 'Expenses'                },
+  { id: 'dashboard', to: '/',         icon: LayoutDashboard, label: 'Dashboard',  exact: true },
+  { id: 'blogs',     to: '/blogs',    icon: FileText,         label: 'Blogs'                   },
+  { id: 'inquiries', to: '/inquiries', icon: MessageSquare,    label: 'Inquiries'               },
+  { id: 'leads',     to: '/leads',     icon: Users,            label: 'Leads'                   },
+  { id: 'clients',   to: '/clients',   icon: Briefcase,        label: 'Clients'                 },
+  { id: 'expenses',  to: '/expenses',  icon: DollarSign,       label: 'Expenses'                },
   { 
-    icon: Users, label: 'Employees',
+    id: 'employees', icon: Users, label: 'Employees',
     subItems: [
       { to: '/employees', label: 'Register New', exact: true },
       { to: '/employees/salaries', label: 'Salary' },
@@ -54,9 +54,16 @@ export default function Sidebar() {
       </div>
 
       {/* Nav */}
-      <nav className="flex-1 px-2 py-4 space-y-0.5">
+      <nav className="flex-1 px-2 py-4 space-y-0.5 overflow-y-auto scrollbar-thin">
         <p className="section-label px-3 mb-3">Navigation</p>
-        {navItems.map(({ to, icon: Icon, label, exact, subItems }) => {
+        {navItems.filter(item => {
+          if (item.id === 'dashboard') return true;
+          if (admin?.role === 'admin' || admin?.role === 'superadmin') return true;
+          if (admin?.role === 'employee' && admin.permissions) {
+            return admin.permissions.includes(`${item.id}:read`) || admin.permissions.includes(`${item.id}:write`);
+          }
+          return false;
+        }).map(({ id, to, icon: Icon, label, exact, subItems }) => {
           if (subItems) {
             const isAnyActive = location.pathname.startsWith('/employees')
             const isExpanded = expanded[label]
@@ -148,18 +155,20 @@ export default function Sidebar() {
           <User size={14} className="shrink-0" />
           <span>My Profile</span>
         </NavLink>
-        <NavLink
-          to="/settings"
-          className={clsx(
-            'flex items-center gap-2.5 px-3 py-2 rounded-sm text-sm mb-1 transition-colors duration-150',
-            location.pathname === '/settings'
-              ? 'bg-amber-500/10 text-amber-400 border-l-2 border-amber-500'
-              : 'text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-hover)] border-l-2 border-transparent'
-          )}
-        >
-          <Settings size={14} className="shrink-0" />
-          <span>Settings</span>
-        </NavLink>
+        {admin?.role === 'superadmin' && (
+          <NavLink
+            to="/settings"
+            className={clsx(
+              'flex items-center gap-2.5 px-3 py-2 rounded-sm text-sm mb-1 transition-colors duration-150',
+              location.pathname === '/settings'
+                ? 'bg-amber-500/10 text-amber-400 border-l-2 border-amber-500'
+                : 'text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-hover)] border-l-2 border-transparent'
+            )}
+          >
+            <Settings size={14} className="shrink-0" />
+            <span>Settings</span>
+          </NavLink>
+        )}
         <button
           onClick={logout}
           className="w-full flex items-center gap-2.5 px-3 py-2 rounded-sm text-sm

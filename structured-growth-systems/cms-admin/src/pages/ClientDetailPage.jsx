@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, useLocation } from 'react-router-dom'
 import { 
   ArrowLeft, Save, Info, Check, User, Globe, Mail, Phone, 
   DollarSign, Briefcase, Plus, Trash2, Calendar, CreditCard, 
@@ -48,12 +48,19 @@ const PAYMENT_METHODS = ["UPI", "Bank Transfer", "Cash", "Cheque", "Other"];
 export default function ClientDetailPage() {
   const { id } = useParams()
   const navigate = useNavigate()
+  const location = useLocation()
   const toast = useToast()
   
   const { client, isLoading, mutate } = useClient(id)
-  const [activeTab, setActiveTab] = useState('overview') // 'overview' or 'payments'
+  const [activeTab, setActiveTab] = useState(location.state?.activeTab || 'overview') // 'overview' or 'payments'
   const [loading, setLoading] = useState(false)
   const [showPaymentModal, setShowPaymentModal] = useState(false)
+
+  useEffect(() => {
+    if (location.state?.activeTab) {
+      setActiveTab(location.state.activeTab)
+    }
+  }, [location.state])
   
   // Removed edit-related state and handlers as per request for compact read-only view
   const [paymentData, setPaymentData] = useState({
@@ -294,7 +301,7 @@ export default function ClientDetailPage() {
                          <span className="text-xs uppercase font-bold">Activity Pulse</span>
                       </div>
                       <div className="space-y-4">
-                         <DetailItem label="Customer Since" value={new Date(client?.createdAt).toLocaleDateString()} />
+                         <DetailItem label="Customer Since" value={new Date(client?.createdAt).toLocaleDateString('en-GB')} />
                          <div className="border-t border-[var(--border)] pt-4">
                             <DetailItem label="Source Origin" value={client?.source} />
                          </div>
@@ -364,7 +371,7 @@ export default function ClientDetailPage() {
                          ) : (
                            client?.payments?.sort((a,b) => new Date(b.date) - new Date(a.date)).map(payment => (
                              <tr key={payment._id} className="hover:bg-[var(--bg-hover)] transition-colors group">
-                                <td className="px-6 py-4 font-mono text-xs">{new Date(payment.date).toLocaleDateString()}</td>
+                                <td className="px-6 py-4 font-mono text-xs">{new Date(payment.date).toLocaleDateString('en-GB')}</td>
                                 <td className="px-6 py-4 text-right">
                                    <span className="font-bold text-emerald-500 font-mono text-base">{formatCurrency(payment.amount)}</span>
                                 </td>

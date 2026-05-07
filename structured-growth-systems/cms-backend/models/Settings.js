@@ -37,6 +37,10 @@ const settingsSchema = new mongoose.Schema(
       accountNumber: String,
       bankName: String,
       ifscCode: String,
+      upiId: String,
+    },
+    qrCode: {
+      type: String, // Base64 or URL
     },
     digitalSignature: {
       type: String, // Name or designation for signature

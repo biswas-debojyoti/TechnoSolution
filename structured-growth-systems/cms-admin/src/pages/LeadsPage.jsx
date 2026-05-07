@@ -11,7 +11,7 @@ import {
   ExternalLink,
   UserPlus
 } from "lucide-react";
-import { useLeads } from "../hooks/useData";
+import { useLeads, useActiveEmployees } from "../hooks/useData";
 import { leadApi } from "../lib/api";
 import { useToast } from "../context/ToastContext";
 import { useAuth } from "../context/AuthContext";
@@ -41,12 +41,22 @@ const SOURCE_OPTIONS = [
   { value: "Other", label: "Other" },
 ];
 
+const SERVICE_OPTIONS = [
+  { value: "website development", label: "Web Dev" },
+  { value: "social media", label: "Social Media" },
+  { value: "GMB", label: "GMB" },
+  { value: "SEO", label: "SEO" },
+  { value: "others", label: "Others" },
+];
+
 export default function LeadsPage() {
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState("");
   const [source, setSource] = useState("");
+  const [service, setService] = useState("");
+  const [assignedTo, setAssignedTo] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [deleteTarget, setDeleteTarget] = useState(null);
@@ -58,16 +68,19 @@ export default function LeadsPage() {
     search,
     status,
     source,
+    service,
+    assignedTo,
     startDate,
     endDate,
   });
 
   const toast = useToast();
   const { admin } = useAuth();
+  const { employees } = useActiveEmployees();
 
   const hasWriteAccess =
     ["admin", "superadmin"].includes(admin?.role) ||
-    admin?.permissions?.includes("write");
+    admin?.permissions?.includes("leads:write");
 
   const handleUpdateStatus = async (id, newStatus) => {
     try {
@@ -95,7 +108,7 @@ export default function LeadsPage() {
   };
 
   const handleExport = () => {
-    const url = leadApi.exportUrl({ status, source, startDate, endDate });
+    const url = leadApi.exportUrl({ status, source, startDate, endDate, service, assignedTo });
     window.open(url, "_blank");
   };
 
@@ -159,6 +172,20 @@ export default function LeadsPage() {
           options={SOURCE_OPTIONS}
         />
 
+        <SelectFilter
+          value={service}
+          onChange={(val) => { setService(val); setPage(1); }}
+          placeholder="All Services"
+          options={SERVICE_OPTIONS}
+        />
+
+        <SelectFilter
+          value={assignedTo}
+          onChange={(val) => { setAssignedTo(val); setPage(1); }}
+          placeholder="Follow up by"
+          options={employees.map(e => ({ value: e._id, label: e.name }))}
+        />
+
         <div className="flex items-center gap-2 ml-auto">
           <div className="flex items-center gap-1.5">
             <Calendar size={13} className="text-[var(--text-muted)]" />
@@ -176,9 +203,9 @@ export default function LeadsPage() {
             onChange={(e) => { setEndDate(e.target.value); setPage(1); }}
             className="input-field h-8 text-xs px-2 w-32"
           />
-          {(startDate || endDate || status || source || search) && (
+          {(startDate || endDate || status || source || service || assignedTo || search) && (
             <button 
-              onClick={() => { setStartDate(""); setEndDate(""); setStatus(""); setSource(""); setSearch(""); setPage(1); }}
+              onClick={() => { setStartDate(""); setEndDate(""); setStatus(""); setSource(""); setService(""); setAssignedTo(""); setSearch(""); setPage(1); }}
               className="text-[10px] text-amber-500 hover:underline px-2"
             >
               Reset
@@ -195,6 +222,7 @@ export default function LeadsPage() {
                 <th className="px-6 py-3 font-medium">Lead Info</th>
                 <th className="px-6 py-3 font-medium">Contact</th>
                 <th className="px-6 py-3 font-medium">Source</th>
+                <th className="px-6 py-3 font-medium">Follow Up</th>
                 <th className="px-6 py-3 font-medium">Budget</th>
                 <th className="px-6 py-3 font-medium">Status</th>
                 <th className="px-6 py-3 font-medium text-right">Actions</th>
@@ -202,10 +230,10 @@ export default function LeadsPage() {
             </thead>
             <tbody className="divide-y divide-[var(--border)]">
               {isLoading ? (
-                <TableSkeleton rows={8} cols={6} />
+                <TableSkeleton rows={8} cols={7} />
               ) : leads.length === 0 ? (
                 <tr>
-                  <td colSpan="6">
+                  <td colSpan="7">
                     <Empty
                       icon={Users}
                       message="No leads found matching your criteria."
@@ -219,9 +247,16 @@ export default function LeadsPage() {
                     <td className="px-6 py-4">
                       <div>
                         <p className="font-medium text-[var(--text-primary)]">{lead.name}</p>
-                        <p className="text-[10px] text-[var(--text-muted)] uppercase tracking-tight">
-                          Added {new Date(lead.createdAt).toLocaleDateString()}
-                        </p>
+                        <div className="flex flex-wrap gap-1 mt-1">
+                          <span className="text-[10px] text-[var(--text-muted)] uppercase tracking-tight mr-1">
+                            Added {new Date(lead.createdAt).toLocaleDateString('en-GB')}
+                          </span>
+                          {lead.services?.map((s, i) => (
+                            <span key={i} className="px-1.5 py-0 rounded-[2px] bg-amber-500/5 text-amber-500/80 text-[8px] uppercase font-bold border border-amber-500/10 whitespace-nowrap">
+                              {s}
+                            </span>
+                          ))}
+                        </div>
                       </div>
                     </td>
                     <td className="px-6 py-4">
@@ -232,6 +267,12 @@ export default function LeadsPage() {
                       <span className="px-2 py-0.5 rounded-sm bg-[var(--bg-elevated)] border border-[var(--border)] text-[10px] text-[var(--text-secondary)]">
                         {lead.source}
                       </span>
+                    </td>
+                    <td className="px-6 py-4">
+                       <div className="flex flex-col">
+                         <span className="text-xs text-[var(--text-primary)] font-bold">{lead.assignedTo?.name || "Unassigned"}</span>
+                         <span className="text-[9px] text-[var(--text-muted)] uppercase tracking-tighter">Personnel</span>
+                       </div>
                     </td>
                     <td className="px-6 py-4">
                       <span className="text-xs text-[var(--text-secondary)] font-mono">{lead.budget || "—"}</span>

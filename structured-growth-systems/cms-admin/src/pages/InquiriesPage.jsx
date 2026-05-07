@@ -3,6 +3,7 @@ import { MessageSquare, Eye, Trash2, ChevronDown } from 'lucide-react'
 import { useInquiries, useInquiryStats } from '../hooks/useData'
 import { inquiryApi } from '../lib/api'
 import { useToast } from '../context/ToastContext'
+import { useAuth } from '../context/AuthContext'
 import {
   PageShell, TableSkeleton, Empty, StatusBadge,
   ConfirmModal, Pagination, SearchInput, SelectFilter, Skeleton
@@ -76,6 +77,8 @@ export default function InquiriesPage() {
     ...(status && { status }),
   })
   const { stats, isLoading: statsLoading } = useInquiryStats()
+  const { admin } = useAuth()
+  const hasWriteAccess = ["admin", "superadmin"].includes(admin?.role) || admin?.permissions?.includes("inquiries:write")
 
   const handleDelete = async () => {
     setDeleting(true)
@@ -153,11 +156,15 @@ export default function InquiriesPage() {
                 </td>
                 {/* Status */}
                 <td className="px-4 py-3">
-                  <StatusMenu inquiry={inq} onUpdated={mutate} />
+                  {hasWriteAccess ? (
+                    <StatusMenu inquiry={inq} onUpdated={mutate} />
+                  ) : (
+                    <StatusBadge status={inq.status} />
+                  )}
                 </td>
                 {/* Date */}
                 <td className="px-4 py-3 text-[var(--text-muted)] font-mono text-xs whitespace-nowrap">
-                  {new Date(inq.createdAt).toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'2-digit' })}
+                  {new Date(inq.createdAt).toLocaleDateString('en-GB')}
                 </td>
                 {/* Actions */}
                 <td className="px-4 py-3">
@@ -166,10 +173,12 @@ export default function InquiriesPage() {
                       className="p-1.5 rounded-sm text-[var(--text-muted)] hover:text-amber-400 hover:bg-amber-500/10 transition-colors" title="View">
                       <Eye size={13} />
                     </button>
-                    <button onClick={() => setDeleteTarget(inq)}
-                      className="p-1.5 rounded-sm text-[var(--text-muted)] hover:text-red-400 hover:bg-red-500/10 transition-colors" title="Delete">
-                      <Trash2 size={13} />
-                    </button>
+                    {hasWriteAccess && (
+                      <button onClick={() => setDeleteTarget(inq)}
+                        className="p-1.5 rounded-sm text-[var(--text-muted)] hover:text-red-400 hover:bg-red-500/10 transition-colors" title="Delete">
+                        <Trash2 size={13} />
+                      </button>
+                    )}
                   </div>
                 </td>
               </tr>

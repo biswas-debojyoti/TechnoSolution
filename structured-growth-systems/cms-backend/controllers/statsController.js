@@ -3,6 +3,8 @@ const Client = require("../models/Client");
 const Inquiry = require("../models/Inquiry");
 const Blog = require("../models/Blog");
 const Expense = require("../models/Expense");
+const Attendance = require("../models/Attendance");
+const Employee = require("../models/Employee");
 const { sendSuccess } = require("../utils/apiResponse");
 
 /**
@@ -51,7 +53,9 @@ const getDashboardStats = async (req, res, next) => {
       newInquiries,
       revenueResult,
       monthlyRevenueAgg,
-      monthlyExpenseAgg
+      monthlyExpenseAgg,
+      attendanceTodayResult,
+      activeEmployeesCount
     ] = await Promise.all([
       Lead.countDocuments(dateFilter),
       Client.countDocuments(dateFilter),
@@ -89,8 +93,20 @@ const getDashboardStats = async (req, res, next) => {
           }
         },
         { $sort: { "_id.year": 1, "_id.month": 1 } }
-      ])
+      ]),
+      // Attendance for today
+      Attendance.find({ dateString: new Date().toISOString().split('T')[0] }).lean(),
+      Employee.countDocuments({ status: 'Active', role: 'employee' })
     ]);
+
+    const todayAttendance = attendanceTodayResult || [];
+    const activeEmployeeCount = activeEmployeesCount || 0;
+    
+    const attendanceStats = {
+      present: todayAttendance.filter(a => a.status !== 'completed').length,
+      onBreak: todayAttendance.filter(a => a.status === 'on_break').length,
+      absent: Math.max(0, activeEmployeeCount - todayAttendance.length)
+    };
 
     // Format monthlyRevenueAgg into last 12 months array
     const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -120,7 +136,8 @@ const getDashboardStats = async (req, res, next) => {
       revenue: revenueResult.length > 0 ? revenueResult[0].total : 0,
       publishedBlogs,
       newInquiries,
-      monthlyRevenue
+      monthlyRevenue,
+      attendance: attendanceStats
     };
 
     return sendSuccess(res, { stats }, "Dashboard stats fetched successfully");

@@ -364,7 +364,7 @@ export default function BlogFormPage() {
                     Created
                   </span>
                   <span className="text-xs text-[var(--text-secondary)] font-mono">
-                    {new Date(blog.createdAt).toLocaleDateString()}
+                    {new Date(blog.createdAt).toLocaleDateString('en-GB')}
                   </span>
                 </div>
                 <div className="flex justify-between">

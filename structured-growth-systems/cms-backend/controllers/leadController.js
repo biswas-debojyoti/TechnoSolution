@@ -40,12 +40,14 @@ const getAllLeads = async (req, res, next) => {
   try {
     const page = parseInt(req.query.page, 10) || 1;
     const limit = parseInt(req.query.limit, 10) || 20;
-    const { search, status, source, startDate, endDate } = req.query;
+    const { search, status, source, startDate, endDate, service, assignedTo } = req.query;
     const startIndex = (page - 1) * limit;
 
     const filter = {};
     if (status) filter.status = status;
     if (source) filter.source = source;
+    if (service) filter.services = service;
+    if (assignedTo) filter.assignedTo = assignedTo;
     
     if (startDate || endDate) {
       filter.createdAt = {};
@@ -205,11 +207,13 @@ const deleteLead = async (req, res, next) => {
  */
 const exportLeads = async (req, res, next) => {
   try {
-    const { status, source, startDate, endDate } = req.query;
+    const { status, source, startDate, endDate, service, assignedTo } = req.query;
     
     const filter = {};
     if (status) filter.status = status;
     if (source) filter.source = source;
+    if (service) filter.services = service;
+    if (assignedTo) filter.assignedTo = assignedTo;
     
     if (startDate || endDate) {
       filter.createdAt = {};

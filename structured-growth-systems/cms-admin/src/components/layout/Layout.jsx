@@ -120,7 +120,7 @@ export default function Layout({ children }) {
                   : location.pathname.replace('/', '').split('/')[0]}
               </h1>
               <p className="text-xs text-ink-500 font-mono hidden sm:block">
-                {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
+                {new Date().toLocaleDateString('en-GB')}
               </p>
             </div>
           </div>

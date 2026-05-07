@@ -52,7 +52,7 @@ export default function ExpensesPage() {
 
   const toast = useToast()
   const { admin } = useAuth()
-  const hasWriteAccess = ["admin", "superadmin"].includes(admin?.role) || admin?.permissions?.includes("write")
+  const hasWriteAccess = ["admin", "superadmin"].includes(admin?.role) || admin?.permissions?.includes("expenses:write")
 
   const handleDelete = async () => {
     if (!deleteTarget) return

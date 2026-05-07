@@ -20,9 +20,8 @@ const validate = (req, res, next) => {
 
 const loginValidator = [
   body("email")
-    .notEmpty().withMessage("Email is required")
-    .isEmail().withMessage("Please provide a valid email address")
-    .normalizeEmail(),
+    .notEmpty().withMessage("Login ID / Email is required")
+    .trim(),
   body("password")
     .notEmpty().withMessage("Password is required")
     .isLength({ min: 6 }).withMessage("Password must be at least 6 characters"),
@@ -118,7 +117,7 @@ const createEmployeeValidator = [
   body("whatsappNo").optional().isString(),
   body("designation").notEmpty().withMessage("Designation is required"),
   body("joiningDate").isISO8601().toDate().withMessage("Valid joining date is required"),
-  body("salary").isNumeric().withMessage("Valid salary is required"),
+  body("salary").optional({ checkFalsy: true }).isNumeric().withMessage("Valid salary is required"),
   body("userId").notEmpty().withMessage("User ID is required").trim(),
   body("password").isLength({ min: 6 }).withMessage("Password must be at least 6 characters"),
   body("permissions").optional(),

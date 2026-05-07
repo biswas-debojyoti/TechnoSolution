@@ -13,9 +13,10 @@ import {
   Briefcase,
   CheckCircle,
   Clock,
-  AlertCircle
+  AlertCircle,
+  CreditCard
 } from "lucide-react";
-import { useClients } from "../hooks/useData";
+import { useClients, useActiveEmployees } from "../hooks/useData";
 import { clientApi } from "../lib/api";
 import { useToast } from "../context/ToastContext";
 import { useAuth } from "../context/AuthContext";
@@ -50,6 +51,7 @@ export default function ClientsPage() {
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState("");
   const [service, setService] = useState("");
+  const [assignedTo, setAssignedTo] = useState("");
   const [deleteTarget, setDeleteTarget] = useState(null);
   const [deleting, setDeleting] = useState(false);
 
@@ -59,11 +61,13 @@ export default function ClientsPage() {
     search,
     status,
     service,
+    assignedTo,
   });
 
   const toast = useToast();
   const { admin } = useAuth();
-  const hasWriteAccess = ["admin", "superadmin"].includes(admin?.role) || admin?.permissions?.includes("write");
+  const { employees } = useActiveEmployees();
+  const hasWriteAccess = ["admin", "superadmin"].includes(admin?.role) || admin?.permissions?.includes("clients:write");
 
   const handleDelete = async () => {
     if (!deleteTarget) return;
@@ -140,9 +144,16 @@ export default function ClientsPage() {
           options={SERVICE_OPTIONS}
         />
 
-        {(status || service || search) && (
+        <SelectFilter
+          value={assignedTo}
+          onChange={(val) => { setAssignedTo(val); setPage(1); }}
+          placeholder="Follow up by"
+          options={employees.map(e => ({ value: e._id, label: e.name }))}
+        />
+
+        {(status || service || assignedTo || search) && (
           <button 
-            onClick={() => { setStatus(""); setService(""); setSearch(""); setPage(1); }}
+            onClick={() => { setStatus(""); setService(""); setAssignedTo(""); setSearch(""); setPage(1); }}
             className="text-[10px] text-amber-500 hover:underline px-2 ml-auto"
           >
             Reset Filters
@@ -156,7 +167,7 @@ export default function ClientsPage() {
             <div className="card overflow-hidden">
               <table className="w-full">
                 <tbody>
-                  <TableSkeleton rows={8} cols={5} />
+                  <TableSkeleton rows={8} cols={8} />
                 </tbody>
               </table>
             </div>
@@ -182,6 +193,7 @@ export default function ClientsPage() {
                     <th className="px-6 py-3 font-medium text-left">Services</th>
                     <th className="px-6 py-3 font-medium text-left">Source</th>
                     <th className="px-6 py-3 font-medium text-left">Status</th>
+                    <th className="px-6 py-3 font-medium text-left">Follow Up</th>
                     <th className="px-6 py-3 font-medium text-right">Project Value</th>
                     <th className="px-6 py-3 font-medium text-right">Balance Due</th>
                     <th className="px-6 py-3 font-medium text-right">Actions</th>
@@ -225,6 +237,12 @@ export default function ClientsPage() {
                            <span className="text-xs text-[var(--text-primary)]">{client.status}</span>
                          </div>
                       </td>
+                      <td className="px-6 py-4">
+                         <div className="flex flex-col">
+                           <span className="text-xs text-[var(--text-primary)] font-bold">{client.assignedTo?.name || "Unassigned"}</span>
+                           <span className="text-[9px] text-[var(--text-muted)] uppercase tracking-tighter">Personnel</span>
+                         </div>
+                      </td>
                       <td className="px-6 py-4 text-right">
                         <span className="text-sm font-bold text-[var(--text-primary)] font-mono">
                           {new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(client.totalValue || 0)}
@@ -242,18 +260,25 @@ export default function ClientsPage() {
                         })()}
                       </td>
                       <td className="px-6 py-4 text-right">
-                        <div className="flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div className="flex items-center justify-end gap-1 ">
+                          <button
+                            onClick={() => navigate(`/clients/${client._id}`, { state: { activeTab: 'payments' } })}
+                            className="p-1.5 rounded-sm text-[var(--text-muted)] hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"
+                            title="Payment History"
+                          >
+                            <CreditCard size={15} />
+                          </button>
                           <button
                             onClick={() => navigate(`/clients/${client._id}/edit`)}
                             className="p-1.5 rounded-sm text-[var(--text-muted)] hover:text-amber-400 hover:bg-amber-500/10 transition-colors"
                           >
-                            <Pencil size={13} />
+                            <Pencil size={15} />
                           </button>
                           <button
                             onClick={() => setDeleteTarget(client)}
                             className="p-1.5 rounded-sm text-[var(--text-muted)] hover:text-red-400 hover:bg-red-500/10 transition-colors"
                           >
-                            <Trash2 size={13} />
+                            <Trash2 size={15} />
                           </button>
                         </div>
                       </td>
@@ -314,12 +339,21 @@ export default function ClientsPage() {
                          );
                       })()}
                     </div>
-                    <button 
-                      onClick={() => navigate(`/clients/${client._id}`)}
-                      className="p-2 rounded-full bg-amber-500/10 text-amber-500 hover:bg-amber-500 hover:text-black transition-all"
-                    >
-                      <ArrowRight size={14} />
-                    </button>
+                    <div className="flex gap-1">
+                      <button 
+                        onClick={() => navigate(`/clients/${client._id}`, { state: { activeTab: 'payments' } })}
+                        className="p-2 rounded-full bg-emerald-500/10 text-emerald-500 hover:bg-emerald-500 hover:text-black transition-all"
+                        title="Payment History"
+                      >
+                        <CreditCard size={14} />
+                      </button>
+                      <button 
+                        onClick={() => navigate(`/clients/${client._id}`)}
+                        className="p-2 rounded-full bg-amber-500/10 text-amber-500 hover:bg-amber-500 hover:text-black transition-all"
+                      >
+                        <ArrowRight size={14} />
+                      </button>
+                    </div>
                   </div>
                 </div>
               ))}

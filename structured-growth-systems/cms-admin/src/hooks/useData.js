@@ -155,3 +155,24 @@ export function useExpense(id) {
   return { expense: data?.expense, isLoading, isError: !!error, error, mutate }
 }
 
+export function useAttendanceToday() {
+  const { data, error, isLoading, mutate } = useSWR('attendance/today', fetcher, { revalidateOnFocus: false })
+  return { attendance: data?.data, isLoading, isError: !!error, error, mutate }
+}
+
+export function useAttendanceHistory(employeeId, params = {}) {
+  const query = new URLSearchParams(params).toString()
+  const key = employeeId ? `attendance/history/${employeeId}${query ? `?${query}` : ''}` : null
+  const { data, error, isLoading, mutate } = useSWR(key, fetcher, { revalidateOnFocus: false })
+  return { history: data?.data || [], isLoading, isError: !!error, error, mutate }
+}
+
+export function useAllAttendance(params = {}) {
+  const query = new URLSearchParams(params).toString()
+  const key = 'attendance/all' + (query ? '?' + query : '')
+  const { data, error, isLoading, mutate } = useSWR(key, fetcher, {
+    revalidateOnFocus: false,
+    keepPreviousData: true,
+  })
+  return { attendance: data?.data || [], isLoading, isError: !!error, error, mutate }
+}

@@ -9,6 +9,9 @@ const MODULES = [
   { id: 'dashboard', label: 'Dashboard' },
   { id: 'blogs', label: 'Blogs' },
   { id: 'inquiries', label: 'Inquiries' },
+  { id: 'leads', label: 'Leads' },
+  { id: 'clients', label: 'Clients' },
+  { id: 'expenses', label: 'Expenses' },
   { id: 'employees', label: 'Employees' },
 ]
 

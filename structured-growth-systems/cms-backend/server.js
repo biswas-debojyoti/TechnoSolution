@@ -105,11 +105,14 @@ app.get("/", (req, res) => {
   res.send("🚀 Backend is running successfully");
 });
 
+const attendanceRoutes = require("./routes/attendanceRoutes");
+
 // ─── API Routes ───────────────────────────────────────────────────────────────
 app.use("/api/auth", authLimiter, authRoutes);
 app.use("/api/blogs", apiLimiter, blogRoutes);
 app.use("/api/inquiries", inquiryLimiter, inquiryRoutes);
 app.use("/api/employees", apiLimiter, employeeRoutes);
+app.use("/api/attendance", apiLimiter, attendanceRoutes);
 app.use("/api/leads", leadRoutes);
 app.use("/api/clients", clientRoutes);
 app.use("/api/expenses", expenseRoutes);

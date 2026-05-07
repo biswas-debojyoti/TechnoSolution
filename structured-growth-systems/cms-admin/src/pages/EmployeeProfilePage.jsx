@@ -5,7 +5,7 @@ import {
   Shield, DollarSign, FileText, Download, UserCircle, 
   Clock, Hash, MapPin, Pencil, Plus, CreditCard, Layers, Receipt, TrendingUp
 } from 'lucide-react'
-import { useEmployee, useEmployeeSalaries } from '../hooks/useData'
+import { useEmployee, useEmployeeSalaries, useAttendanceHistory } from '../hooks/useData'
 import { employeeApi, settingsApi } from '../lib/api'
 import { useToast } from '../context/ToastContext'
 import { useAuth } from '../context/AuthContext'
@@ -45,6 +45,7 @@ export default function EmployeeProfilePage() {
   
   const { employee, isLoading, error } = useEmployee(id)
   const { salaries, isLoading: salariesLoading, mutate: mutateSalaries } = useEmployeeSalaries(id)
+  const { history: attendanceHistory, isLoading: attLoading } = useAttendanceHistory(id)
 
   const [activeTab, setActiveTab] = useState('overview')
   const [showPaymentModal, setShowPaymentModal] = useState(false)
@@ -59,7 +60,7 @@ export default function EmployeeProfilePage() {
     }
   })
 
-  const hasWriteAccess = ["admin", "superadmin"].includes(admin?.role) || admin?.permissions?.includes("write")
+  const hasWriteAccess = ["admin", "superadmin"].includes(admin?.role) || admin?.permissions?.includes("employees:write")
 
   if (isLoading) {
     return (
@@ -193,7 +194,7 @@ export default function EmployeeProfilePage() {
                 <span className="text-[var(--border-light)]">•</span>
                 <span className="flex items-center gap-1.5">
                   <Clock size={14} className="text-amber-500" />
-                  Joined {new Date(employee.joiningDate).toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' })}
+                  Joined {new Date(employee.joiningDate).toLocaleDateString('en-GB')}
                 </span>
                 <span className="text-[var(--border-light)]">•</span>
                 <span className="flex items-center gap-1.5 font-mono text-xs uppercase tracking-wider text-[var(--text-muted)] bg-[var(--bg-elevated)] px-2 py-0.5 rounded border border-[var(--border)]">
@@ -227,6 +228,15 @@ export default function EmployeeProfilePage() {
              <CreditCard size={14} /> Salary & Payments
           </div>
           {activeTab === 'salaries' && <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-amber-500 rounded-full" />}
+        </button>
+        <button 
+          onClick={() => setActiveTab('attendance')}
+          className={`pb-3 text-sm font-bold transition-all relative ${activeTab === 'attendance' ? 'text-amber-500' : 'text-[var(--text-muted)] hover:text-[var(--text-secondary)]'}`}
+        >
+          <div className="flex items-center gap-2 uppercase tracking-wider">
+             <Clock size={14} /> Attendance Records
+          </div>
+          {activeTab === 'attendance' && <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-amber-500 rounded-full" />}
         </button>
       </div>
       {/* Content Grid */}
@@ -359,7 +369,7 @@ export default function EmployeeProfilePage() {
                          salaries.map(salary => (
                            <tr key={salary._id} className="hover:bg-[var(--bg-hover)] transition-colors group">
                               <td className="px-6 py-4 font-bold">{salary.month} {salary.year}</td>
-                              <td className="px-6 py-4 font-mono text-xs">{new Date(salary.paymentDate).toLocaleDateString()}</td>
+                              <td className="px-6 py-4 font-mono text-xs">{new Date(salary.paymentDate).toLocaleDateString('en-GB')}</td>
                               <td className="px-6 py-4 text-right">
                                  <span className="font-bold text-emerald-500 font-mono text-base">{formatCurrency(salary.netSalary)}</span>
                               </td>
@@ -371,6 +381,57 @@ export default function EmployeeProfilePage() {
                                  >
                                     <Download size={14} /> Download Slip
                                  </button>
+                              </td>
+                           </tr>
+                         ))
+                       )}
+                    </tbody>
+                 </table>
+             </div>
+          </div>
+        )}
+
+        {activeTab === 'attendance' && (
+          <div className="w-full space-y-6">
+             <div className="card overflow-hidden">
+                 <table className="w-full text-left text-sm whitespace-nowrap">
+                    <thead className="bg-[var(--bg-elevated)] border-b border-[var(--border)] text-[var(--text-secondary)] uppercase text-[10px] tracking-wider font-mono">
+                       <tr>
+                          <th className="px-6 py-4 font-bold">Date</th>
+                          <th className="px-6 py-4 font-bold">Check In</th>
+                          <th className="px-6 py-4 font-bold">Check Out</th>
+                          <th className="px-6 py-4 font-bold">Total Work</th>
+                          <th className="px-6 py-4 font-bold text-right">Status</th>
+                       </tr>
+                    </thead>
+                    <tbody className="divide-y divide-[var(--border)]">
+                       {attLoading ? (
+                         <tr><td colSpan="5" className="text-center py-8">Loading...</td></tr>
+                       ) : attendanceHistory.length === 0 ? (
+                         <tr>
+                           <td colSpan="5" className="px-6 py-12 text-center text-[var(--text-muted)] italic">
+                             <Clock size={32} className="mx-auto mb-3 opacity-20" />
+                             No attendance records found.
+                           </td>
+                         </tr>
+                       ) : (
+                         attendanceHistory.map(att => (
+                           <tr key={att._id} className="hover:bg-[var(--bg-hover)] transition-colors group">
+                              <td className="px-6 py-4 font-bold">{new Date(att.dateString).toLocaleDateString('en-GB')}</td>
+                              <td className="px-6 py-4 font-mono text-xs">{att.checkIn ? new Date(att.checkIn).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '—'}</td>
+                              <td className="px-6 py-4 font-mono text-xs">{att.checkOut ? new Date(att.checkOut).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '—'}</td>
+                              <td className="px-6 py-4 font-mono text-xs font-bold text-[var(--text-primary)]">
+                                 {att.totalWorkMs ? `${Math.floor(att.totalWorkMs / 3600000)}h ${Math.floor((att.totalWorkMs % 3600000) / 60000)}m` : '0h 0m'}
+                              </td>
+                              <td className="px-6 py-4 text-right">
+                                 <span className={`px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider ${
+                                   att.status === 'completed' ? 'bg-blue-500/10 text-blue-500 border border-blue-500/20' :
+                                   att.status === 'working' ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20' :
+                                   att.status === 'absent' ? 'bg-red-500/10 text-red-500 border border-red-500/20' :
+                                   'bg-amber-500/10 text-amber-500 border border-amber-500/20'
+                                 }`}>
+                                   {att.status.replace('_', ' ')}
+                                 </span>
                               </td>
                            </tr>
                          ))

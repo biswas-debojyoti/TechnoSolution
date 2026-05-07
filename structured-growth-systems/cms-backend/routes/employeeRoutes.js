@@ -36,8 +36,15 @@ router.get("/active/basic", protect, requireModuleAccess("employees", "read"), g
 // @desc   Get global salaries
 router.get("/salaries/all", protect, requireModuleAccess("employees", "read"), getAllSalaries);
 
+const allowSelfOrModuleRead = (req, res, next) => {
+  if (req.admin.role === "employee" && req.admin._id.toString() === req.params.id) {
+    return next();
+  }
+  return requireModuleAccess("employees", "read")(req, res, next);
+};
+
 // @route  GET /api/employees/:id
-router.get("/:id", protect, requireModuleAccess("employees", "read"), getEmployeeById);
+router.get("/:id", protect, allowSelfOrModuleRead, getEmployeeById);
 
 // @route  POST /api/employees
 // @desc   Create an employee
@@ -92,6 +99,6 @@ router.post("/:id/salaries", protect, requireModuleAccess("employees", "write"),
 
 // @route  GET /api/employees/:id/salaries
 // @desc   Get salary history
-router.get("/:id/salaries", protect, requireModuleAccess("employees", "read"), getSalaryHistory);
+router.get("/:id/salaries", protect, allowSelfOrModuleRead, getSalaryHistory);
 
 module.exports = router;

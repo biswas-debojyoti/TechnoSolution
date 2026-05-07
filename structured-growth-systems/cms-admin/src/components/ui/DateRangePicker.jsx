@@ -171,9 +171,8 @@ export default function DateRangePicker({ value, onChange }) {
 
   const formatValue = () => {
     if (!start) return 'Select date range'
-    const s = start.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' })
-    if (!end) return `${s} — ...`
-    const e = end.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: '2-digit' })
+    const s = start.toLocaleDateString('en-GB')
+    const e = end.toLocaleDateString('en-GB')
     return `${s} — ${e}`
   }
 

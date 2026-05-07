@@ -108,4 +108,6 @@ export const expenseApi = {
   },
 }
 
-
+export const attendanceApi = {
+  action: (data) => api.post('attendance/action', data),
+}

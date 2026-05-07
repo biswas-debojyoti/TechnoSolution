@@ -88,7 +88,7 @@ export const generateInvoicePDF = (client, payment, settings) => {
     doc.setFont('helvetica', 'bold')
     doc.text('DATE:', 130, 62)
     doc.setFont('helvetica', 'normal')
-    doc.text(payment?.date ? new Date(payment.date).toLocaleDateString() : 'N/A', 160, 62)
+    doc.text(payment?.date ? new Date(payment.date).toLocaleDateString('en-GB') : 'N/A', 160, 62)
     
     doc.setFont('helvetica', 'bold')
     doc.text('STATUS:', 130, 69)
@@ -196,6 +196,23 @@ export const generateInvoicePDF = (client, payment, settings) => {
       doc.text(`A/C Holder: ${settings.bankDetails.accountName}`, 15, bankY + 13)
       doc.text(`A/C Number: ${settings.bankDetails.accountNumber}`, 15, bankY + 18)
       doc.text(`IFSC: ${settings.bankDetails.ifscCode}`, 15, bankY + 23)
+      
+      if (settings.bankDetails.upiId) {
+        doc.setFont('helvetica', 'bold')
+        doc.text(`UPI ID: ${settings.bankDetails.upiId}`, 15, bankY + 28)
+        doc.setFont('helvetica', 'normal')
+      }
+
+      // QR Code
+      if (settings.qrCode) {
+        try {
+          doc.addImage(settings.qrCode, 15, bankY + 32, 25, 25)
+          doc.setFontSize(7)
+          doc.text('Scan to Pay via UPI', 15, bankY + 60)
+        } catch (e) {
+          console.error('Error adding QR code to PDF:', e)
+        }
+      }
     }
 
     // --- SIGNATURE SECTION ---

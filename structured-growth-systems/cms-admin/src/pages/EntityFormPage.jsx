@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate, useParams, useLocation } from 'react-router-dom'
 import { ArrowLeft, Save, Info, Check, User, Globe, Mail, Phone, DollarSign, Briefcase, Users } from 'lucide-react'
 import { leadApi, clientApi } from '../lib/api'
-import { useLead, useClient } from '../hooks/useData'
+import { useLead, useClient, useActiveEmployees } from '../hooks/useData'
 import { useToast } from '../context/ToastContext'
 
 const SOURCE_OPTIONS = [
@@ -62,8 +62,11 @@ export default function EntityFormPage() {
     budget: '',
     notes: '',
     services: [],
-    totalValue: 0
+    totalValue: 0,
+    assignedTo: ''
   })
+
+  const { employees } = useActiveEmployees()
 
   // Populate form
   useEffect(() => {
@@ -77,7 +80,8 @@ export default function EntityFormPage() {
         budget: entity.budget || '',
         notes: entity.notes || '',
         services: entity.services || [],
-        totalValue: entity.totalValue || 0
+        totalValue: entity.totalValue || 0,
+        assignedTo: entity.assignedTo?._id || entity.assignedTo || ''
       })
     }
   }, [entity, type])
@@ -230,6 +234,15 @@ export default function EntityFormPage() {
                  <div className="space-y-1.5">
                   <label className="text-[10px] uppercase font-bold text-[var(--text-muted)]">Budget Range</label>
                   <input type="text" name="budget" value={formData.budget} onChange={handleChange} className="input-field text-sm py-2" placeholder="e.g. $5k - $10k" />
+                </div>
+                <div className="space-y-1.5">
+                  <label className="text-[10px] uppercase font-bold text-[var(--text-muted)]">Follow-up Person</label>
+                  <select name="assignedTo" value={formData.assignedTo} onChange={handleChange} className="input-field text-sm py-2 h-[38px] cursor-pointer font-bold">
+                    <option value="">Select Employee</option>
+                    {employees.map(emp => (
+                      <option key={emp._id} value={emp._id}>{emp.name}</option>
+                    ))}
+                  </select>
                 </div>
                 {type === 'client' && (
                   <div className="space-y-1.5">

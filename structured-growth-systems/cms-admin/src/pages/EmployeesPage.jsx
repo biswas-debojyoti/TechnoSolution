@@ -35,7 +35,7 @@ export default function EmployeesPage() {
 
   const hasWriteAccess =
     ["admin", "superadmin"].includes(admin?.role) ||
-    admin?.permissions?.includes("write");
+    admin?.permissions?.includes("employees:write");
 
   const toggleStatus = async (id, currentStatus) => {
     if (!hasWriteAccess) {
@@ -177,7 +177,7 @@ export default function EmployeesPage() {
                           </div>
                           <p className="hover:text-amber-500 transition-colors text-[10px] text-[var(--text-muted)] uppercase tracking-tight">
                             Joined{" "}
-                            {new Date(emp.joiningDate).toLocaleDateString()}
+                            {new Date(emp.joiningDate).toLocaleDateString('en-GB')}
                           </p>
                         </div>
                       </Link>

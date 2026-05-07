@@ -4,6 +4,7 @@ import { Plus, FileText, Pencil, Trash2, ImageOff, Star } from "lucide-react";
 import { useBlogs } from "../hooks/useData";
 import { blogApi } from "../lib/api";
 import { useToast } from "../context/ToastContext";
+import { useAuth } from "../context/AuthContext";
 import {
   PageShell,
   TableSkeleton,
@@ -46,6 +47,9 @@ export default function BlogsPage() {
     ...(search && { search }),
     ...(status && { status }),
   });
+
+  const { admin } = useAuth();
+  const hasWriteAccess = ["admin", "superadmin"].includes(admin?.role) || admin?.permissions?.includes("blogs:write");
 
   const handleDelete = async () => {
     if (!deleteTarget) return;
@@ -103,9 +107,11 @@ export default function BlogsPage() {
               { value: "draft", label: "Draft" },
             ]}
           />
-          <Link to="/blogs/new" className="btn-primary text-xs py-1.5 px-3">
-            <Plus size={13} /> New Blog
-          </Link>
+          {hasWriteAccess && (
+            <Link to="/blogs/new" className="btn-primary text-xs py-1.5 px-3">
+              <Plus size={13} /> New Blog
+            </Link>
+          )}
         </>
       }
     >
@@ -139,9 +145,11 @@ export default function BlogsPage() {
                         : "No blog posts yet."
                     }
                     action={
-                      <Link to="/blogs/new" className="btn-primary text-xs">
-                        Create first post
-                      </Link>
+                      hasWriteAccess && (
+                        <Link to="/blogs/new" className="btn-primary text-xs">
+                          Create first post
+                        </Link>
+                      )
                     }
                   />
                 </td>
@@ -180,11 +188,12 @@ export default function BlogsPage() {
                   <td className="px-4 py-3">
                     <button
                       onClick={() => handleToggleFeatured(blog)}
+                      disabled={!hasWriteAccess}
                       className={`p-1.5 rounded-sm transition-colors ${
                         blog.isFeatured 
                           ? "text-amber-500 bg-amber-500/10 hover:bg-amber-500/20" 
                           : "text-[var(--text-muted)] hover:text-amber-500 hover:bg-amber-500/10"
-                      }`}
+                      } disabled:opacity-50 disabled:cursor-not-allowed`}
                       title={blog.isFeatured ? "Unmark Featured" : "Mark as Featured"}
                     >
                       <Star size={14} className={blog.isFeatured ? "fill-current" : ""} />
@@ -192,31 +201,31 @@ export default function BlogsPage() {
                   </td>
                   {/* Created */}
                   <td className="px-4 py-3 text-[var(--text-muted)] font-mono text-xs whitespace-nowrap">
-                    {new Date(blog.createdAt).toLocaleDateString("en-GB", {
-                      day: "2-digit",
-                      month: "short",
-                      year: "2-digit",
-                    })}
+                    {new Date(blog.createdAt).toLocaleDateString("en-GB")}
                   </td>
                   {/* Actions */}
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-1">
-                      <button
-                        onClick={() =>
-                          navigate("/blogs/" + blog.slug + "/edit")
-                        }
-                        className="p-1.5 rounded-sm text-[var(--text-muted)] hover:text-amber-400 hover:bg-amber-500/10 transition-colors"
-                        title="Edit"
-                      >
-                        <Pencil size={12} />
-                      </button>
-                      <button
-                        onClick={() => setDeleteTarget(blog)}
-                        className="p-1.5 rounded-sm text-[var(--text-muted)] hover:text-red-400 hover:bg-red-500/10 transition-colors"
-                        title="Delete"
-                      >
-                        <Trash2 size={13} />
-                      </button>
+                      {hasWriteAccess && (
+                        <>
+                          <button
+                            onClick={() =>
+                              navigate("/blogs/" + blog.slug + "/edit")
+                            }
+                            className="p-1.5 rounded-sm text-[var(--text-muted)] hover:text-amber-400 hover:bg-amber-500/10 transition-colors"
+                            title="Edit"
+                          >
+                            <Pencil size={12} />
+                          </button>
+                          <button
+                            onClick={() => setDeleteTarget(blog)}
+                            className="p-1.5 rounded-sm text-[var(--text-muted)] hover:text-red-400 hover:bg-red-500/10 transition-colors"
+                            title="Delete"
+                          >
+                            <Trash2 size={13} />
+                          </button>
+                        </>
+                      )}
                     </div>
                   </td>
                 </tr>

@@ -35,7 +35,7 @@ export default function SalariesPage() {
     year: new Date().getFullYear()
   })
 
-  const hasWriteAccess = ["admin", "superadmin"].includes(admin?.role) || admin?.permissions?.includes("write")
+  const hasWriteAccess = ["admin", "superadmin"].includes(admin?.role) || admin?.permissions?.includes("employees:write")
 
   const formatCurrency = (val) => {
     return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(val || 0)
@@ -192,7 +192,7 @@ export default function SalariesPage() {
                        {salary.employeeId.userId}
                     </td>
                     <td className="px-6 py-4 font-bold">{salary.month} {salary.year}</td>
-                    <td className="px-6 py-4 font-mono text-xs">{new Date(salary.paymentDate).toLocaleDateString()}</td>
+                    <td className="px-6 py-4 font-mono text-xs">{new Date(salary.paymentDate).toLocaleDateString('en-GB')}</td>
                     <td className="px-6 py-4 text-right">
                        <span className="font-bold text-emerald-500 font-mono text-base">{formatCurrency(salary.netSalary)}</span>
                     </td>

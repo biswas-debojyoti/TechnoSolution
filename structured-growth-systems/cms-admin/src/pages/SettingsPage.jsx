@@ -1,12 +1,20 @@
 import { useState, useEffect } from 'react'
+import { Navigate } from 'react-router-dom'
 import { Save, Building2, Phone, Mail, Globe, Landmark, ShieldCheck, PenTool } from 'lucide-react'
 import { settingsApi } from '../lib/api'
 import { useToast } from '../context/ToastContext'
+import { useAuth } from '../context/AuthContext'
 
 export default function SettingsPage() {
+  const { admin } = useAuth()
   const toast = useToast()
   const [loading, setLoading] = useState(false)
   const [fetching, setFetching] = useState(true)
+
+  if (admin?.role !== 'superadmin') {
+    return <Navigate to="/" replace />
+  }
+
   const [formData, setFormData] = useState({
     companyName: '',
     address: '',
@@ -15,11 +23,13 @@ export default function SettingsPage() {
     website: '',
     gstin: '',
     digitalSignature: '',
+    qrCode: '',
     bankDetails: {
       accountName: '',
       accountNumber: '',
       bankName: '',
       ifscCode: '',
+      upiId: '',
     }
   })
 
@@ -40,11 +50,13 @@ export default function SettingsPage() {
           website: data.website || '',
           gstin: data.gstin || '',
           digitalSignature: data.digitalSignature || '',
+          qrCode: data.qrCode || '',
           bankDetails: {
             accountName: data.bankDetails?.accountName || '',
             accountNumber: data.bankDetails?.accountNumber || '',
             bankName: data.bankDetails?.bankName || '',
             ifscCode: data.bankDetails?.ifscCode || '',
+            upiId: data.bankDetails?.upiId || '',
           }
         })
       }
@@ -65,6 +77,21 @@ export default function SettingsPage() {
       }))
     } else {
       setFormData(prev => ({ ...prev, [name]: value }))
+    }
+  }
+
+  const handleFileUpload = (e) => {
+    const file = e.target.files[0]
+    if (file) {
+      if (file.size > 1024 * 1024) {
+        toast.error('File size too large (max 1MB)')
+        return
+      }
+      const reader = new FileReader()
+      reader.onloadend = () => {
+        setFormData(prev => ({ ...prev, qrCode: reader.result }))
+      }
+      reader.readAsDataURL(file)
     }
   }
 
@@ -228,12 +255,73 @@ export default function SettingsPage() {
                     className="input-field h-9 text-sm font-mono uppercase"
                   />
                 </div>
+                <div className="col-span-2 space-y-1.5">
+                  <label className="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-widest">UPI ID (For Quick Payment)</label>
+                  <input
+                    type="text"
+                    name="bankDetails.upiId"
+                    value={formData.bankDetails.upiId}
+                    onChange={handleChange}
+                    className="input-field h-9 text-sm font-mono"
+                    placeholder="company@upi"
+                  />
+                </div>
               </div>
             </div>
           </div>
 
           {/* Contact & Misc - Right Col */}
           <div className="md:col-span-5 space-y-6">
+            <div className="card p-5 space-y-5 border-l-2 border-purple-500">
+               <div className="flex items-center gap-2 text-purple-500 mb-1">
+                  <Globe size={16} />
+                  <h2 className="text-sm font-bold uppercase tracking-wider">Payment QR Code</h2>
+               </div>
+               
+               <div className="space-y-4 text-center">
+                  <div className="aspect-square w-48 mx-auto bg-[var(--bg-elevated)] rounded-lg border-2 border-dashed border-[var(--border)] flex flex-col items-center justify-center overflow-hidden relative group">
+                     {formData.qrCode ? (
+                       <>
+                         <img src={formData.qrCode} alt="QR Code" className="w-full h-full object-contain p-2" />
+                         <div className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                            <button 
+                              type="button" 
+                              onClick={() => setFormData(prev => ({ ...prev, qrCode: '' }))}
+                              className="text-xs font-bold text-red-400 uppercase tracking-widest"
+                            >
+                               Remove
+                            </button>
+                         </div>
+                       </>
+                     ) : (
+                       <div className="p-4">
+                          <Globe size={24} className="mx-auto mb-2 opacity-20" />
+                          <p className="text-[10px] text-[var(--text-muted)] uppercase font-bold">No QR Uploaded</p>
+                       </div>
+                     )}
+                  </div>
+                  
+                  <div className="relative">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleFileUpload}
+                      className="hidden"
+                      id="qr-upload"
+                    />
+                    <label
+                      htmlFor="qr-upload"
+                      className="btn-primary py-2 px-4 text-[10px] uppercase tracking-widest font-bold cursor-pointer inline-flex items-center gap-2"
+                    >
+                      <PenTool size={12} />
+                      {formData.qrCode ? 'Change QR Code' : 'Upload QR Code'}
+                    </label>
+                  </div>
+                  <p className="text-[9px] text-[var(--text-muted)] italic">
+                    Upload your GPay/PhonePe/UPI QR code to show on invoices.
+                  </p>
+               </div>
+            </div>
             <div className="card p-5 space-y-5 border-l-2 border-blue-500">
               <div className="flex items-center gap-2 text-blue-500 mb-1">
                  <Globe size={16} />

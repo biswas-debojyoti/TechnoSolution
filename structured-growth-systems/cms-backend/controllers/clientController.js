@@ -10,12 +10,13 @@ const getAllClients = async (req, res, next) => {
   try {
     const page = parseInt(req.query.page, 10) || 1;
     const limit = parseInt(req.query.limit, 10) || 20;
-    const { search, status, service } = req.query;
+    const { search, status, service, assignedTo } = req.query;
     const startIndex = (page - 1) * limit;
 
     const filter = {};
     if (status) filter.status = status;
     if (service) filter.services = { $in: [service] };
+    if (assignedTo) filter.assignedTo = assignedTo;
 
     if (search) {
       filter.$or = [
